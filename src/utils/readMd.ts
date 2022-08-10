@@ -56,9 +56,6 @@ export const getPostBySlug = (slug: string, fields: string[] = []) => {
       items[field] = data[field]
     }
   })
-
-  console.log(slug)
-
   return items
 }
 
@@ -71,18 +68,17 @@ export const getAllPosts = (fields: string[] = []) => {
   const posts = slugs
     .map((slug) => getPostBySlug(slug, fields))
     .sort((a, b) => {
-      // 辞書順ソート
-      // 目的に応じて、日付順などでソートしてもよい
-      const slugA = a.slug.toString().toLowerCase()
-      const slugB = b.slug.toString().toLowerCase()
+      // 日付順ソート
+      const slugA = a.date
+      const slugB = b.date
 
-      if (slugA > slugB) {
+      if (slugA < slugB) {
         return 1
       } else {
-        slugB > slugA
+        slugB < slugA
       }
 
-      return slugA >= slugB ? 1 : -1
+      return slugA <= slugB ? 1 : -1
     })
 
   return posts
