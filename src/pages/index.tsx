@@ -13,24 +13,44 @@ export const getStaticProps = async () => {
   }
 }
 
-const Home: NextPage<Props> = ({ allPosts }) => (
-  <ul>
-    {allPosts?.map((post) => (
-      <Box key={post.slug} mt={10}>
-        <li>
-          <Link href={`/posts/${post.slug}`}>
-            <a>{post.title}</a>
-          </Link>
-          <p>{post.date}</p>
-          <ul>
-            {post.tags?.map((tag) => (
-              <li key={tag}>{tag}</li>
-            ))}
-          </ul>
-        </li>
-      </Box>
-    ))}
-  </ul>
-)
+const Home: NextPage<Props> = ({ allPosts }) => {
+  const createTags = (tags: string[]) =>
+    tags.map((tag) => (
+      <ul
+        key={tag}
+        style={{
+          marginLeft: "0px",
+          marginBottom: "10px",
+          marginRight: "10px",
+          display: "inline-block",
+          backgroundColor: "#98e1ff",
+          paddingLeft: "5px",
+          paddingRight: "5px",
+          borderRadius: "5px",
+        }}
+        className="tag"
+      >
+        <Link key={tag} href={`/tags/${tag}`} className="tag">
+          {tag}
+        </Link>
+      </ul>
+    ))
+
+  return (
+    <ul>
+      {allPosts.map((post) => (
+        <article key={post.slug}>
+          <h2>
+            <Link href={`/posts/${post.slug}`} aria-label={post.title}>
+              {post.title}
+            </Link>
+          </h2>
+          <div>{createTags(post.tags)}</div>
+          <time dateTime={post.date}>{post.date}</time>
+        </article>
+      ))}
+    </ul>
+  )
+}
 
 export default Home
