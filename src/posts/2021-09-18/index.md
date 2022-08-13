@@ -1,8 +1,7 @@
 ---
-title: 'TypeScriptの使用をNuxtで強制するために'
-date: '2021-09-18'
-tags: ['TypeScript', 'Nuxt']
-slug: 'nuxt-ts-pj-force'
+title: "TypeScriptの使用をNuxtで強制するために"
+tags: ["TypeScript", "Nuxt"]
+slug: "nuxt-ts-pj-force"
 ---
 
 ![](../images/posts-image/2021-09-04.jpg)<br>

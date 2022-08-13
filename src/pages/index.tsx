@@ -25,14 +25,14 @@ const Home: NextPage<Props> = ({ allPosts }) => {
   return (
     <ul>
       {allPosts.map((post) => (
-        <article key={post.slug}>
-          <h2>
+        <article key={post.slug} className="top-post">
+          <time dateTime={post.date}>{post.date}</time>
+          <h2 className="top">
             <Link href={`/posts/${post.slug}`} aria-label={post.title}>
               {post.title}
             </Link>
           </h2>
           <div>{createTags(post.tags)}</div>
-          <time dateTime={post.date}>{post.date}</time>
         </article>
       ))}
     </ul>

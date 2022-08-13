@@ -1,8 +1,7 @@
 ---
-title: '2020年に身につけた技術まとめ'
-date: '2020-12-30'
-tags: ['技術', 'JavaScript']
-slug: '2020-tech-entry'
+title: "2020年に身につけた技術まとめ"
+tags: ["技術", "JavaScript"]
+slug: "2020-tech-entry"
 ---
 
 ![](../images/posts-image/2020-12-30.png)

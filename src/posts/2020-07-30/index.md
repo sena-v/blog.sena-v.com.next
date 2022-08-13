@@ -1,6 +1,5 @@
 ---
 title: "UWSCを使用しエビデンス取得を自動化する"
-date: "2020-07-30"
 tags: ["技術"]
 slug: "uwsc-screenshot-auto"
 ---

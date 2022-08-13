@@ -52,10 +52,14 @@ export const getPostBySlug = (slug: string, fields: string[] = []) => {
       items[field] = content
     }
 
-    if (field === "title" || field === "date" || field === "tags") {
+    if (field === "title" || field === "tags") {
       items[field] = data[field]
     }
   })
+
+  // 格納フォルダ名を投稿日付とする(md内にdateを書くと乖離する可能性が出るため)
+  items["date"] = slug
+
   return items
 }
 

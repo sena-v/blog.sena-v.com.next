@@ -1,8 +1,7 @@
 ---
-title: 'Firebaseプロジェクトのデプロイ先変更を行う'
-date: '2020-09-29'
-tags: ['Firebase']
-slug: 'firebase-deploy'
+title: "Firebaseプロジェクトのデプロイ先変更を行う"
+tags: ["Firebase"]
+slug: "firebase-deploy"
 ---
 
 既存のプロジェクトと同じ構成(自分は vue)の開発を進めたい時、

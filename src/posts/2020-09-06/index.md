@@ -1,8 +1,7 @@
 ---
-title: 'JavaScriptで関数をobject形式にして使用する'
-date: '2020-09-06'
-tags: ['JavaScript']
-slug: 'js-class-object'
+title: "JavaScriptで関数をobject形式にして使用する"
+tags: ["JavaScript"]
+slug: "js-class-object"
 ---
 
 JavaScript で複数のモジュールを組み合わせて使用しており、設計上の理由で変数を特定のモジュールに入れないといけないが、メインモジュールからそのモジュールを参照すると変数がクロージャのため undefined になってしまう。
@@ -32,20 +31,20 @@ const parts = {
 
   // 1回実行毎に2進数と16進数を切り替える
   changeType: () => {
-    if (binaryFlag === 'true') {
-      binaryFlag = false;
-      hexadecimalFlag = true;
+    if (binaryFlag === "true") {
+      binaryFlag = false
+      hexadecimalFlag = true
     } else {
-      binaryFlag = true;
-      hexadecimalFlag = false;
+      binaryFlag = true
+      hexadecimalFlag = false
     }
   },
 
   changeDecimalToOtherType: (num) => {
-    if (binaryFlag === 'true') num.toString(2);
-    else num.toString(16);
+    if (binaryFlag === "true") num.toString(2)
+    else num.toString(16)
   },
-};
+}
 ```
 
 モジュール内フラグへ外部から parts.changeType()を実行し、フラグ切り替えの構造で実装を行った。

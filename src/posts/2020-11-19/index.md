@@ -1,8 +1,7 @@
 ---
-title: '[JavaScript]なろうランキングをAPIで一括取得する'
-date: '2020-11-19'
-tags: ['JavaScript']
-slug: 'narou-rank-get'
+title: "[JavaScript]なろうランキングをAPIで一括取得する"
+tags: ["JavaScript"]
+slug: "narou-rank-get"
 ---
 
 API が使える環境があり、定期的にそれを使っているならちょっとコード化するだけで<br>
@@ -41,54 +40,54 @@ axios に変更しました。request 使用が簡単すぎたので大丈夫か
 ソース：https://github.com/sena-v/narouRankingToText<br>
 
 ```js
-const axiosBase = require('axios'); // ①に使用
-const fs = require('fs'); // ②に使用
+const axiosBase = require("axios") // ①に使用
+const fs = require("fs") // ②に使用
 
 // urlと検索パラメータを保管
-const url = 'https://api.syosetu.com/novelapi/api/';
-const weeklyURL = '?genre=201&order=weeklypoint&of=t-n-w-s-k-gf-gl-l-nu';
-const monthlyURL = '?genre=201&order=monthlypoint&of=t-n-w-s-k-gf-gl-l-nu';
+const url = "https://api.syosetu.com/novelapi/api/"
+const weeklyURL = "?genre=201&order=weeklypoint&of=t-n-w-s-k-gf-gl-l-nu"
+const monthlyURL = "?genre=201&order=monthlypoint&of=t-n-w-s-k-gf-gl-l-nu"
 
 const axios = axiosBase.create({
   baseURL: url,
   headers: {
-    'Content-Type': 'application/json',
-    'X-Requested-With': 'XMLHttpRequest',
-    'User-Agent': 'Mozilla/5.0',
+    "Content-Type": "application/json",
+    "X-Requested-With": "XMLHttpRequest",
+    "User-Agent": "Mozilla/5.0",
   },
-  responseType: 'json',
-});
+  responseType: "json",
+})
 
-let outputText = null;
+let outputText = null
 
 const fileOutput = (text) => {
   // weekly取得時は出力せずreturn
   if (outputText === null) {
-    fs.writeFileSync('output.txt', '');
-    outputText = text;
-    return;
+    fs.writeFileSync("output.txt", "")
+    outputText = text
+    return
   }
 
-  outputText = outputText + text;
-  const arrText = outputText.split('\\n');
-  console.log(arrText);
+  outputText = outputText + text
+  const arrText = outputText.split("\\n")
+  console.log(arrText)
 
   try {
     for (let txt of arrText) {
-      fs.appendFile('output.txt', txt + '\r\n', () => {});
+      fs.appendFile("output.txt", txt + "\r\n", () => {})
     }
 
-    console.log('write end');
+    console.log("write end")
   } catch (e) {
-    console.log(e);
+    console.log(e)
   }
-};
+}
 
 const narouListGet = (adress) =>
-  axios.get('/' + adress).then((data) => fileOutput(JSON.stringify(data.data)));
+  axios.get("/" + adress).then((data) => fileOutput(JSON.stringify(data.data)))
 
-narouListGet(weeklyURL);
-narouListGet(monthlyURL);
+narouListGet(weeklyURL)
+narouListGet(monthlyURL)
 ```
 
 楽さを重視したので text 出力にしましたが、JSON 加工だけできれば後フロントとの繋ぎだけなので<br>

@@ -1,6 +1,5 @@
 ---
 title: "Nuxt + TypeScriptの現場開発感"
-date: "2021-09-04"
 tags: ["JavaScript", "TypeScript", "Nuxt"]
 slug: "nuxt-ts-pj-review"
 ---

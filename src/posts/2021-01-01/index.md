@@ -1,8 +1,7 @@
 ---
-title: '2021年水準のJavaScriptを学ぶ最速パターン'
-date: '2021-01-01'
-tags: ['技術', 'JavaScript', '勉強法']
-slug: '2021-javascript'
+title: "2021年水準のJavaScriptを学ぶ最速パターン"
+tags: ["技術", "JavaScript", "勉強法"]
+slug: "2021-javascript"
 ---
 
 ![](../images/posts-image/2021-01-01.png)
