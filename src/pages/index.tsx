@@ -1,5 +1,4 @@
 import { NextPage, InferGetStaticPropsType } from "next"
-import { Box } from "@chakra-ui/react"
 import { getAllPosts } from "@src/utils/readMd"
 import Link from "next/link"
 
@@ -16,21 +15,8 @@ export const getStaticProps = async () => {
 const Home: NextPage<Props> = ({ allPosts }) => {
   const createTags = (tags: string[]) =>
     tags.map((tag) => (
-      <ul
-        key={tag}
-        style={{
-          marginLeft: "0px",
-          marginBottom: "10px",
-          marginRight: "10px",
-          display: "inline-block",
-          backgroundColor: "#98e1ff",
-          paddingLeft: "5px",
-          paddingRight: "5px",
-          borderRadius: "5px",
-        }}
-        className="tag"
-      >
-        <Link key={tag} href={`/tags/${tag}`} className="tag">
+      <ul key={tag} className="post-tag">
+        <Link key={tag} href={`/tags/${tag}`}>
           {tag}
         </Link>
       </ul>
