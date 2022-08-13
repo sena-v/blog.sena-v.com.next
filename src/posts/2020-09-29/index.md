@@ -23,9 +23,8 @@ firebase use zzzzzz
 firebase deploy  // zzzzzzにデプロイが実施される
 ```
 
-<br><br>
 実行結果
-<br><br>
+
 ![a](../images/posts-image/2020-09-29-01.png)
 
 注意：firebase のデプロイ先を変更しても FirebaseSDK の設定は動的に変わらないため、
