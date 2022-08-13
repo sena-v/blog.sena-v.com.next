@@ -1,6 +1,7 @@
 import { NextPage, InferGetStaticPropsType } from "next"
 import { getAllPosts, getPostBySlug } from "@src/utils/readMd"
 import ReactMarkdown from "react-markdown"
+import Link from "next/link"
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>
 
@@ -36,19 +37,25 @@ export const getStaticProps = async ({ params }: any) => {
   }
 }
 
-const Post: NextPage<Props> = ({ post }) => (
-  <article>
-    <h2>{post.title}</h2>
-    <p>{post.date}</p>
-    <ul>
-      {post.tags?.map((tag) => (
-        <li key={tag}>{tag}</li>
-      ))}
-    </ul>
-    <section>
-      <ReactMarkdown>{post.content}</ReactMarkdown>
-    </section>
-  </article>
-)
+const Post: NextPage<Props> = ({ post }) => {
+  const createTags = (tags: string[]) =>
+    post.tags.map((tag) => (
+      <ul key={tag} className="post-tag">
+        <Link key={tag} href={`/tags/${tag}`}>
+          {tag}
+        </Link>
+      </ul>
+    ))
 
+  return (
+    <article className="slug-post">
+      <h2>{post.title}</h2>
+      <p>{post.date}</p>
+      <p>{createTags(post.tags)}</p>
+      <section>
+        <ReactMarkdown>{post.content}</ReactMarkdown>
+      </section>
+    </article>
+  )
+}
 export default Post
