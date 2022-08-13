@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/next-script-for-ga */
 import PropTypes from "prop-types"
+import Image from "next/image"
 
 import { Helmet } from "react-helmet"
 // import Header from "./header"

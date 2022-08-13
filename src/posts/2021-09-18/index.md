@@ -4,7 +4,7 @@ tags: ["TypeScript", "Nuxt"]
 slug: "nuxt-ts-pj-force"
 ---
 
-![](../images/posts-image/2021-09-04.jpg)<br>
+![](../images/posts-image/2021-09-04.jpg)
 
 Nuxt + TypeScript 構成のプロジェクトに関わることがあり、主にバグ中心のリファクタリング・構造化を実施した際
 Any が許容されていたり、何故か型が使用されていないモジュールがあり大変でした。<br>
