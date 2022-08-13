@@ -1,6 +1,15 @@
-import { NextPage, InferGetStaticPropsType } from "next"
-import { getAllPosts } from "@src/utils/readMd"
-import Link from "next/link"
+/* eslint-disable @next/next/next-script-for-ga */
+import PropTypes from "prop-types"
+
+import { Helmet } from "react-helmet"
+// import Header from "./header"
+// import Footer from "./footer"
+// import Float from "./float"
+// import FloatMenu from "./float-menu"
+import Home from "src/components/top-page"
+
+import { InferGetStaticPropsType } from "next"
+import { getAllPosts } from "@src/utils/read-md"
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>
 
@@ -12,31 +21,65 @@ export const getStaticProps = async () => {
   }
 }
 
-const Home: NextPage<Props> = ({ allPosts }) => {
-  const createTags = (tags: string[]) =>
-    tags.map((tag) => (
-      <ul key={tag} className="post-tag">
-        <Link key={tag} href={`/tags/${tag}`}>
-          {tag}
-        </Link>
-      </ul>
-    ))
-
+const Layout = ({ allPosts }: Props) => {
   return (
-    <ul>
-      {allPosts.map((post) => (
-        <article key={post.slug} className="top-post">
-          <time dateTime={post.date}>{post.date}</time>
-          <h2 className="top">
-            <Link href={`/posts/${post.slug}`} aria-label={post.title}>
-              {post.title}
-            </Link>
-          </h2>
-          <div>{createTags(post.tags)}</div>
-        </article>
-      ))}
-    </ul>
+    <>
+      <Helmet>
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-76NH7ZL65V"
+        />
+        <script>
+          {`
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-76NH7ZL65V');
+  `}
+        </script>
+      </Helmet>
+      {/* <Header siteTitle={data.site.siteMetadata?.title || "Title"} /> */}
+      {/* <title style={{ display: "none" }}>{data.site.siteMetadata?.title}</title> */}
+      <div
+        style={{
+          display: "grid",
+          // gridTemplateColumns: `50px 85px 950px 1fr`,
+          gridTemplateColumns: "50px minmax(auto, 950px) 80px",
+          backgroundColor: "#2F2D32",
+        }}
+      >
+        <div
+          style={{
+            gridColumn: 0 / 1,
+            backgroundColor: "#2F2D32",
+          }}
+        >
+          {/* <Float /> */}
+        </div>
+        <div
+          style={{
+            maxWidth: 1200,
+            paddingTop: "2rem ",
+            paddingBottom: "120px",
+            paddingRight: "2rem",
+            paddingLeft: "3rem",
+
+            gridColumn: 1 / 2,
+            backgroundColor: "#2F2D32",
+          }}
+        >
+          <Home allPosts={allPosts} />
+        </div>
+        {/* @ts-ignore */}
+        {/* <FloatMenu style={{ gridColumn: 3 / 4 }} /> */}
+      </div>
+      {/* <Footer /> */}
+    </>
   )
 }
 
-export default Home
+Layout.propTypes = {
+  children: PropTypes.node.isRequired,
+}
+
+export default Layout

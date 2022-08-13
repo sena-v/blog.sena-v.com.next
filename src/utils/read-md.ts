@@ -2,6 +2,14 @@ import fs from "fs"
 import { join } from "path"
 import matter from "gray-matter"
 
+export type Item = {
+  slug: string
+  content: string
+  title: string
+  date: string
+  tags: string[]
+}
+
 // postsが格納されているディレクトリを取得する
 // memo: process.cwd() はカレントディレクトリ
 const postsDirectory = join(process.cwd(), "src/posts")
@@ -26,13 +34,6 @@ export const getPostBySlug = (slug: string, fields: string[] = []) => {
   const fullPath = join(postsDirectory, slug, "index.md")
   const fileContents = fs.readFileSync(fullPath, "utf8")
   const { data, content } = matter(fileContents)
-  type Item = {
-    slug: string
-    content: string
-    title: string
-    date: string
-    tags: string[]
-  }
 
   const items: Item = {
     slug: "",
@@ -41,6 +42,8 @@ export const getPostBySlug = (slug: string, fields: string[] = []) => {
     date: "",
     tags: [],
   }
+
+  // TODO: slugが日付で取得されてしまっているが、SSG時に参照するフォルダ名=slugのため大きく治す必要あり
 
   // 指定された値を取得してくる
   // memo: slugが指定されたとき、contentが指定されたとき、frontmatterの中身が指定されたときで返却の仕方が異なる

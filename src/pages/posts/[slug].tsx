@@ -1,5 +1,5 @@
 import { NextPage, InferGetStaticPropsType } from "next"
-import { getAllPosts, getPostBySlug } from "@src/utils/readMd"
+import { getAllPosts, getPostBySlug } from "@src/utils/read-md"
 import ReactMarkdown from "react-markdown"
 import Link from "next/link"
 
@@ -37,7 +37,7 @@ export const getStaticProps = async ({ params }: any) => {
   }
 }
 
-const Post: NextPage<Props> = ({ post }) => {
+const Slug: NextPage<Props> = ({ post }) => {
   const createTags = (tags: string[]) =>
     post.tags.map((tag) => (
       <ul key={tag} className="post-tag">
@@ -58,4 +58,4 @@ const Post: NextPage<Props> = ({ post }) => {
     </article>
   )
 }
-export default Post
+export default Slug
