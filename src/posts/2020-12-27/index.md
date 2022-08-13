@@ -1,8 +1,8 @@
 ---
-title: 'GatsbyにおけるGraphQLの役割について'
-date: '2020-12-27'
-tags: ['JavaScript', 'React', 'GraphQL']
-slug: 'gatsby-graphql'
+title: "GatsbyにおけるGraphQLの役割について"
+date: "2020-12-27"
+tags: ["JavaScript", "React", "GraphQL"]
+slug: "gatsby-graphql"
 ---
 
 ![](../images/posts-image/2020-12-27.png)
@@ -60,7 +60,7 @@ const result = await graphql(`
         }
       }
     }
-  `);
+  `)
 ```
 
 <br><br>
@@ -90,7 +90,7 @@ export const query = graphql`
       }
     }
   }
-`;
+`
 ```
 
 <br><br>
@@ -114,8 +114,8 @@ const data = useStaticQuery(
         }
       }
     }
-  `,
-);
+  `
+)
 
 /* 以下、dataにて取得結果を使用できる */
 ```

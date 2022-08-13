@@ -1,8 +1,8 @@
 ---
-title: '自分がReactを選ぶべきだと思うただ1つの理由'
-date: '2020-12-01'
-tags: ['JavaScript', 'React', 'Vue', '技術']
-slug: 'reason-react-recommend'
+title: "自分がReactを選ぶべきだと思うただ1つの理由"
+date: "2020-12-01"
+tags: ["JavaScript", "React", "Vue", "技術"]
+slug: "reason-react-recommend"
 ---
 
 今後何を勉強するかを分析して、対応幅が広くなりそうな React をやろうと思った。<br>
