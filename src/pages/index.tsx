@@ -70,7 +70,6 @@ const Layout = ({ allPosts }: Props) => {
         >
           <Home allPosts={allPosts} />
         </div>
-        {/* @ts-ignore */}
         {/* <FloatMenu style={{ gridColumn: 3 / 4 }} /> */}
       </div>
       {/* <Footer /> */}

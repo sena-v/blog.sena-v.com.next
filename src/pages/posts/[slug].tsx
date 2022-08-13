@@ -37,7 +37,7 @@ export const getStaticProps = async ({ params }: any) => {
   }
 }
 
-const Slug: NextPage<Props> = ({ post }) => {
+const SlugPage: NextPage<Props> = ({ post }) => {
   const createTags = (tags: string[]) =>
     post.tags.map((tag) => (
       <ul key={tag} className="post-tag">
@@ -58,4 +58,4 @@ const Slug: NextPage<Props> = ({ post }) => {
     </article>
   )
 }
-export default Slug
+export default SlugPage
