@@ -1,6 +1,6 @@
 import { NextPage, InferGetStaticPropsType } from "next"
 import { getAllPosts, getPostBySlug } from "@src/utils/readMd"
-import markdownToHtml from "@src/utils/markdownToHtml"
+import ReactMarkdown from "react-markdown"
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>
 
@@ -27,16 +27,11 @@ export const getStaticProps = async ({ params }: any) => {
     "tags",
     "content",
   ])
-  // ここで変換
-  const content = await markdownToHtml(post.content)
 
   // 変換結果をpropsとして渡す
   return {
     props: {
-      post: {
-        ...post,
-        content,
-      },
+      post,
     },
   }
 }
@@ -51,8 +46,7 @@ const Post: NextPage<Props> = ({ post }) => (
       ))}
     </ul>
     <section>
-      {/* ここでdangerouslySetInnerHTMLを使ってHTMLタグを出力する */}
-      <div dangerouslySetInnerHTML={{ __html: post.content }} />
+      <ReactMarkdown>{post.content}</ReactMarkdown>
     </section>
   </article>
 )
