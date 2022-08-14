@@ -4,11 +4,11 @@
 //   <Slug post={props as Item} />
 // )}
 
-import Home from "src/components/top-page"
-import Slug from "src/components/post"
+import Home from "src/components/TopPage"
+import Slug from "src/components/Post"
 
 import { Item } from "src/utils/read-md"
-import { AllPosts } from "src/components/top-page"
+import { AllPosts } from "src/components/TopPage"
 
 export type Props = AllPosts | Item
 

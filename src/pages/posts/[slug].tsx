@@ -1,6 +1,7 @@
 import { NextPage, InferGetStaticPropsType } from "next"
 import { getAllPosts, getPostBySlug } from "@src/utils/read-md"
 import ReactMarkdown from "react-markdown"
+import CodeBlock from "@src/components/CodeBlock"
 import Link from "next/link"
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>
@@ -53,7 +54,13 @@ const SlugPage: NextPage<Props> = ({ post }) => {
       <p>{post.date}</p>
       <p>{createTags(post.tags)}</p>
       <section>
-        <ReactMarkdown>{post.content}</ReactMarkdown>
+        <ReactMarkdown
+          components={{
+            code: CodeBlock,
+          }}
+        >
+          {post.content}
+        </ReactMarkdown>
       </section>
     </article>
   )

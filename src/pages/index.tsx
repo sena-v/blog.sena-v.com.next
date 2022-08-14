@@ -7,7 +7,7 @@ import { Helmet } from "react-helmet"
 // import Footer from "./footer"
 // import Float from "./float"
 // import FloatMenu from "./float-menu"
-import Home from "src/components/top-page"
+import Home from "@src/components/TopPage"
 
 import { InferGetStaticPropsType } from "next"
 import { getAllPosts } from "@src/utils/read-md"
