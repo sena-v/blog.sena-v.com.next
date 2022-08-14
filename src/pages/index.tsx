@@ -44,9 +44,7 @@ const Layout = ({ allPosts }: Props) => {
       <div
         style={{
           display: "grid",
-          // gridTemplateColumns: `50px 85px 950px 1fr`,
           gridTemplateColumns: "50px minmax(auto, 950px) 80px",
-          backgroundColor: "#2F2D32",
         }}
       >
         <div
