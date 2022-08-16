@@ -8,9 +8,22 @@ import Header from "@src/components/Header"
 // import Float from "./float"
 // import FloatMenu from "./float-menu"
 // import TopPage from "@src/components/TopPage"
-import Post from "@src/components/Post"
+// import Post from "@src/components/Post"
 
-const Layout = (props: any) => {
+import { InferGetStaticPropsType } from "next"
+import { getAllPosts } from "@src/utils/read-md"
+
+type Props = InferGetStaticPropsType<typeof getStaticProps>
+
+export const getStaticProps = async () => {
+  const allPosts = getAllPosts(["slug", "title", "date", "tags"])
+
+  return {
+    props: { allPosts },
+  }
+}
+
+const Layout = ({ allPosts }: Props) => {
   return (
     <>
       <Helmet>
@@ -27,12 +40,11 @@ const Layout = (props: any) => {
   `}
         </script>
       </Helmet>
-      {/* <Header siteTitle={data.site.siteMetadata?.title || "Title"} /> */}
-      {/* <title style={{ display: "none" }}>{data.site.siteMetadata?.title}</title> */}
+      <Header siteTitle={"sena-v.com"} />
+      <title style={{ display: "none" }}>{"sena-v.com"}</title>
       <div
         style={{
           display: "grid",
-          // gridTemplateColumns: `50px 85px 950px 1fr`,
           gridTemplateColumns: "50px minmax(auto, 950px) 80px",
           backgroundColor: "#2F2D32",
         }}
@@ -59,16 +71,11 @@ const Layout = (props: any) => {
         >
           {/* <Post allPosts={props} /> */}
         </div>
-        {/* @ts-ignore */}
         {/* <FloatMenu style={{ gridColumn: 3 / 4 }} /> */}
       </div>
       {/* <Footer /> */}
     </>
   )
-}
-
-Layout.propTypes = {
-  children: PropTypes.node.isRequired,
 }
 
 export default Layout
