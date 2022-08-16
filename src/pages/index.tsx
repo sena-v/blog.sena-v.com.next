@@ -40,7 +40,8 @@ const Layout = ({ allPosts }: Props) => {
         </script>
       </Helmet>
       <Header siteTitle={"sena-v.com"} />
-      {/* <title style={{ display: "none" }}>{data.site.siteMetadata?.title}</title> */}
+      <title style={{ display: "none" }}>{"sena-v.com"}</title>
+      <meta name="description" content="Author: sena-v" />
       <div
         style={{
           display: "grid",

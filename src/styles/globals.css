@@ -696,23 +696,24 @@ a.react-sharing-button__link:hover {
 
 ul.post-tag {
   margin-left: 0px;
-  margin-right: 10px;
-  margin-bottom: 10px;
+  margin-right: 5px;
   display: inline-block;
-  background-color: #98e1ff;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-radius: 5px;
+  background-color: #181818;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  border-radius: 10px;
 }
 
 ul.post-tag a {
-  color: rgb(0, 89, 255);
+  color: #efeff1;
   font-weight: bold;
 }
 
-.top-post {
-  padding-bottom: 20px;
-}
+/* .top-post {
+  padding-bottom: 10px;
+} */
 
 .slug-post {
   margin-left: 1.45rem;
