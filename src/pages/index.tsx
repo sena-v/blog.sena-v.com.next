@@ -3,11 +3,11 @@ import PropTypes from "prop-types"
 import Image from "next/image"
 
 import { Helmet } from "react-helmet"
-// import Header from "./header"
+import Header from "@src/components/Header"
 // import Footer from "./footer"
 // import Float from "./float"
 // import FloatMenu from "./float-menu"
-import Home from "@src/components/TopPage"
+import TopPage from "@src/components/TopPage"
 
 import { InferGetStaticPropsType } from "next"
 import { getAllPosts } from "@src/utils/read-md"
@@ -39,7 +39,7 @@ const Layout = ({ allPosts }: Props) => {
   `}
         </script>
       </Helmet>
-      {/* <Header siteTitle={data.site.siteMetadata?.title || "Title"} /> */}
+      <Header siteTitle={"sena-v.com"} />
       {/* <title style={{ display: "none" }}>{data.site.siteMetadata?.title}</title> */}
       <div
         style={{
@@ -67,7 +67,7 @@ const Layout = ({ allPosts }: Props) => {
             backgroundColor: "#2F2D32",
           }}
         >
-          <Home allPosts={allPosts} />
+          <TopPage allPosts={allPosts} />
         </div>
         {/* <FloatMenu style={{ gridColumn: 3 / 4 }} /> */}
       </div>

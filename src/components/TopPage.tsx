@@ -5,7 +5,7 @@ export type AllPosts = {
   allPosts: Item[]
 }
 
-const Home = ({ allPosts }: AllPosts) => {
+const TopPage = ({ allPosts }: AllPosts) => {
   const createTags = (tags: string[]) =>
     tags.map((tag) => (
       <ul key={tag} className="post-tag">
@@ -32,4 +32,4 @@ const Home = ({ allPosts }: AllPosts) => {
   )
 }
 
-export default Home
+export default TopPage
