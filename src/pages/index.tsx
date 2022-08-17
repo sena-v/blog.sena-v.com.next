@@ -4,9 +4,9 @@ import Image from "next/image"
 
 import { Helmet } from "react-helmet"
 import Header from "@src/components/Header"
-// import Footer from "./footer"
-// import Float from "./float"
-// import FloatMenu from "./float-menu"
+import Footer from "@src/components/Footer"
+import FloatMenu from "@src/components/FloatMenu"
+// import Float from "@src/components/Float"
 import TopPage from "@src/components/TopPage"
 
 import { InferGetStaticPropsType } from "next"
@@ -17,12 +17,36 @@ type Props = InferGetStaticPropsType<typeof getStaticProps>
 export const getStaticProps = async () => {
   const allPosts = getAllPosts(["slug", "title", "date", "tags"])
 
+  // 全タグを配列にpush
+  const tagAllList = allPosts
+    .map((post) => {
+      return [...post.tags]
+    })
+    .flat()
+
+  // 全タグから重複を削除
+  const tagReducedList = tagAllList.filter(
+    (x: string, i: number, self: string[]) => self.indexOf(x) === i
+  )
+
+  // 後にtype TagCountTypeになるが初期化時は空のためany
+  const tagCount: any = {}
+
+  // 重複文字でループしてタグ数をカウント
+  for (let i = 0; i < tagReducedList.length; i++) {
+    let count = 0
+    tagAllList.forEach((tag) => tag === tagReducedList[i] && count++)
+
+    // ループ後、tagCountにkey,valueでセット
+    tagCount[tagReducedList[i]] = count
+  }
+
   return {
-    props: { allPosts },
+    props: { allPosts, tagCount },
   }
 }
 
-const Layout = ({ allPosts }: Props) => {
+const Layout = ({ allPosts, tagCount }: Props) => {
   return (
     <>
       <Helmet>
@@ -70,9 +94,9 @@ const Layout = ({ allPosts }: Props) => {
         >
           <TopPage allPosts={allPosts} />
         </div>
-        {/* <FloatMenu style={{ gridColumn: 3 / 4 }} /> */}
+        <FloatMenu tagCount={tagCount} />
       </div>
-      {/* <Footer /> */}
+      <Footer />
     </>
   )
 }
