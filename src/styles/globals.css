@@ -373,7 +373,7 @@ ul {
   padding-left: 0;
   padding-right: 0;
   padding-top: 0;
-  margin-bottom: 1.45rem;
+
   list-style-position: outside;
   list-style-image: none;
 }
@@ -711,9 +711,9 @@ ul.post-tag a {
   font-weight: bold;
 }
 
-/* .top-post {
-  padding-bottom: 10px;
-} */
+.top-post {
+  padding-bottom: 30px;
+}
 
 .slug-post {
   margin-left: 1.45rem;
