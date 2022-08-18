@@ -1,8 +1,8 @@
 import Link from "next/link"
-import { Item } from "src/utils/read-md"
+import { ItemType } from "src/utils/read-md"
 
 export type AllPosts = {
-  allPosts: Item[]
+  allPosts: ItemType[]
 }
 
 const TopPage = ({ allPosts }: AllPosts) => {

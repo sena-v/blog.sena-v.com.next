@@ -1,5 +1,5 @@
 import Link from "next/link"
-// import Ad from "./adsense"
+import Ad from "@src/components/Adsense"
 
 // TOPディレクトリの時だけTwitterを表示する？
 
@@ -41,21 +41,15 @@ const FloatMenu = (tagCountList: TagCountType) => {
         paddingTop: "1rem",
         textAlign: "right",
         backgroundColor: "#2F2D32",
-        // paddingLeft: `40px`,
         paddingRight: "600px",
       }}
     >
       <div
         style={{
-          // floatMenu: `left`, なんで入れたか忘れたけど消して問題なかったのでコメントアウト
-          // position: `fixed`,
-          // width: `240px`,
-          // height: `500px`,
           padding: "0.1rem",
           margin: "0 auto",
           textAlign: "center",
           fontFamily: "Helvetica Neue",
-          // background: `#CE4532`,
           borderRadius: "15px",
           width: "330px",
         }}
@@ -63,7 +57,6 @@ const FloatMenu = (tagCountList: TagCountType) => {
         <div
           style={{
             width: "330px",
-            // padding: `1rem`,
             margin: "0 auto",
             textAlign: "left",
             fontFamily: "Helvetica Neue",
@@ -73,7 +66,6 @@ const FloatMenu = (tagCountList: TagCountType) => {
         >
           <p
             style={{
-              // paddingLeft: `30%`,
               textAlign: "center",
               marginBottom: "20px",
               width: "320px",
@@ -126,8 +118,7 @@ const FloatMenu = (tagCountList: TagCountType) => {
             &nbsp;
           </a>
         </div>
-
-        {/* <Ad /> */}
+        <Ad />
       </div>
     </div>
   )

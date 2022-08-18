@@ -1,12 +1,11 @@
 /* eslint-disable @next/next/next-script-for-ga */
-import PropTypes from "prop-types"
 import Image from "next/image"
 
 import { Helmet } from "react-helmet"
 import Header from "@src/components/Header"
 import Footer from "@src/components/Footer"
 import FloatMenu from "@src/components/FloatMenu"
-// import Float from "@src/components/Float"
+import Float from "@src/components/Float"
 import TopPage from "@src/components/TopPage"
 
 import { InferGetStaticPropsType } from "next"
@@ -78,7 +77,7 @@ const Layout = ({ allPosts, tagCount }: Props) => {
             backgroundColor: "#2F2D32",
           }}
         >
-          {/* <Float /> */}
+          <Float />
         </div>
         <div
           style={{

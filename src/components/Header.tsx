@@ -1,12 +1,10 @@
-import PropTypes from "prop-types"
-import React from "react"
 import Link from "next/link"
 
-type headerProps = {
+type HeaderPropsType = {
   siteTitle: string
 }
 
-function Header({ siteTitle }: headerProps) {
+function Header({ siteTitle }: HeaderPropsType) {
   return (
     <header>
       <div
