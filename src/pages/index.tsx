@@ -68,7 +68,7 @@ const Layout = ({ allPosts, tagCount }: Props) => {
   `}
         </script>
       </Helmet>
-      <Header siteTitle={"sena-v.com"} />
+      <Header siteTitle={"sena-v.com"} setTagPage={setSelectTagName} />
       <title style={{ display: "none" }}>{"sena-v.com"}</title>
       <meta name="description" content="Author: sena-v" />
       <div

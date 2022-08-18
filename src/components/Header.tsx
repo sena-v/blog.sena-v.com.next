@@ -1,10 +1,12 @@
 import Link from "next/link"
+import { Dispatch } from "react"
 
 type HeaderPropsType = {
   siteTitle: string
+  setTagPage: Dispatch<string>
 }
 
-function Header({ siteTitle }: HeaderPropsType) {
+const Header = ({ siteTitle, setTagPage }: HeaderPropsType) => {
   return (
     <header>
       <div
@@ -35,6 +37,7 @@ function Header({ siteTitle }: HeaderPropsType) {
                 fontSize: "70px",
                 fontWeight: "bold",
               }}
+              onClick={() => setTagPage("")}
             >
               {siteTitle}
             </a>
