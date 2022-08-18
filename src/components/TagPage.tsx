@@ -1,11 +1,20 @@
 import Link from "next/link"
 import { ItemType } from "src/utils/read-md"
 
-export type AllPosts = {
+export type AllPostsType = {
   allPosts: ItemType[]
+  selectTagName: string
 }
 
-const TopPage = ({ allPosts }: AllPosts) => {
+const TagPage = ({ allPosts, selectTagName }: AllPostsType) => {
+  // allPost内でタグが存在する物のみ絞り込み
+  console.log(allPosts)
+  const filteredPosts = allPosts
+    .map((post) => {
+      if (post.tags.indexOf(selectTagName) >= 0) return post
+    })
+    .filter((v) => v) as ItemType[]
+
   const createTags = (tags: string[]) =>
     tags.map((tag) => (
       <ul key={tag} className="post-tag">
@@ -17,7 +26,7 @@ const TopPage = ({ allPosts }: AllPosts) => {
 
   return (
     <ul>
-      {allPosts.map((post) => (
+      {filteredPosts.map((post) => (
         <article key={post.slug} className="top-post">
           <time dateTime={post.date}>{post.date}</time>
           <h2 className="top">
@@ -32,4 +41,4 @@ const TopPage = ({ allPosts }: AllPosts) => {
   )
 }
 
-export default TopPage
+export default TagPage

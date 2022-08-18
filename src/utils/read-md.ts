@@ -2,7 +2,7 @@ import fs from "fs"
 import { join } from "path"
 import matter from "gray-matter"
 
-export type Item = {
+export type ItemType = {
   slug: string
   content: string
   title: string
@@ -35,7 +35,7 @@ export const getPostBySlug = (slug: string, fields: string[] = []) => {
   const fileContents = fs.readFileSync(fullPath, "utf8")
   const { data, content } = matter(fileContents)
 
-  const items: Item = {
+  const items: ItemType = {
     slug: "",
     content: "",
     title: "",

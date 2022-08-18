@@ -1,8 +1,8 @@
-import { Item } from "src/utils/read-md"
+import { ItemType } from "src/utils/read-md"
 import ReactMarkdown from "react-markdown"
 import Link from "next/link"
 
-const Post = (post: Item) => {
+const Post = (post: ItemType) => {
   const createTags = (tags: string[]) =>
     post.tags.map((tag) => (
       <ul key={tag} className="post-tag">

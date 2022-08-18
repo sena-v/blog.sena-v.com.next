@@ -1,12 +1,12 @@
-import PropTypes from "prop-types"
-import React from "react"
 import Link from "next/link"
+import { Dispatch } from "react"
 
-type headerProps = {
+type HeaderPropsType = {
   siteTitle: string
+  setTagPage: Dispatch<string>
 }
 
-function Header({ siteTitle }: headerProps) {
+const Header = ({ siteTitle, setTagPage }: HeaderPropsType) => {
   return (
     <header>
       <div
@@ -37,6 +37,7 @@ function Header({ siteTitle }: headerProps) {
                 fontSize: "70px",
                 fontWeight: "bold",
               }}
+              onClick={() => setTagPage("")}
             >
               {siteTitle}
             </a>

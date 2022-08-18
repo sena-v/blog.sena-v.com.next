@@ -1,39 +1,44 @@
-import Link from "next/link"
-// import Ad from "./adsense"
+import Ad from "@src/components/Adsense"
+import { Dispatch } from "react"
 
 // TOPディレクトリの時だけTwitterを表示する？
 
-export type TagCountType = { tagCount: TagDataType[] }
+export type TagPropsType = {
+  tagCount: TagCountType[]
+  setTagPage: Dispatch<string>
+}
 
-type TagDataType = {
+export type TagCountType = {
   tagName: string
   totalCount: number
 }
 
-const FloatMenu = (tagCountList: TagCountType) => {
-  const createSideMenuTags = (tagCount: TagDataType[]) =>
-    Object.entries(tagCount).map((tag) => (
-      <ul
-        key={tag[0]}
-        style={{
-          marginLeft: "0px",
-          marginRight: "5px",
-          marginBottom: "5px",
-          display: "inline-block",
-          backgroundColor: "#181818",
-          paddingLeft: "10px",
-          paddingRight: "10px",
-          paddingTop: "2px",
-          paddingBottom: "2px",
-          borderRadius: "10px",
-        }}
-      >
-        <Link key={tag[0]} href={`/tags/${tag[0]}`} aria-label={tag[0]}>
-          {tag[0]}
-        </Link>
-        <span style={{ fontSize: "9px" }}>({JSON.stringify(tag[1])})</span>
-      </ul>
-    ))
+const FloatMenu = (tagProps: TagPropsType) => {
+  const createSideMenuTags = (tagCount: TagCountType[]) =>
+    Object.entries(tagCount)
+      .sort()
+      .map((tag) => (
+        <ul
+          key={tag[0]}
+          style={{
+            marginLeft: "0px",
+            marginRight: "5px",
+            marginBottom: "5px",
+            display: "inline-block",
+            backgroundColor: "#181818",
+            paddingLeft: "10px",
+            paddingRight: "10px",
+            paddingTop: "2px",
+            paddingBottom: "2px",
+            borderRadius: "10px",
+            cursor: "pointer",
+          }}
+          onClick={() => tagProps.setTagPage(tag[0])}
+        >
+          <b>{tag[0]}</b>
+          <span style={{ fontSize: "9px" }}>({JSON.stringify(tag[1])})</span>
+        </ul>
+      ))
 
   return (
     <div
@@ -41,21 +46,15 @@ const FloatMenu = (tagCountList: TagCountType) => {
         paddingTop: "1rem",
         textAlign: "right",
         backgroundColor: "#2F2D32",
-        // paddingLeft: `40px`,
         paddingRight: "600px",
       }}
     >
       <div
         style={{
-          // floatMenu: `left`, なんで入れたか忘れたけど消して問題なかったのでコメントアウト
-          // position: `fixed`,
-          // width: `240px`,
-          // height: `500px`,
           padding: "0.1rem",
           margin: "0 auto",
           textAlign: "center",
           fontFamily: "Helvetica Neue",
-          // background: `#CE4532`,
           borderRadius: "15px",
           width: "330px",
         }}
@@ -63,7 +62,6 @@ const FloatMenu = (tagCountList: TagCountType) => {
         <div
           style={{
             width: "330px",
-            // padding: `1rem`,
             margin: "0 auto",
             textAlign: "left",
             fontFamily: "Helvetica Neue",
@@ -73,7 +71,6 @@ const FloatMenu = (tagCountList: TagCountType) => {
         >
           <p
             style={{
-              // paddingLeft: `30%`,
               textAlign: "center",
               marginBottom: "20px",
               width: "320px",
@@ -90,7 +87,7 @@ const FloatMenu = (tagCountList: TagCountType) => {
           </p>
 
           <div style={{ width: "320px" }}>
-            {createSideMenuTags({ ...tagCountList.tagCount })}
+            {createSideMenuTags({ ...tagProps.tagCount })}
           </div>
           <p
             style={{
@@ -126,8 +123,7 @@ const FloatMenu = (tagCountList: TagCountType) => {
             &nbsp;
           </a>
         </div>
-
-        {/* <Ad /> */}
+        <Ad />
       </div>
     </div>
   )
