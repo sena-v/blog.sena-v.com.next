@@ -68,7 +68,7 @@ const Layout = ({ allPosts, tagCount }: Props) => {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "50px minmax(auto, 950px) 80px",
+          gridTemplateColumns: "50px minmax(700px, auto) 350px",
         }}
       >
         <div
