@@ -9,6 +9,10 @@ type userDataPropsType = {
   }
 }
 
+const scrollTop = () => {
+  window.scrollTo(0, 0)
+}
+
 function Float({ userData }: userDataPropsType) {
   return (
     <div
@@ -64,8 +68,8 @@ function Float({ userData }: userDataPropsType) {
             src="/images/scrollTop.png"
             width="28px"
             height="28px"
-            onClick={Float.scrollTop}
-            onKeyPress={Float.scrollTop}
+            onClick={scrollTop}
+            onKeyPress={scrollTop}
             alt="scroll top"
           />
         </div>
@@ -82,10 +86,6 @@ Float.defaultProps = {
     GitHubUrl: "https://github.com/sena-v",
     QiitaUrl: "https://qiita.com/sena_v",
   },
-}
-
-Float.scrollTop = () => {
-  window.scrollTo(0, 0)
 }
 
 export default Float
