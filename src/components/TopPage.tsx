@@ -25,7 +25,7 @@ const TopPage = ({ allPosts }: AllPosts) => {
               {post.title}
             </Link>
           </h2>
-          <div>{createTags(post.tags)}</div>
+          <div>{createTags(post.tags.sort())}</div>
         </article>
       ))}
     </ul>

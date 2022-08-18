@@ -12,28 +12,30 @@ type TagDataType = {
 
 const FloatMenu = (tagCountList: TagCountType) => {
   const createSideMenuTags = (tagCount: TagDataType[]) =>
-    Object.entries(tagCount).map((tag) => (
-      <ul
-        key={tag[0]}
-        style={{
-          marginLeft: "0px",
-          marginRight: "5px",
-          marginBottom: "5px",
-          display: "inline-block",
-          backgroundColor: "#181818",
-          paddingLeft: "10px",
-          paddingRight: "10px",
-          paddingTop: "2px",
-          paddingBottom: "2px",
-          borderRadius: "10px",
-        }}
-      >
-        <Link key={tag[0]} href={`/tags/${tag[0]}`} aria-label={tag[0]}>
-          {tag[0]}
-        </Link>
-        <span style={{ fontSize: "9px" }}>({JSON.stringify(tag[1])})</span>
-      </ul>
-    ))
+    Object.entries(tagCount)
+      .sort()
+      .map((tag) => (
+        <ul
+          key={tag[0]}
+          style={{
+            marginLeft: "0px",
+            marginRight: "5px",
+            marginBottom: "5px",
+            display: "inline-block",
+            backgroundColor: "#181818",
+            paddingLeft: "10px",
+            paddingRight: "10px",
+            paddingTop: "2px",
+            paddingBottom: "2px",
+            borderRadius: "10px",
+          }}
+        >
+          <Link key={tag[0]} href={`/tags/${tag[0]}`} aria-label={tag[0]}>
+            {tag[0]}
+          </Link>
+          <span style={{ fontSize: "9px" }}>({JSON.stringify(tag[1])})</span>
+        </ul>
+      ))
 
   return (
     <div
