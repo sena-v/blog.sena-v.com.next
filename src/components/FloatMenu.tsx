@@ -1,17 +1,20 @@
-import Link from "next/link"
 import Ad from "@src/components/Adsense"
+import { Dispatch } from "react"
 
 // TOPディレクトリの時だけTwitterを表示する？
 
-export type TagCountType = { tagCount: TagDataType[] }
+export type TagPropsType = {
+  tagCount: TagCountType[]
+  setTagPage: Dispatch<string>
+}
 
-type TagDataType = {
+export type TagCountType = {
   tagName: string
   totalCount: number
 }
 
-const FloatMenu = (tagCountList: TagCountType) => {
-  const createSideMenuTags = (tagCount: TagDataType[]) =>
+const FloatMenu = (tagProps: TagPropsType) => {
+  const createSideMenuTags = (tagCount: TagCountType[]) =>
     Object.entries(tagCount)
       .sort()
       .map((tag) => (
@@ -28,11 +31,11 @@ const FloatMenu = (tagCountList: TagCountType) => {
             paddingTop: "2px",
             paddingBottom: "2px",
             borderRadius: "10px",
+            cursor: "pointer",
           }}
+          onClick={() => tagProps.setTagPage(tag[0])}
         >
-          <Link key={tag[0]} href={`/tags/${tag[0]}`} aria-label={tag[0]}>
-            {tag[0]}
-          </Link>
+          <b>{tag[0]}</b>
           <span style={{ fontSize: "9px" }}>({JSON.stringify(tag[1])})</span>
         </ul>
       ))
@@ -84,7 +87,7 @@ const FloatMenu = (tagCountList: TagCountType) => {
           </p>
 
           <div style={{ width: "320px" }}>
-            {createSideMenuTags({ ...tagCountList.tagCount })}
+            {createSideMenuTags({ ...tagProps.tagCount })}
           </div>
           <p
             style={{

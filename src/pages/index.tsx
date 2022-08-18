@@ -1,15 +1,15 @@
 /* eslint-disable @next/next/next-script-for-ga */
-import Image from "next/image"
-
 import { Helmet } from "react-helmet"
 import Header from "@src/components/Header"
 import Footer from "@src/components/Footer"
 import FloatMenu from "@src/components/FloatMenu"
 import Float from "@src/components/Float"
 import TopPage from "@src/components/TopPage"
+import TagPage from "@src/components/TagPage"
 
 import { InferGetStaticPropsType } from "next"
 import { getAllPosts } from "@src/utils/read-md"
+import { useState } from "react"
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>
 
@@ -29,7 +29,7 @@ export const getStaticProps = async () => {
   )
 
   // 後にtype TagCountTypeになるが初期化時は空のためany
-  const tagCount: any = {}
+  const tagCount: any = { ALL: tagReducedList.length }
 
   // 重複文字でループしてタグ数をカウント
   for (let i = 0; i < tagReducedList.length; i++) {
@@ -40,12 +40,18 @@ export const getStaticProps = async () => {
     tagCount[tagReducedList[i]] = count
   }
 
+  tagCount["ALL"] = tagReducedList.length
+
   return {
     props: { allPosts, tagCount },
   }
 }
 
 const Layout = ({ allPosts, tagCount }: Props) => {
+  const [selectTagName, setSelectTagName] = useState("")
+
+  console.log(selectTagName)
+
   return (
     <>
       <Helmet>
@@ -91,9 +97,14 @@ const Layout = ({ allPosts, tagCount }: Props) => {
             backgroundColor: "#2F2D32",
           }}
         >
-          <TopPage allPosts={allPosts} />
+          {!selectTagName || selectTagName === "ALL" ? (
+            <TopPage allPosts={allPosts} />
+          ) : (
+            <TagPage allPosts={allPosts} selectTagName={selectTagName} />
+          )}
         </div>
-        <FloatMenu tagCount={tagCount} />
+
+        <FloatMenu tagCount={tagCount} setTagPage={setSelectTagName} />
       </div>
       <Footer />
     </>
