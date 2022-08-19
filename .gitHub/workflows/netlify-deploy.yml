@@ -18,7 +18,7 @@ jobs:
       - run: npm ci
       - run: npm run build
 
-      # Netlifyにデプロイ
+      # Netlifyにデプロイ実施
       - run: npx netlify-cli deploy --dir=./next
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
