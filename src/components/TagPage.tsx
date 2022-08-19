@@ -8,7 +8,6 @@ export type AllPostsType = {
 
 const TagPage = ({ allPosts, selectTagName }: AllPostsType) => {
   // allPost内でタグが存在する物のみ絞り込み
-  console.log(allPosts)
   const filteredPosts = allPosts
     .map((post) => {
       if (post.tags.indexOf(selectTagName) >= 0) return post

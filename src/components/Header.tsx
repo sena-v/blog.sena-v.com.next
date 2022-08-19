@@ -14,7 +14,7 @@ const Header = ({ siteTitle, setTagPage }: HeaderPropsType) => {
           display: "inline-block",
           height: "320px",
           width: "100%",
-          backgroundImage: "url(images/titleback.jpg)",
+          backgroundImage: "url(/images/titleback.jpg)",
           backgroundSize: "cover",
           backgroundColor: "#02031b",
         }}

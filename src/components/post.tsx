@@ -1,8 +1,9 @@
 import { ItemType } from "src/utils/read-md"
 import ReactMarkdown from "react-markdown"
+import CodeBlock from "@src/components/CodeBlock"
 import Link from "next/link"
 
-const Post = (post: ItemType) => {
+const Post = ({ ...post }: ItemType) => {
   const createTags = (tags: string[]) =>
     post.tags.map((tag) => (
       <ul key={tag} className="post-tag">
@@ -18,7 +19,13 @@ const Post = (post: ItemType) => {
       <p>{post.date}</p>
       <p>{createTags(post.tags)}</p>
       <section>
-        <ReactMarkdown>{post.content}</ReactMarkdown>
+        <ReactMarkdown
+          components={{
+            code: CodeBlock,
+          }}
+        >
+          {post.content}
+        </ReactMarkdown>
       </section>
     </article>
   )
