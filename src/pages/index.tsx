@@ -9,38 +9,16 @@ import TagPage from "@src/components/TagPage"
 
 import { InferGetStaticPropsType } from "next"
 import { getAllPosts } from "@src/utils/read-md"
-import { useState } from "react"
+import { countTags } from "@src/utils/tag-count"
+import { useRecoilState } from "recoil"
+import { selectTagAtom } from "@src/recoil/globalState"
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>
 
 export const getStaticProps = async () => {
   const allPosts = getAllPosts(["slug", "title", "date", "tags"])
 
-  // 全タグを配列にpush
-  const tagAllList = allPosts
-    .map((post) => {
-      return [...post.tags]
-    })
-    .flat()
-
-  // 全タグから重複を削除
-  const tagReducedList = tagAllList.filter(
-    (x: string, i: number, self: string[]) => self.indexOf(x) === i
-  )
-
-  // 後にtype TagCountTypeになるが初期化時は空のためany
-  const tagCount: any = { ALL: tagReducedList.length }
-
-  // 重複文字でループしてタグ数をカウント
-  for (let i = 0; i < tagReducedList.length; i++) {
-    let count = 0
-    tagAllList.forEach((tag) => tag === tagReducedList[i] && count++)
-
-    // ループ後、tagCountにkey,valueでセット
-    tagCount[tagReducedList[i]] = count
-  }
-
-  tagCount["ALL"] = tagReducedList.length
+  const tagCount = countTags(allPosts)
 
   return {
     props: { allPosts, tagCount },
@@ -48,9 +26,7 @@ export const getStaticProps = async () => {
 }
 
 const Layout = ({ allPosts, tagCount }: Props) => {
-  const [selectTagName, setSelectTagName] = useState("")
-
-  console.log(selectTagName)
+  const [selectTagName, setSelectTagName] = useRecoilState(selectTagAtom)
 
   return (
     <>
@@ -98,9 +74,13 @@ const Layout = ({ allPosts, tagCount }: Props) => {
           }}
         >
           {!selectTagName || selectTagName === "ALL" ? (
-            <TopPage allPosts={allPosts} />
+            <TopPage allPosts={allPosts} setTagPage={setSelectTagName} />
           ) : (
-            <TagPage allPosts={allPosts} selectTagName={selectTagName} />
+            <TagPage
+              allPosts={allPosts}
+              selectTagName={selectTagName}
+              setTagPage={setSelectTagName}
+            />
           )}
         </div>
 
