@@ -1,17 +1,17 @@
 import Link from "next/link"
+import { Dispatch } from "react"
 import { ItemType } from "src/utils/read-md"
 
-export type AllPosts = {
+export type AllPostsType = {
   allPosts: ItemType[]
+  setTagPage: Dispatch<string>
 }
 
-const TopPage = ({ allPosts }: AllPosts) => {
+const TopPage = ({ allPosts, setTagPage }: AllPostsType) => {
   const createTags = (tags: string[]) =>
     tags.map((tag) => (
-      <ul key={tag} className="post-tag">
-        <Link key={tag} href={`/tags/${tag}`}>
-          {tag}
-        </Link>
+      <ul key={tag} className="post-tag" onClick={() => setTagPage(tag)}>
+        {tag}
       </ul>
     ))
 

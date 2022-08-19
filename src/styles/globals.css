@@ -376,6 +376,7 @@ ul {
 
   list-style-position: outside;
   list-style-image: none;
+  cursor: pointer;
 }
 ol {
   margin-left: 1.45rem;
@@ -704,11 +705,8 @@ ul.post-tag {
   padding-top: 2px;
   padding-bottom: 2px;
   border-radius: 10px;
-}
-
-ul.post-tag a {
-  color: #efeff1;
   font-weight: bold;
+  cursor: "pointer";
 }
 
 .top-post {

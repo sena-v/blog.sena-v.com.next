@@ -1,12 +1,14 @@
 import Link from "next/link"
 import { ItemType } from "src/utils/read-md"
+import { Dispatch } from "react"
 
 export type AllPostsType = {
   allPosts: ItemType[]
   selectTagName: string
+  setTagPage: Dispatch<string>
 }
 
-const TagPage = ({ allPosts, selectTagName }: AllPostsType) => {
+const TagPage = ({ allPosts, selectTagName, setTagPage }: AllPostsType) => {
   // allPost内でタグが存在する物のみ絞り込み
   const filteredPosts = allPosts
     .map((post) => {
@@ -16,10 +18,8 @@ const TagPage = ({ allPosts, selectTagName }: AllPostsType) => {
 
   const createTags = (tags: string[]) =>
     tags.map((tag) => (
-      <ul key={tag} className="post-tag">
-        <Link key={tag} href={`/tags/${tag}`}>
-          {tag}
-        </Link>
+      <ul key={tag} className="post-tag" onClick={() => setTagPage(tag)}>
+        {tag}
       </ul>
     ))
 

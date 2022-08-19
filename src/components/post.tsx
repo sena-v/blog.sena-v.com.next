@@ -7,9 +7,7 @@ const Post = ({ ...post }: ItemType) => {
   const createTags = (tags: string[]) =>
     post.tags.map((tag) => (
       <ul key={tag} className="post-tag">
-        <Link key={tag} href={`/tags/${tag}`}>
-          {tag}
-        </Link>
+        {tag}
       </ul>
     ))
 

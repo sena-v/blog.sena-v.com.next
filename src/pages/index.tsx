@@ -74,9 +74,13 @@ const Layout = ({ allPosts, tagCount }: Props) => {
           }}
         >
           {!selectTagName || selectTagName === "ALL" ? (
-            <TopPage allPosts={allPosts} />
+            <TopPage allPosts={allPosts} setTagPage={setSelectTagName} />
           ) : (
-            <TagPage allPosts={allPosts} selectTagName={selectTagName} />
+            <TagPage
+              allPosts={allPosts}
+              selectTagName={selectTagName}
+              setTagPage={setSelectTagName}
+            />
           )}
         </div>
 
