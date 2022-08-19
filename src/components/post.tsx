@@ -1,7 +1,6 @@
 import { ItemType } from "src/utils/read-md"
 import ReactMarkdown from "react-markdown"
 import CodeBlock from "@src/components/CodeBlock"
-import Link from "next/link"
 
 const Post = ({ ...post }: ItemType) => {
   const createTags = (tags: string[]) =>

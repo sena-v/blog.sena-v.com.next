@@ -15,6 +15,10 @@ Next / TypeScript / Recoil / netlify
 production
 リリース ok の場合、PR で main にマージする
 
+リリースは Acitions にてビルドして Deploy
+https://qiita.com/nwtgck/items/e9a355c2ccb03d8e8eb0
+※netlify-build の環境依存エラーを無視・ビルド時間節約できるため
+
 ## custom_blog
 
 デザイン変更・設定追加・機能追加等
