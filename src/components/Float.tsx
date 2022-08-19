@@ -1,5 +1,4 @@
-import Image from "next/image"
-
+/* eslint-disable @next/next/no-img-element */
 type userDataPropsType = {
   userData: {
     userName: string
@@ -34,7 +33,7 @@ function Float({ userData }: userDataPropsType) {
         }}
       >
         <div className="imgDiv">
-          <Image
+          <img
             src="/images/twitter.png"
             alt="画像"
             width="30px"
@@ -44,7 +43,7 @@ function Float({ userData }: userDataPropsType) {
         </div>
         <br />
         <div className="imgDiv">
-          <Image
+          <img
             src="/images/github.png"
             alt="画像"
             width="30px"
@@ -54,7 +53,7 @@ function Float({ userData }: userDataPropsType) {
         </div>
         <br />
         <div className="imgDiv">
-          <Image
+          <img
             src="/images/qiita.png"
             alt="画像"
             width="30px"
@@ -64,7 +63,7 @@ function Float({ userData }: userDataPropsType) {
         </div>
         <div style={{ height: "200px" }} />
         <div className="imgDiv">
-          <Image
+          <img
             src="/images/scrollTop.png"
             width="28px"
             height="28px"
