@@ -51,3 +51,6 @@ npm run ci
 
 参考
 https://tamalog.szmd.jp/next-markdown-blog/
+
+next/image の LightHouse 指摘は LightHouse のバグのため issue 監視すること(2022-08-17 release Staged)
+https://github.com/GoogleChrome/lighthouse/issues/11631#issuecomment-1217146090
