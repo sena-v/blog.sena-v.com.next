@@ -10,8 +10,13 @@ const Adsense = (props: any) => {
   useEffect(() => {
     // 型注釈用に中間変数に取る
     const currentWindow: googleAds = window
-    currentWindow.adsbygoogle = currentWindow.adsbygoogle || []
-    currentWindow.adsbygoogle.push({})
+    // 未ビルド環境だと失敗するためtry-catchで挟む
+    try {
+      currentWindow.adsbygoogle = currentWindow.adsbygoogle || []
+      currentWindow.adsbygoogle.push({})
+    } catch (e) {
+      console.log(e, "adsbygoogle")
+    }
   }, [currentPath])
 
   return (
@@ -27,34 +32,5 @@ const Adsense = (props: any) => {
     </div>
   )
 }
-
-// export type Window = {
-//   adsbygoogle?: { [key: string]: unknown }[]
-// }
-
-// function Ad(props: any) {
-//   const { currentPath } = props
-
-//   useEffect(() => {
-//     // 型注釈用に中間変数に取る
-//     const currentWindow: googleAds = window
-//     currentWindow.adsbygoogle = currentWindow.adsbygoogle || []
-//     currentWindow.adsbygoogle.push({})
-//   }, [currentPath])
-
-//   return (
-//     <div>
-//       <ins
-//         className="adsbygoogle"
-//         style={{ display: "block" }}
-//         data-ad-client="ca-pub-5515095500922112"
-//         data-ad-slot="7682109354"
-//         data-ad-format="auto"
-//         data-full-width-responsive="true"
-//         data-testid="adsbygoogle"
-//       />
-//     </div>
-//   )
-// }
 
 export default Adsense
