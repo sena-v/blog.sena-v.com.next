@@ -6,7 +6,7 @@ on:
     types: [opened, synchronize]
 
 jobs:
-  Check / type / lint / build:
+  Check-type_lint_build:
     runs-on: ubuntu-latest
     steps:
       - name: Use Node.js ${{ matrix.node-version }}
