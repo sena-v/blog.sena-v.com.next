@@ -695,6 +695,20 @@ a.react-sharing-button__link:hover {
   margin-right: 0.4rem;
 }
 
+ul.post-tag-top {
+  margin-left: 0px;
+  margin-right: 5px;
+  display: inline-block;
+  background-color: #181818;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: "pointer";
+}
+
 ul.post-tag {
   margin-left: 0px;
   margin-right: 5px;
@@ -707,6 +721,7 @@ ul.post-tag {
   border-radius: 10px;
   font-weight: bold;
   cursor: "pointer";
+  margin-block-end: 0px;
 }
 
 .top-post {

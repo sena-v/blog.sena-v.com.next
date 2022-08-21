@@ -10,7 +10,7 @@ export type AllPostsType = {
 const TopPage = ({ allPosts, setTagPage }: AllPostsType) => {
   const createTags = (tags: string[]) =>
     tags.map((tag) => (
-      <ul key={tag} className="post-tag" onClick={() => setTagPage(tag)}>
+      <ul key={tag} className="post-tag-top" onClick={() => setTagPage(tag)}>
         {tag}
       </ul>
     ))

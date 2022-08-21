@@ -11,7 +11,6 @@
     "ci": "next lint && npm run typecheck && npm run build"
   },
   "dependencies": {
-    "@chakra-ui/react": "^2.2.6",
     "@netlify/plugin-nextjs": "^4.16.0",
     "gray-matter": "^4.0.3",
     "next": "12.2.4",
@@ -19,6 +18,7 @@
     "react-dom": "18.2.0",
     "react-helmet": "^6.1.0",
     "react-markdown": "^8.0.3",
+    "react-share": "^4.4.0",
     "recoil": "^0.7.5",
     "remark": "^14.0.2",
     "remark-html": "^15.0.1"
