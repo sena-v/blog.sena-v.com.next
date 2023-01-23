@@ -31,13 +31,7 @@ export const getStaticPaths = async () => {
 }
 
 export const getStaticProps = async ({ params }: any) => {
-  const post = getPostBySlug(params.slug, [
-    "slug",
-    "title",
-    "date",
-    "tags",
-    "content",
-  ])
+  const post = getPostBySlug(params.slug, ["slug", "title", "date", "tags", "content"])
 
   // タグカウントのために全記事を取得し、タグ計算(SSGのためビルド時のみ)
   const allPosts = getAllPosts(["slug", "title", "date", "tags"])
@@ -66,10 +60,7 @@ const SlugPage: NextPage<Props> = ({ post, tagCount }) => {
   return (
     <>
       <Helmet>
-        <script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=G-76NH7ZL65V"
-        />
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-76NH7ZL65V" />
         <script>
           {`
     window.dataLayer = window.dataLayer || [];

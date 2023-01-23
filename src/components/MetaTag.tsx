@@ -8,5 +8,5 @@ export const MetaTag = () => {
       <meta name="twitter:description" content="技術ブログ TyprScript/Nodejs" />
       <meta name="twitter:image" content="https://sena-v.com/images/titleback.jpg" />
     </>
-  );
-};
+  )
+}

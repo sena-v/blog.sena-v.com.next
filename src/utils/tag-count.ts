@@ -9,9 +9,7 @@ export const countTags = (allPosts: ItemType[]) => {
     .flat()
 
   // 全タグから重複を削除
-  const tagReducedList = tagAllList.filter(
-    (x: string, i: number, self: string[]) => self.indexOf(x) === i
-  )
+  const tagReducedList = tagAllList.filter((x: string, i: number, self: string[]) => self.indexOf(x) === i)
 
   // 後にtype TagCountTypeになるが初期化時は空のためany
   const tagCount: any = { ALL: tagReducedList.length }

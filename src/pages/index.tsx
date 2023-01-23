@@ -31,10 +31,7 @@ const Layout = ({ allPosts, tagCount }: Props) => {
   return (
     <>
       <Helmet>
-        <script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=G-76NH7ZL65V"
-        />
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-76NH7ZL65V" />
         <script>
           {`
     window.dataLayer = window.dataLayer || [];
@@ -76,11 +73,7 @@ const Layout = ({ allPosts, tagCount }: Props) => {
           {!selectTagName || selectTagName === "ALL" ? (
             <TopPage allPosts={allPosts} setTagPage={setSelectTagName} />
           ) : (
-            <TagPage
-              allPosts={allPosts}
-              selectTagName={selectTagName}
-              setTagPage={setSelectTagName}
-            />
+            <TagPage allPosts={allPosts} selectTagName={selectTagName} setTagPage={setSelectTagName} />
           )}
         </div>
 
