@@ -79,16 +79,13 @@ const FloatMenu = (tagProps: TagPropsType) => {
               borderRight: "none",
               borderBottom: "3px double",
               fontWeight: "bold",
-              borderColor:
-                "rgb(47, 45, 50) rgb(47, 45, 50) #ffffff rgb(47, 45, 50)",
+              borderColor: "rgb(47, 45, 50) rgb(47, 45, 50) #ffffff rgb(47, 45, 50)",
             }}
           >
             Tags
           </p>
 
-          <div style={{ width: "320px" }}>
-            {createSideMenuTags({ ...tagProps.tagCount })}
-          </div>
+          <div style={{ width: "320px" }}>{createSideMenuTags({ ...tagProps.tagCount })}</div>
           <p
             style={{
               paddingTop: "10px",
@@ -100,8 +97,7 @@ const FloatMenu = (tagProps: TagPropsType) => {
               borderRight: "none",
               borderBottom: "3px double",
               fontWeight: "bold",
-              borderColor:
-                "rgb(47, 45, 50) rgb(47, 45, 50) #ffffff rgb(47, 45, 50)",
+              borderColor: "rgb(47, 45, 50) rgb(47, 45, 50) #ffffff rgb(47, 45, 50)",
             }}
           />
           <br />

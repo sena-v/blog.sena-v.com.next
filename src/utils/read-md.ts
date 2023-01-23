@@ -19,9 +19,7 @@ export const getPostSlugs = () => {
   // まずはファイル名、ディレクトリ名を両方取得する
   const allDirents = fs.readdirSync(postsDirectory, { withFileTypes: true })
   // ディレクトリ名のみに絞り込んで返す
-  return allDirents
-    .filter((dirent) => dirent.isDirectory())
-    .map(({ name }) => name)
+  return allDirents.filter((dirent) => dirent.isDirectory()).map(({ name }) => name)
 }
 
 /**

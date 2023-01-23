@@ -41,9 +41,7 @@ const Footer = ({ userData }: UserDataType) => {
           </Link>
         </span>
         &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
-        <span className="auth">
-          © {new Date().getFullYear()}, Built with Next.js
-        </span>
+        <span className="auth">© {new Date().getFullYear()}, Built with Next.js</span>
       </div>
     </footer>
   )
