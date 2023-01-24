@@ -30,7 +30,7 @@ const Header = ({ siteTitle, setTagPage }: HeaderPropsType) => {
           }}
         >
           <Link href="/" aria-label={siteTitle}>
-            <a
+            <span
               style={{
                 color: "#2196F3",
                 textDecoration: "none",
@@ -40,7 +40,7 @@ const Header = ({ siteTitle, setTagPage }: HeaderPropsType) => {
               onClick={() => setTagPage("")}
             >
               {siteTitle}
-            </a>
+            </span>
           </Link>
         </p>
         <div style={{ paddingTop: "6rem" }} />
