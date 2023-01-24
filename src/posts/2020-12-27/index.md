@@ -6,24 +6,24 @@ slug: "gatsby-graphql"
 
 ![](../images/posts-image/2020-12-27.png)
 
-Gatsby における GraphQL の挙動について、公式チュートリアル・参考サイトで得られる情報は
+Gatsby における GraphQL の挙動について、公式チュートリアル・参考サイトで得られる情報は  
 順番に学習することを想定しているため、ピンポイントでの理解が難しくなっている。
 
-差別化のため、この記事では<u><b>何をしたいときにどこを触るか</b></u>という逆引き形式で
+差別化のため、この記事では<u><b>何をしたいときにどこを触るか</b></u>という逆引き形式で  
 Gatsby における GraphQL の使用方法をまとめる。
 
 # GraphQL 挙動の前提
 
-基本的には各コンポーネントを構成する.js ファイル内で定義をすることで、内部処理が行われ Gatsby の黒魔術で結果が返却される。
-おおまかな流れとしては以下になる。
+基本的には各コンポーネントを構成する.js ファイル内で定義をすることで、  
+内部処理が行われGatsby の黒魔術で結果が返却される。おおまかな流れとしては以下になる。
 
-JSX を生成するコンポーネントを読み込む
-↓
-query を export して読み込んだ graphQL モジュールに投げる
-↓
-モジュール内部で処理し、結果を data オブジェクトとしてグローバルに返却
-↓
-返却された data オブジェクトを用いて JSX で表示させる。
+JSX を生成するコンポーネントを読み込む  
+↓  
+query を export して読み込んだ graphQL モジュールに投げる  
+↓  
+モジュール内部で処理し、結果を data オブジェクトとしてグローバルに返却  
+↓  
+返却された data オブジェクトを用いて JSX で表示させる。  
 
 # 用途に応じた GraphQL 記法の違い
 
@@ -113,24 +113,24 @@ const data = useStaticQuery(
 
 ## 親から子コンポーネントへ渡せなくはないと思うが…
 
-子要素の中で graphQL の結果を使用したい場合、子要素内でクエリ発行を行う方法(useStaticQuery)と
+子要素の中で graphQL の結果を使用したい場合、子要素内でクエリ発行を行う方法(useStaticQuery)と  
 親コンポーネントで生成した query から取得した Object を子要素に渡す方法が考えられる
 
-SQL と同じ考え方をするのであれば、子要素内でクエリ発行する場合単純化でき保守性が上がるメリットがあり、
+SQL と同じ考え方をするのであれば、子要素内でクエリ発行する場合単純化でき保守性が上がるメリットがあり、  
 親コンポーネントから子要素へ渡す場合はクエリ発行回数が 1 回以上減らせるメリットがある。
 
-Gatsby レベルの動作であれば props のバケツリレーをするよりクエリ発行してしまったほうが実装が楽なので
-親でクエリを複雑にするよりは子コンポーネントを作ってしまったほうが楽じゃないかなと～思う。
+Gatsby レベルの動作であれば props のバケツリレーをするよりクエリ発行してしまったほうが実装が楽なので  
+親でクエリを複雑にするよりは子コンポーネントを作ってしまったほうが楽じゃないかなと～思う。  
 (子要素が 10-20 個とかになるなら発行回数の差がエグいけど、そんなケースなさそうだし)
 
 # まとめ
 
-data は単数のコンポーネントで取得したい？　 → 　複数　 → 　<u>gatsby-node.js に記述</u>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;単数
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓
-そのコンポーネントはメインの JSX を出力する？　 → 　 NO 　 → 　親コンポーネントの<u>グローバル変数にクエリを記述</u>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Yes
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓
-子コンポーネントのため<u>useStaticQuery を用いてメインメソッドのローカル変数にクエリを記述</u>
+data は単数のコンポーネントで取得したい？　 → 　複数　 → 　<u>gatsby-node.js に記述</u>  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;単数  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓  
+そのコンポーネントはメインの JSX を出力する？　 → 　 NO 　 → 　親コンポーネントの<u>グローバル変数にクエリを記述</u>  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Yes  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓  
+子コンポーネントのため<u>useStaticQuery を用いてメインメソッドのローカル変数にクエリを記述</u>  
