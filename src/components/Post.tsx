@@ -35,7 +35,7 @@ const Post = ({ ...post }: ItemType) => {
           {post.date}&nbsp;&nbsp;&nbsp;&nbsp;
         </p>
         <div>{createTags(post.tags)}</div>
-
+        <br />
         <section>
           <ReactMarkdown
             components={{
