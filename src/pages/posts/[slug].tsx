@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/next-script-for-ga */
-import { Helmet } from "react-helmet"
+import { Helmet, HelmetProvider } from "react-helmet-async"
 import Header from "@src/components/Header"
 import Footer from "@src/components/Footer"
 import FloatMenu from "@src/components/FloatMenu"
@@ -59,17 +59,25 @@ const SlugPage: NextPage<Props> = ({ post, tagCount }) => {
 
   return (
     <>
-      <Helmet>
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-76NH7ZL65V" />
-        <script>
-          {`
+      <HelmetProvider>
+        <Helmet>
+          <meta name="description" content="Author: sena-v" />
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:site" content="sena-v.com" />
+          <meta name="twitter:title" content={`${post.title}`} />
+          <meta name="twitter:description" content={`${post.content.substring(0, 40)}...`} />
+          <meta name="twitter:image" content="https://sena-v.com/images/titleback.jpg" />
+          <script async src="https://www.googletagmanager.com/gtag/js?id=G-76NH7ZL65V" />
+          <script>
+            {`
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'G-76NH7ZL65V');
   `}
-        </script>
-      </Helmet>
+          </script>
+        </Helmet>
+      </HelmetProvider>
       <Header siteTitle={"sena-v.com"} setTagPage={selectTagNameFromSlugPage} />
       <title style={{ display: "none" }}>{"sena-v.com"}</title>
       <meta name="description" content="Author: sena-v" />
