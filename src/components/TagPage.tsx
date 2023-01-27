@@ -29,7 +29,7 @@ const TagPage = ({ allPosts, selectTagName, setTagPage }: AllPostsType) => {
         <article key={post.slug} className="top-post">
           <time dateTime={post.date}>{post.date}</time>
           <h2 className="top">
-            <Link href={`/posts/${post.slug}?date=${post.date}`} as={`/posts/${post.slug}`} aria-label={post.title}>
+            <Link href={`/posts/${post.slug}`} aria-label={post.title}>
               {post.title}
             </Link>
           </h2>
