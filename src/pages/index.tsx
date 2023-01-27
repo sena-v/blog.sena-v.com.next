@@ -17,7 +17,6 @@ type Props = InferGetStaticPropsType<typeof getStaticProps>
 
 export const getStaticProps = async () => {
   const allPosts = getAllPosts(["slug", "title", "date", "tags"])
-
   const tagCount = countTags(allPosts)
 
   return {
