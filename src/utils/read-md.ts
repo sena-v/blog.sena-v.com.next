@@ -27,9 +27,9 @@ export const getPostSlugs = () => {
  * @param slug
  * @param fields 取得したい値 (slug | content | title | tags)
  */
-export const getPostBySlug = (slug: string, fields: string[] = []) => {
+export const getPostBySlug = (postDate: string, fields: string[] = []) => {
   // ファイルを読み込む
-  const fullPath = join(postsDirectory, slug, "index.md")
+  const fullPath = join(postsDirectory, postDate, "index.md")
   const fileContents = fs.readFileSync(fullPath, "utf8")
   const { data, content } = matter(fileContents)
 
@@ -41,13 +41,11 @@ export const getPostBySlug = (slug: string, fields: string[] = []) => {
     tags: [],
   }
 
-  // TODO: slugが日付で取得されてしまっているが、SSG時に参照するフォルダ名=slugのため大きく治す必要あり
-
   // 指定された値を取得してくる
   // memo: slugが指定されたとき、contentが指定されたとき、frontmatterの中身が指定されたときで返却の仕方が異なる
   fields.forEach((field) => {
     if (field === "slug") {
-      items[field] = slug
+      items[field] = data.slug
     }
     if (field === "content") {
       items[field] = content.toString()
@@ -58,8 +56,8 @@ export const getPostBySlug = (slug: string, fields: string[] = []) => {
     }
   })
 
-  // 格納フォルダ名を投稿日付とする(md内にdateを書くと乖離する可能性が出るため)
-  items["date"] = slug
+  // 格納フォルダ名を投稿日付とする
+  items["date"] = postDate
 
   return items
 }

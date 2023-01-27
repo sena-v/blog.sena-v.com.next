@@ -31,11 +31,13 @@ export const getStaticPaths = async () => {
 }
 
 export const getStaticProps = async ({ params }: any) => {
-  const post = getPostBySlug(params.slug, ["slug", "title", "date", "tags", "content"])
-
   // タグカウントのために全記事を取得し、タグ計算(SSGのためビルド時のみ)
   const allPosts = getAllPosts(["slug", "title", "date", "tags"])
   const tagCount = countTags(allPosts)
+
+  // 全postのslugから記事投稿日付(DirectoryName)を特定
+  const postDate = allPosts.filter((post) => post.slug === params.slug)[0].date
+  const post = getPostBySlug(postDate, ["slug", "title", "date", "tags", "content"])
 
   // 変換結果をpropsとして渡す
   return {

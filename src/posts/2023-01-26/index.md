@@ -1,7 +1,7 @@
 ---
 title: "npmモジュールの更新チェックを自動化する"
 tags: ["TypeScript", "node", "npm"]
-slug: swiftui-list-array
+slug: npm-module-auto-update-check
 ---
 開発を実施している中でnpmを使用していると、依存しているモジュールの更新が発生した場合  
 多くのプロジェクトでははGitHub上でdependabotAlertが出てから対応することになります。  
