@@ -12,6 +12,9 @@
     "ci": "next lint && npm run typecheck && npm run build"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@mui/material": "^5.11.7",
     "@netlify/plugin-nextjs": "^4.30.2",
     "gray-matter": "^4.0.3",
     "next": "13.1.6",
