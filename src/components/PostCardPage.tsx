@@ -1,4 +1,4 @@
-import { Dispatch } from "react"
+import { CSSProperties, Dispatch } from "react"
 import { ItemType } from "src/utils/read-md"
 import PostThumbnail from "./PostThumbnail"
 import Grid from "@mui/material/Grid"
@@ -10,9 +10,9 @@ type PropsType = {
 }
 
 const PostCardPage = ({ allPosts, setTagPage }: PropsType) => {
-  const createTags = (tags: string[]) =>
+  const createTags = (tags: string[], styleOption?: CSSProperties) =>
     tags.map((tag) => (
-      <ul key={tag} className="post-tag-top" onClick={() => setTagPage(tag)}>
+      <ul key={tag} className="post-tag-top" style={{ ...styleOption }} onClick={() => setTagPage(tag)}>
         {tag}
       </ul>
     ))
@@ -22,7 +22,7 @@ const PostCardPage = ({ allPosts, setTagPage }: PropsType) => {
       <ul>
         <Grid container spacing={2}>
           {allPosts.map((post, index) => (
-            <Grid item key={index} md={6} xl={4}>
+            <Grid item key={index}>
               <PostThumbnail {...{ post, createTags }} />
             </Grid>
           ))}
