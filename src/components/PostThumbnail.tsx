@@ -1,7 +1,7 @@
 import { ItemType } from "src/utils/read-md"
 import { Box, Card, CardActionArea } from "@mui/material"
 import { useRouter } from "next/router"
-import React, { CSSProperties } from "react"
+import React, { CSSProperties, useState } from "react"
 
 type PropsType = {
   post: ItemType
@@ -13,46 +13,55 @@ const PostThumbnail = ({ post, createTags }: PropsType) => {
   const url = `posts/${post.slug}`
 
   const PostCoverImage = () => {
-    const coverImageUrl = "/images/icon.png" //post.slug ??
-
     return (
       <div
         style={{
           width: "100%",
           height: "180px",
           display: "flex",
+          background: "white",
           justifyContent: "center",
           alignItems: "center",
           overflow: "hidden",
         }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={coverImageUrl} alt="画像" style={{ width: "50%" }} />
+        <img src={post.coverImage} alt="画像" style={{ objectFit: "cover", height: "100%" }} />
       </div>
     )
   }
 
   return (
     <Box>
-      <Card variant="outlined" sx={{ width: 350, height: 350, background: "#95959529" }} onMouseOver={() => {}}>
-        <CardActionArea onClick={() => router.push(url)} style={{ padding: 15 }}>
+      <Card variant="outlined" sx={{ width: 350, height: 350, background: "#02032a2b" }} onMouseOver={() => {}}>
+        <CardActionArea onClick={() => router.push(url)} style={{ paddingTop: 30, paddingBottom: 15 }}>
           <article>
             <PostCoverImage />
-            <div
-              style={{
-                height: "3rem",
-              }}
-            >
-              {post.title}
+            <div style={{ padding: 10 }}>
+              <div
+                style={{
+                  height: "3rem",
+                }}
+              >
+                <span className="card-title">{post.title}</span>
+              </div>
+              <div
+                style={{
+                  height: "1.5rem",
+                }}
+              >
+                <span
+                  style={{
+                    paddingTop: 10,
+                    color: "#ffffff",
+                  }}
+                >
+                  {" "}
+                  {post.date}
+                </span>
+              </div>
+              <div>{createTags(post.tags, { color: "white", marginTop: 3, marginBottom: 3 })}</div>
             </div>
-            <div
-              style={{
-                height: "1.5rem",
-              }}
-            >
-              {post.date}&nbsp;&nbsp;&nbsp;&nbsp;
-            </div>
-            <div>{createTags(post.tags, { color: "white", marginTop: 3, marginBottom: 3 })}</div>
             <br />
           </article>
         </CardActionArea>

@@ -32,7 +32,7 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async ({ params }: any) => {
   // タグカウントのために全記事を取得し、タグ計算(SSGのためビルド時のみ)
-  const allPosts = getAllPosts(["slug", "title", "date", "tags"])
+  const allPosts = getAllPosts(["slug", "title", "coverImage", "date", "tags"])
   const tagCount = countTags(allPosts)
 
   // 全postのslugから記事投稿日付(DirectoryName)を特定

@@ -2,6 +2,7 @@
 title: "2020年最新技術とそれに関する知見"
 tags: ["技術"]
 slug: "2020-tech-trend"
+coverImage: "2020-11-27-01.png"
 ---
 
 最近 Twitter で流れてきて気になった単語。  

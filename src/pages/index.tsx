@@ -4,8 +4,8 @@ import Header from "@src/components/Header"
 import Footer from "@src/components/Footer"
 import FloatMenu from "@src/components/FloatMenu"
 import Float from "@src/components/Float"
-import TopPage from "@src/components/TopPage"
 import TagPage from "@src/components/TagPage"
+import PostCardPage from "@src/components/PostCardPage"
 
 import { InferGetStaticPropsType } from "next"
 import { getAllPosts } from "@src/utils/read-md"
@@ -16,7 +16,7 @@ import { selectTagAtom } from "@src/recoil/globalState"
 type Props = InferGetStaticPropsType<typeof getStaticProps>
 
 export const getStaticProps = async () => {
-  const allPosts = getAllPosts(["slug", "title", "date", "tags"])
+  const allPosts = getAllPosts(["slug", "title", "coverImage", "date", "tags"])
   const tagCount = countTags(allPosts)
 
   return {
@@ -54,7 +54,7 @@ const Layout = ({ allPosts, tagCount }: Props) => {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "50px minmax(700px, auto) 350px",
+          gridTemplateColumns: "15px minmax(700px, auto) 350px",
         }}
       >
         <div
@@ -68,7 +68,7 @@ const Layout = ({ allPosts, tagCount }: Props) => {
         <div
           style={{
             maxWidth: 1200,
-            paddingTop: "2rem ",
+            paddingTop: "2rem",
             paddingBottom: "120px",
             paddingRight: "2rem",
             paddingLeft: "3rem",
@@ -78,7 +78,7 @@ const Layout = ({ allPosts, tagCount }: Props) => {
           }}
         >
           {!selectTagName || selectTagName === "ALL" ? (
-            <TopPage allPosts={allPosts} setTagPage={setSelectTagName} />
+            <PostCardPage allPosts={allPosts} setTagPage={setSelectTagName} />
           ) : (
             <TagPage allPosts={allPosts} selectTagName={selectTagName} setTagPage={setSelectTagName} />
           )}
