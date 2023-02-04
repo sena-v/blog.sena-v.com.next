@@ -15,7 +15,7 @@ const Adsense = (props: any) => {
       currentWindow.adsbygoogle = currentWindow.adsbygoogle || []
       currentWindow.adsbygoogle.push({})
     } catch (e) {
-      console.log(e, "adsbygoogle")
+      console.error(e, "adsbygoogle")
     }
   }, [currentPath])
 

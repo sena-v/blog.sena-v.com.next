@@ -6,6 +6,7 @@ export type ItemType = {
   slug: string
   content: string
   title: string
+  coverImage: string
   date: string
   tags: string[]
 }
@@ -37,6 +38,7 @@ export const getPostBySlug = (postDate: string, fields: string[] = []) => {
     slug: "",
     content: "",
     title: "",
+    coverImage: "",
     date: "",
     tags: [],
   }
@@ -53,6 +55,10 @@ export const getPostBySlug = (postDate: string, fields: string[] = []) => {
 
     if (field === "title" || field === "tags") {
       items[field] = data[field]
+    }
+
+    if (field === "coverImage") {
+      items[field] = data.coverImage ? `images/posts-image/${data.coverImage}` : "images/icon.png"
     }
   })
 

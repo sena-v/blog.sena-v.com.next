@@ -2,6 +2,7 @@
 title: "2020年に身につけた技術まとめ"
 tags: ["技術", "JavaScript"]
 slug: "2020-tech-entry"
+coverImage: "2020-12-30.png"
 ---
 
 ![](../images/posts-image/2020-12-30.png)

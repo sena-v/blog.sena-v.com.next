@@ -2,6 +2,7 @@
 title: "TypeScriptの使用をNuxtで強制するために"
 tags: ["TypeScript", "Nuxt"]
 slug: "nuxt-ts-pj-force"
+coverImage: "2021-09-04.jpg"
 ---
 
 ![](../images/posts-image/2021-09-04.jpg)
