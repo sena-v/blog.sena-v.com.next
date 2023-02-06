@@ -1,7 +1,7 @@
 import { ItemType } from "src/utils/read-md"
 import { Box, Card, CardActionArea } from "@mui/material"
 import { useRouter } from "next/router"
-import React, { CSSProperties, useState } from "react"
+import React, { CSSProperties, useState, useEffect } from "react"
 
 type PropsType = {
   post: ItemType
@@ -9,8 +9,25 @@ type PropsType = {
 }
 
 const PostThumbnail = ({ post, createTags }: PropsType) => {
+  const [style, setStyle] = useState<Record<string, any>>([])
+  const [isMouseOver, setIsMouseOver] = useState<boolean>(false)
   const router = useRouter()
   const url = `posts/${post.slug}`
+
+  useEffect(() => {
+    const toggleStyle = (isMouseOver: boolean) => {
+      const defaultStyle = { objectFit: "cover", height: "100%" }
+      const mouseOverStyle = {
+        objectFit: "cover",
+        height: "100%",
+        transform: "scale(1.2,1.2)",
+      }
+
+      setStyle(isMouseOver ? mouseOverStyle : defaultStyle)
+    }
+
+    toggleStyle(isMouseOver)
+  }, [isMouseOver])
 
   const PostCoverImage = () => {
     return (
@@ -26,7 +43,13 @@ const PostThumbnail = ({ post, createTags }: PropsType) => {
         }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={post.coverImage} alt="画像" style={{ objectFit: "cover", height: "100%" }} />
+        <img
+          src={post.coverImage}
+          alt="画像"
+          style={{ objectFit: "cover", height: "100%", ...style }}
+          onMouseOver={() => setIsMouseOver(true)}
+          onMouseLeave={() => setIsMouseOver(false)}
+        />
       </div>
     )
   }
