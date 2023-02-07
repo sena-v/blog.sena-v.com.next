@@ -254,7 +254,7 @@ textarea {
 h2 {
   margin-left: 0;
   margin-right: 0;
-  margin-top: 0;
+  margin-top: 30px;
   padding-bottom: 10px;
   padding-left: 0;
   padding-right: 0;
@@ -290,7 +290,7 @@ h2.top {
 h3 {
   margin-left: 0;
   margin-right: 0;
-  margin-top: 0;
+  margin-top: 30px;
   padding-bottom: 10px;
   padding-left: 0;
   padding-right: 0;
@@ -698,8 +698,8 @@ ul.post-tag-top {
   margin-right: 5px;
   display: inline-block;
   background-color: #181818;
-  padding-left: 10px;
-  padding-right: 10px;
+  padding-left: 7px;
+  padding-right: 7px;
   padding-top: 2px;
   padding-bottom: 2px;
   border-radius: 10px;
