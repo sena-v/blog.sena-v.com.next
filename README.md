@@ -24,9 +24,9 @@ https://qiita.com/nwtgck/items/e9a355c2ccb03d8e8eb0
 
 デザイン変更・設定追加・機能追加等
 
-## post/date(yyyy-mm-dd)
+## post/slug
 
-記事追加用。更新前に master に対して PR → マージする
+記事追加用。更新前に main に対して PR → マージする
 
 ---
 
@@ -57,5 +57,6 @@ npm run ci
 参考
 https://tamalog.szmd.jp/next-markdown-blog/
 
-next/image の LightHouse 指摘は LightHouse のバグのため issue 監視すること(2022-08-17 release Staged)
+next/image の LightHouse 指摘は LightHouse のバグのため issue 監視すること
+(2022-08-17 release Staged)
 https://github.com/GoogleChrome/lighthouse/issues/11631#issuecomment-1217146090
