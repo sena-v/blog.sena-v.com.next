@@ -3,14 +3,14 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "npm outdated; echo '\r'; next dev",
     "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "format": "prettier --write .",
-    "typecheck": "tsc",
     "ci": "next lint && npm run typecheck && npm run build",
-    "cleanbranch": "git branch --merged main | grep -v -e main | xargs -I{} git branch -d {}"
+    "cleanupbranch": "git branch --merged main | grep -v -e main | xargs -I{} git branch -d {}",
+    "dev": "npm outdated; echo '\r'; next dev",
+    "format": "prettier --write .",
+    "lint": "next lint",
+    "start": "next start",
+    "typecheck": "tsc"
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
