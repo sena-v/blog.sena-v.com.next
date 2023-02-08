@@ -2,7 +2,7 @@
 title: "Nuxt + TypeScriptの現場開発感"
 tags: ["JavaScript", "TypeScript", "Nuxt"]
 slug: "nuxt-ts-pj-review"
-coverImage: "2021-09-04.jpg"
+coverImage: "posts-image/2021-09-04.jpg"
 ---
 
 ![](../images/posts-image/2021-09-04.jpg)

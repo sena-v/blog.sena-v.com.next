@@ -2,7 +2,7 @@
 title: "[JavaScript]なろうランキングをAPIで一括取得する"
 tags: ["JavaScript"]
 slug: "narou-rank-get"
-coverImage: "2020-11-19-01.png"
+coverImage: "posts-image/2020-11-19-01.png"
 ---
 
 API が使える環境があり、定期的にそれを使っているならちょっとコード化するだけで  

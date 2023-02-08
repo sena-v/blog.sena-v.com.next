@@ -2,7 +2,7 @@
 title: "カスタムフックの作り方を1から考える"
 tags: ["TypeScript", "React", "カスタムフック"]
 slug: react-custom-hooks-study
-coverImage: "2023-02-07.png"
+coverImage: "posts-image/2023-02-07.png"
 ---
 
 # カスタムフックの作り方を１から考える

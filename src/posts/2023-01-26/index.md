@@ -2,7 +2,7 @@
 title: "npmモジュールの更新チェックを自動化する"
 tags: ["TypeScript", "node", "npm"]
 slug: npm-module-auto-update-check
-coverImage: "2023-01-26.png"
+coverImage: "posts-image/2023-01-26.png"
 ---
 開発を実施している中でnpmを使用していると、依存しているモジュールの更新が発生した場合  
 多くのプロジェクトでははGitHub上でdependabotAlertが出てから対応することになります。  
