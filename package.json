@@ -9,7 +9,8 @@
     "lint": "next lint",
     "format": "prettier --write .",
     "typecheck": "tsc",
-    "ci": "next lint && npm run typecheck && npm run build"
+    "ci": "next lint && npm run typecheck && npm run build",
+    "cleanbranch": "git branch --merged main | grep -v -e main | xargs -I{} git branch -d {}"
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
