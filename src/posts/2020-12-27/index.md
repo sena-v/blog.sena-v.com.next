@@ -2,7 +2,7 @@
 title: "GatsbyにおけるGraphQLの役割について"
 tags: ["JavaScript", "React", "GraphQL"]
 slug: "gatsby-graphql"
-coverImage: "2020-12-27.png"
+coverImage: "posts-image/2020-12-27.png"
 ---
 
 ![](../images/posts-image/2020-12-27.png)

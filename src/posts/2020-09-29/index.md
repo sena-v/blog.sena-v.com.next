@@ -2,7 +2,7 @@
 title: "Firebaseプロジェクトのデプロイ先変更を行う"
 tags: ["Firebase"]
 slug: "firebase-deploy"
-coverImage: "2020-09-29-01.png"
+coverImage: "posts-image/2020-09-29-01.png"
 ---
 
 既存のプロジェクトと同じ構成(自分は vue)の開発を進めたい時、  

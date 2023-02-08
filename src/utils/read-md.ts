@@ -58,7 +58,7 @@ export const getPostBySlug = (postDate: string, fields: string[] = []) => {
     }
 
     if (field === "coverImage") {
-      items[field] = data.coverImage ? `images/posts-image/${data.coverImage}` : "images/icon.png"
+      items[field] = data.coverImage ? `images/${data.coverImage}` : "images/icon.png"
     }
   })
 

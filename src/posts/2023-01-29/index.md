@@ -2,7 +2,7 @@
 title: "Reactの子コンポーネント内でTwitterCardを設定する"
 tags: ["TypeScript", "React"]
 slug: twitter-card-in-react
-coverImage: ""
+coverImage: "react.png"
 ---
 TwitterCardを始め外部のサイトに情報を伝えるため`<meta>`タグを利用したい場合があります。  
 React(Next)内では親となるコンポーネントの`<head>`タグ内で`<meta>`タグ設定を行うことが多いですが、  

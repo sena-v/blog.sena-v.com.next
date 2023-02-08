@@ -2,7 +2,7 @@
 title: "2022年前半振り返り"
 tags: ["振り返り", "技術"]
 slug: log-202109-202208
-coverImage: "2022-08-09.jpg"
+coverImage: "posts-image/2022-08-09.jpg"
 ---
 
 ![](/images/posts-image/2022-08-09.jpg)

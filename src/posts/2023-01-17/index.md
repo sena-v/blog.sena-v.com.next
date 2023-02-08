@@ -2,7 +2,7 @@
 title: "Wowza API v1.6->v1.9で認証方法を変更する"
 tags: ["node", "wowza"]
 slug: wowza-authorization-to-jwt
-coverImage: "2023-01-17.png"
+coverImage: "posts-image/2023-01-17.png"
 ---
 
 配信関連のタスクとして、wowzaのAPIアップデートを実施した際に記事がなかったため記録。

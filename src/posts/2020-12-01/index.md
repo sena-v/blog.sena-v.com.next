@@ -2,7 +2,7 @@
 title: "自分がReactを選ぶべきだと思うただ1つの理由"
 tags: ["JavaScript", "React", "Vue", "技術"]
 slug: "reason-react-recommend"
-coverImage: "2020-12-01-01.png"
+coverImage: "posts-image/2020-12-01-01.png"
 ---
 
 今後何を勉強するかを分析して、対応幅が広くなりそうな React をやろうと思った。  
