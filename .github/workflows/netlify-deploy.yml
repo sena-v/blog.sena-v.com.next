@@ -2,7 +2,7 @@ name: Netlify
 
 on:
   pull_request:
-  types: [opened, synchronize]
+    types: [opened, synchronize]
 
 jobs:
   Check-type_lint_build:
