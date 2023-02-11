@@ -1,9 +1,8 @@
 name: Netlify
 
 on:
-  push:
   pull_request:
-    types: [opened, synchronize]
+  types: [opened, synchronize]
 
 jobs:
   Check-type_lint_build:
@@ -26,9 +25,3 @@ jobs:
         run: npm ci
       - name: type check
         run: npm run ci
-
-  # Netlifyにデプロイ実施
-  # - run: npx netlify-cli deploy --dir=./next
-  #   env:
-  #     NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-  #     NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
