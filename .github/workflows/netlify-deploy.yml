@@ -16,7 +16,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
       - name: load or cache node dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ~/.npm
           key: npm-${{ hashFiles('package-lock.json') }}
