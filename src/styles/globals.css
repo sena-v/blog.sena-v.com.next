@@ -124,7 +124,6 @@ img {
 svg:not(:root) {
   overflow: hidden;
 }
-code,
 kbd,
 pre,
 samp {
@@ -588,7 +587,7 @@ td:last-child {
 }
 tt,
 code {
-  background-color: hsla(0, 0%, 0%, 0.04);
+  background-color: hsl(0, 1%, 31%);
   border-radius: 3px;
   font-family: "SFMono-Regular", Consolas, "Roboto Mono", "Droid Sans Mono",
     "Liberation Mono", Menlo, Courier, monospace;
