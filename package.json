@@ -5,7 +5,7 @@
   "scripts": {
     "build": "next build",
     "ci": "next lint && npm run typecheck && npm run build",
-    "cleanupbranch": "git checkout main && git branch --merged main | grep -v -e main | xargs -I{} git branch -d {}",
+    "clean-up-branch": "git checkout main && git branch --merged main | grep -v -e main | xargs -I{} git branch -d {}",
     "dev": "npm run format && npm outdated; echo '\r'; next dev",
     "format": "prettier --write .",
     "lint": "next lint",
