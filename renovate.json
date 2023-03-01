@@ -5,7 +5,7 @@
     "enabled": false
   },
   "schedule": ["before 2am"],
-  "automergeSchedule": ["every weekend"],
+  "automergeSchedule": ["ebefore 5am"],
   "packageRules": [
     {
       "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
