@@ -1,0 +1,7 @@
+# Doc: https://docs.netlify.com/configure-builds/file-based-configuration/
+# ビルド設定
+[build]
+  # 公開ディレクトリ
+  publish = "dist"
+  # デプロイ前実行コマンド
+  command = "npm run build"
