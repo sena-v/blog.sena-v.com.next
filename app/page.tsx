@@ -11,7 +11,7 @@ export default function Home() {
   return (
     <main className={styles.main}>
       <div className={styles.title}>
-        <Link href="/">sena-v.com</Link>
+        <a href="./">sena-v.com</a>
       </div>
       <div className={styles.linkContainer}>
         <Link href="https://github.com/sena-v" className={styles.link}>

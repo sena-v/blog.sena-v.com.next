@@ -3,7 +3,7 @@
 import styles from "./PostSelectSingle.module.css"
 import ReactMarkdown from "react-markdown"
 import CodeBlock from "./CodeBlock"
-import { useEffect, useState } from "react"
+import { useEffect, useLayoutEffect, useState } from "react"
 import { ItemType } from "@/utils/read-md"
 
 export const PostSelectSingle = ({ posts }: { posts: ItemType[] }) => {
@@ -21,19 +21,23 @@ export const PostSelectSingle = ({ posts }: { posts: ItemType[] }) => {
     )
   }
 
-  useEffect(() => globalThis.scroll(0, 0), [])
+  const components = {
+    code: CodeBlock,
+    img: (props: any) => (
+      <div className={styles.container_post_image}>
+        <img {...props} className={styles.post_image} />
+      </div>
+    ),
+  }
+
+  useEffect(() => globalThis.scroll(0, 0), [post])
 
   return (
     <div className={styles.container}>
       <h1>{post.title}</h1>
       <CoverImage />
-      <ReactMarkdown
-        components={{
-          code: CodeBlock,
-        }}
-      >
-        {post.content}
-      </ReactMarkdown>
+      <ReactMarkdown components={components}>{post.content}</ReactMarkdown>
+      <p className={styles.post_date}>{post.date}</p>
       <div className={styles.button_container}>
         <button
           className={`${styles.button} ${styles.left_button}`}
@@ -42,7 +46,7 @@ export const PostSelectSingle = ({ posts }: { posts: ItemType[] }) => {
           {"<<<"}
         </button>
         <div className={styles.button_space} />
-        <p className={styles.button_space}>{post.date}</p>
+        <p className={styles.button_space}> - {postIndex + 1} - </p>
         <div className={styles.button_space} />
         <button className={`${styles.button} ${styles.right_button}`} onClick={() => setPostIndex(postIndex + 1)}>
           {">>>"}
