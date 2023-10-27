@@ -1,16 +1,16 @@
 /* eslint-disable @next/next/next-script-for-ga */
 import { Helmet, HelmetProvider } from "react-helmet-async"
-import Header from "@src/components/Header"
-import Footer from "@src/components/Footer"
-import FloatMenu from "@src/components/FloatMenu"
-import Float from "@src/components/Float"
-import Post from "@src/components/Post"
+import Header from "@/components/Header"
+import Footer from "@/components/Footer"
+import FloatMenu from "@/components/FloatMenu"
+import Float from "@/components/Float"
+import Post from "@/components/Post"
 
 import { NextPage, InferGetStaticPropsType } from "next"
-import { getAllPosts, getPostBySlug } from "@src/utils/read-md"
-import { countTags } from "@src/utils/tag-count"
+import { getAllPosts, getPostBySlug } from "@/utils/read-md"
+import { countTags } from "@/utils/tag-count"
 import { useRecoilState } from "recoil"
-import { selectTagAtom } from "@src/recoil/globalState"
+import { selectTagAtom } from "@/recoil/globalState"
 import { useRouter } from "next/router"
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>

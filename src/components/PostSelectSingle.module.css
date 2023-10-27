@@ -1,0 +1,86 @@
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+
+  /* ヘッダーのスタイル */
+  .header {
+    background-color: #0078d4;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+  }
+
+  .header h1 {
+    margin: 0;
+  }
+
+  /* メインコンテンツのスタイル */
+  .main-content {
+    padding: 20px;
+  }
+
+  /* 記事のタイトルのスタイル */
+  .article-title {
+    font-size: 24px;
+    color: #333;
+  }
+
+  /* 記事の本文のスタイル */
+  .article-content {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  /* フッターのスタイル */
+  .footer {
+    background-color: #0078d4;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+  }
+
+
+  .button_container{
+    margin-top: 90px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  /* ボタンの共通スタイル */
+  .button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #363c3f;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+  }
+
+  .button:hover {
+    background-color: #474c50;
+  }
+
+  /* 左端のボタン */
+  .left_button {
+    margin-right: 10px;
+  }
+
+  .button_space{
+    width:100px;
+    display: inline-block;
+  }
+
+  /* 右端のボタン */
+  .right_button {
+    margin-left: 10px;
+  }
+
+}

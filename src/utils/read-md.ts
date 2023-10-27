@@ -13,7 +13,7 @@ export type ItemType = {
 
 // postsが格納されているディレクトリを取得する
 // memo: process.cwd() はカレントディレクトリ
-const postsDirectory = join(process.cwd(), "src/posts")
+const postsDirectory = join(process.cwd(), "posts")
 
 // posts配下にあるディレクトリ名(slug)をすべて取得する
 export const getPostSlugs = () => {
