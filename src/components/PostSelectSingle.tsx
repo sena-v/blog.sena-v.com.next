@@ -16,7 +16,7 @@ export const PostSelectSingle = ({ posts }: { posts: ItemType[] }) => {
 
     return (
       <div className={styles.container_post_image}>
-        <img src={post.coverImage} className={styles.post_image} />
+        <img src={post.coverImage} className={styles.post_image} width="10" height="10" />
       </div>
     )
   }
@@ -25,7 +25,7 @@ export const PostSelectSingle = ({ posts }: { posts: ItemType[] }) => {
     code: CodeBlock,
     img: (props: any) => (
       <div className={styles.container_post_image}>
-        <img {...props} className={styles.post_image} alt={props.alt ?? "postImage"} />
+        <img {...props} alt={props.alt ?? "postImage"} className={styles.post_image} width="10" height="10" />
       </div>
     ),
   }
