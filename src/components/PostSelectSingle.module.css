@@ -45,20 +45,28 @@
 
   .container_post_image{
     background-color: #ffffff;
+    display: block;
+    text-align: center;
+    margin: auto;
     padding: 10px;
+    max-height: 400px;
   }
 
   .post_image{
+    max-height: auto;
+    max-width: 100%;
+  }
+
+  .post_date{
     display: block;
     text-align: center;
     margin: auto;
 
-
-    height: 300px;
+    margin-top: 40px;
+    margin-bottom: 20px;
   }
 
   .button_container{
-    margin-top: 90px;
     margin-bottom: 20px;
     text-align: center;
   }

@@ -25,4 +25,13 @@ body {
     line-height: 1.5;
     padding-top: 10px;
     padding-bottom: 10px;
+
+    img{
+      height: 100%;
+      width: 100%;
+      display: block;
+      text-align: center;
+      margin: auto;
+    }
   }
+
