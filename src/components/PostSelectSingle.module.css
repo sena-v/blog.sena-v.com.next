@@ -43,6 +43,19 @@
     text-align: center;
   }
 
+  .container_post_image{
+    background-color: #ffffff;
+    padding: 10px;
+  }
+
+  .post_image{
+    display: block;
+    text-align: center;
+    margin: auto;
+
+
+    height: 300px;
+  }
 
   .button_container{
     margin-top: 90px;

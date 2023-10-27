@@ -20,3 +20,9 @@ body {
   a:hover {
     text-decoration: none;
   }
+
+  p{
+    line-height: 1.5;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }

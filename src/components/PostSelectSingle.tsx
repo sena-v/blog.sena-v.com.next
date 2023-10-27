@@ -11,11 +11,22 @@ export const PostSelectSingle = ({ posts }: { posts: ItemType[] }) => {
 
   const post = posts[postIndex]
 
+  const CoverImage = () => {
+    if (!post.coverImage) return <></>
+
+    return (
+      <div className={styles.container_post_image}>
+        <img src={post.coverImage} className={styles.post_image} />
+      </div>
+    )
+  }
+
   useEffect(() => globalThis.scroll(0, 0), [])
 
   return (
     <div className={styles.container}>
       <h1>{post.title}</h1>
+      <CoverImage />
       <ReactMarkdown
         components={{
           code: CodeBlock,
