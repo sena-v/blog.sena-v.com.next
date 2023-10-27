@@ -25,7 +25,7 @@ export const PostSelectSingle = ({ posts }: { posts: ItemType[] }) => {
     code: CodeBlock,
     img: (props: any) => (
       <div className={styles.container_post_image}>
-        <img {...props} className={styles.post_image} />
+        <img {...props} className={styles.post_image} alt={props.alt ?? "postImage"} />
       </div>
     ),
   }
