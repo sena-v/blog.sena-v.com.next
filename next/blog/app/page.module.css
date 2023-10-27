@@ -1,10 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat&display=swap');
+
 .main {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 6rem;
+  padding: 1rem;
   min-height: 100vh;
+  background-color: white;
+  background-image: url('/background.jpg');
+  background-size: cover;
+}
+
+.title {
+  max-width: 1100px;
+  width: var(--max-width);
+  margin: 40px auto;
+  /* background-color: #fff; */
+  padding: -10px;
+  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+  font-family: 'Caveat', cursive;
+  font-size: 100px;
+  color: white;
+  font-style: bold;
 }
 
 .description {
@@ -227,3 +245,4 @@
     transform: rotate(0deg);
   }
 }
+
