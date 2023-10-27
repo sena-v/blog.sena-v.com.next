@@ -16,7 +16,7 @@ export const PostSelectSingle = ({ posts }: { posts: ItemType[] }) => {
 
     return (
       <div className={styles.container_post_image}>
-        <img src={post.coverImage} className={styles.post_image} width="10" height="10" />
+        <img src={post.coverImage} alt={"coverImage"} className={styles.post_image} width="10" height="10" />
       </div>
     )
   }
