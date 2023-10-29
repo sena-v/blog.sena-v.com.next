@@ -12,6 +12,8 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: right 62% bottom;
+  overflow: hidden;
+
 }
 
 .title {
@@ -32,6 +34,10 @@
   font-size: 20px;
   color: white;
   font-style: bold;
+
+  @media screen and (max-width: 1080px) {
+    display: none;
+  }
 }
 
 .link{
