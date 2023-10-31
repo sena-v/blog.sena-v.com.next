@@ -30,7 +30,7 @@
     "@types/react-dom": "^18",
     "@types/react-syntax-highlighter": "^15.5.9",
     "eslint": "^8",
-    "eslint-config-next": "14.0.0",
+    "eslint-config-next": "14.0.1",
     "prettier": "^2.8.4",
     "react-syntax-highlighter": "^15.5.0",
     "typescript": "^5"
