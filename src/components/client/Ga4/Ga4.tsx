@@ -1,13 +1,14 @@
 "use client"
 
+import Head from "next/head"
 import Script from "next/script"
 
-export const LayoutClientSide = () => {
+export const Ga4 = () => {
   return (
     <>
-      <head>
+      <Head>
         <ScriptGa />
-      </head>
+      </Head>
     </>
   )
 }

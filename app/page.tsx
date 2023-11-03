@@ -1,6 +1,6 @@
 import * as styles from "./page.css"
 import { getAllPosts } from "src/utils/read-md"
-import { PostSelectSingle } from "@/components/PostSelectSingle"
+import { PostSelectSingle } from "@/components/client/PostSelectSingle/PostSelectSingle"
 import Link from "next/link"
 
 export default function Home() {

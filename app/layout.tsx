@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
-import { LayoutClientSide } from "./layoutClientSide"
-import "./globals.css"
+
+import "./font.css"
+import { Ga4 } from "@/components/client/Ga4/Ga4"
 
 export const metadata: Metadata = {
   title: "sena-v.com",
@@ -10,7 +11,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ja">
-      <LayoutClientSide />
+      <Ga4 />
       <body>{children}</body>
     </html>
   )
