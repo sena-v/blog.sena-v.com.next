@@ -10,5 +10,5 @@ const nextConfig = {
 }
 
 module.exports = withVanillaExtract(
-  withInterceptStdout(nextConfig, (text) => (text.includes("Duplicate atom key") ? "" : text))
+  withInterceptStdout(nextConfig, (text) => (text.includes("Duplicate atom key") ? "" : text)),
 )

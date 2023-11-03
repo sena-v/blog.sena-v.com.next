@@ -2,8 +2,8 @@
 
 import styles from "./PostSelectSingle.module.css"
 import ReactMarkdown from "react-markdown"
-import CodeBlock from "./CodeBlock"
-import { useEffect, useLayoutEffect, useState } from "react"
+import { CodeBlock } from "./CodeBlock"
+import { useEffect, useState } from "react"
 import { ItemType } from "@/utils/read-md"
 
 export const PostSelectSingle = ({ posts }: { posts: ItemType[] }) => {

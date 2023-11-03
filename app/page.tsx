@@ -1,12 +1,10 @@
 import * as styles from "./page.css"
 import { getAllPosts } from "src/utils/read-md"
-import { countTags } from "src/utils/tag-count"
 import { PostSelectSingle } from "@/components/PostSelectSingle"
 import Link from "next/link"
 
 export default function Home() {
   const allPosts = getAllPosts(["slug", "title", "coverImage", "date", "tags", "content"])
-  const tagCount = countTags(allPosts)
 
   return (
     <main className={styles.main}>
