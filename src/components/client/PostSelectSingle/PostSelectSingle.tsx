@@ -2,9 +2,24 @@
 
 import styles from "./PostSelectSingle.module.css"
 import ReactMarkdown from "react-markdown"
-import { CodeBlock } from "./CodeBlock"
 import { useEffect, useState } from "react"
 import { ItemType } from "@/utils/read-md"
+
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
+import { okaidia } from "react-syntax-highlighter/dist/cjs/styles/prism"
+
+export const CodeBlock = ({ inline, className, children }: any) => {
+  if (inline) {
+    return <code className={className}>{children}</code>
+  }
+  const match = /language-(\w+)/.exec(className || "")
+  const lang = match && match[1] ? match[1] : ""
+  return (
+    <SyntaxHighlighter style={okaidia} language={lang}>
+      {String(children).replace(/\n$/, "")}
+    </SyntaxHighlighter>
+  )
+}
 
 export const PostSelectSingle = ({ posts }: { posts: ItemType[] }) => {
   const [postIndex, setPostIndex] = useState<number>(0)
