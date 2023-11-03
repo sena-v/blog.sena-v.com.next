@@ -2,7 +2,7 @@ import fs from "fs"
 import { join } from "path"
 import matter from "gray-matter"
 
-export type ItemType = {
+export interface ItemType {
   slug: string
   content: string
   title: string
@@ -64,7 +64,7 @@ export const getPostBySlug = (postDate: string, fields: string[] = []) => {
   })
 
   // 格納フォルダ名を投稿日付とする
-  items["date"] = postDate
+  items.date = postDate
 
   return items
 }
@@ -85,6 +85,7 @@ export const getAllPosts = (fields: string[] = []) => {
       if (slugA < slugB) {
         return 1
       } else {
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         slugB < slugA
       }
 

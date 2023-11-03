@@ -23,7 +23,7 @@ export const countTags = (allPosts: ItemType[]) => {
     tagCount[tagReducedList[i]] = count
   }
 
-  tagCount["ALL"] = tagReducedList.length
+  tagCount.ALL = tagReducedList.length
 
   return tagCount
 }

@@ -3,7 +3,7 @@
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
 import { okaidia } from "react-syntax-highlighter/dist/cjs/styles/prism"
 
-const CodeBlock = ({ inline, className, children }: any) => {
+export const CodeBlock = ({ inline, className, children }: any) => {
   if (inline) {
     return <code className={className}>{children}</code>
   }
@@ -15,5 +15,3 @@ const CodeBlock = ({ inline, className, children }: any) => {
     </SyntaxHighlighter>
   )
 }
-
-export default CodeBlock

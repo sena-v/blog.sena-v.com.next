@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
-import "./globals.css"
 import { LayoutClientSide } from "./layoutClientSide"
+import "./globals.css"
 
 export const metadata: Metadata = {
   title: "sena-v.com",
