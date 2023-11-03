@@ -1,4 +1,4 @@
-import styles from "./page.module.css"
+import * as styles from "./page.css"
 import { getAllPosts } from "src/utils/read-md"
 import { countTags } from "src/utils/tag-count"
 import { PostSelectSingle } from "@/components/PostSelectSingle"

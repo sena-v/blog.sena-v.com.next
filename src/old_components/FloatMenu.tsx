@@ -1,4 +1,4 @@
-import Ad from "@/components/Adsense"
+import Ad from "@/old_components/Adsense"
 import { Dispatch } from "react"
 
 // TOPディレクトリの時だけTwitterを表示する？

@@ -1,11 +1,11 @@
 /* eslint-disable @next/next/next-script-for-ga */
 import { Helmet, HelmetProvider } from "react-helmet-async"
-import Header from "@/components/Header"
-import Footer from "@/components/Footer"
-import FloatMenu from "@/components/FloatMenu"
-import Float from "@/components/Float"
-import TopPage from "@/components/TopPage"
-import TagPage from "@/components/TagPage"
+import Header from "@/old_components/Header"
+import Footer from "@/old_components/Footer"
+import FloatMenu from "@/old_components/FloatMenu"
+import Float from "@/old_components/Float"
+import TopPage from "@/old_components/TopPage"
+import TagPage from "@/old_components/TagPage"
 
 import { InferGetStaticPropsType } from "next"
 import { getAllPosts } from "@/utils/read-md"

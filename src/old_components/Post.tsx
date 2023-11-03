@@ -1,7 +1,7 @@
 import { ItemType } from "src/utils/read-md"
 import ReactMarkdown from "react-markdown"
 import CodeBlock from "@/components/CodeBlock"
-import SharingButton from "@/components/ShareButton"
+import SharingButton from "@/old_components/ShareButton"
 
 const Post = ({ ...post }: ItemType) => {
   const createTags = (tags: string[]) =>
