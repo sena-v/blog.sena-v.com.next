@@ -10,6 +10,10 @@ globalStyle("a", {
   textDecoration: "none",
 })
 
+globalStyle("p", {
+  lineHeight: "1.7rem",
+})
+
 export const main = style({
   display: "flex",
   flexDirection: "column",
