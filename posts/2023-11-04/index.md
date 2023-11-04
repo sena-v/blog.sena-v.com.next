@@ -2,7 +2,7 @@
 title: "vanilla-extractでGoogle Fontsを使う"
 tags: ["vanilla-extract","React","css"]
 slug: vanilla-extract-fonts
-coverImage: "posts-image/2023-11-04.png"
+coverImage: "posts-image/2023-11-04.avif"
 ---
 
 App Routerアップデート当時はほぼCSS Modules一択だったため  
