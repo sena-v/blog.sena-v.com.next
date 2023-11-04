@@ -2,11 +2,14 @@
 
 import styles from "./PostSelectSingle.module.css"
 import ReactMarkdown from "react-markdown"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { ItemType } from "@/utils/read-md"
 
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
 import { okaidia } from "react-syntax-highlighter/dist/cjs/styles/prism"
+import { useSearchParams, useRouter } from "next/navigation"
+import { SharingButtons } from "@/components/ShareButton/ShareButton"
+import { siteUrl } from "@/utils/constants"
 
 export const CodeBlock = ({ inline, className, children }: any) => {
   if (inline) {
@@ -22,9 +25,28 @@ export const CodeBlock = ({ inline, className, children }: any) => {
 }
 
 export const PostSelectSingle = ({ posts }: { posts: ItemType[] }) => {
-  const [postIndex, setPostIndex] = useState<number>(0)
+  const router = useRouter()
+  const searchParams = useSearchParams()
 
+  const findIndexByValue = (targetValue: string): number => {
+    for (let i = 0; i < posts.length; i++) {
+      if (posts[i].slug === targetValue) {
+        return i // 一致する要素のインデックスを返す
+      }
+    }
+    return 0 // 一致する要素が見つからない場合は0を返す(topを表示)
+  }
+
+  // slugが一致する対象の記事を取得
+  const postIndex = findIndexByValue(searchParams.get("slug") ?? "")
   const post = posts[postIndex]
+
+  // slugを指定して記事を表示
+  const moveNextIndexPage = (index: number) => {
+    router.push(`/?slug=${posts[index].slug}`)
+  }
+
+  const currentUrl = `${siteUrl}/?slug=${posts[postIndex].slug}`
 
   const CoverImage = () => {
     if (!post.coverImage) return <></>
@@ -50,20 +72,21 @@ export const PostSelectSingle = ({ posts }: { posts: ItemType[] }) => {
   return (
     <div className={styles.container}>
       <h1>{post.title}</h1>
+      <SharingButtons title={post.title} url={currentUrl} />
       <CoverImage />
       <ReactMarkdown components={components}>{post.content}</ReactMarkdown>
       <p className={styles.post_date}>{post.date}</p>
       <div className={styles.button_container}>
         <button
           className={`${styles.button} ${styles.left_button}`}
-          onClick={() => setPostIndex(postIndex < 0 ? postIndex - 1 : 0)}
+          onClick={() => moveNextIndexPage(postIndex < 0 ? postIndex - 1 : 0)}
         >
           {"<<<"}
         </button>
         <div className={styles.button_space} />
         <p className={styles.button_space}> - {postIndex + 1} - </p>
         <div className={styles.button_space} />
-        <button className={`${styles.button} ${styles.right_button}`} onClick={() => setPostIndex(postIndex + 1)}>
+        <button className={`${styles.button} ${styles.right_button}`} onClick={() => moveNextIndexPage(postIndex + 1)}>
           {">>>"}
         </button>
       </div>
