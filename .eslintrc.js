@@ -44,14 +44,6 @@ module.exports = {
     "import/no-default-export": "error", // default exportを使用しない
     "@typescript-eslint/no-explicit-any": 1, //2, // any型を禁止 - 2が禁止のため修正完了まで警告レベルを指定
 
-    // Routerは特定のコンポーネントでのみ使用する
-    "no-restricted-imports": [
-      "error",
-      {
-        paths: ["next/navigation"],
-      },
-    ],
-
     // RSCのServerActions用にコンポーネントの引数にPromise<void>を渡した場合許可する
     "@typescript-eslint/no-misused-promises": [
       2,
@@ -68,12 +60,6 @@ module.exports = {
       files: ["pages/**/*", "app/**/*", "*.config.ts"],
       rules: {
         "import/no-default-export": 0,
-      },
-    },
-    {
-      files: ["src/utils/RouterUtils.ts"],
-      rules: {
-        "no-restricted-imports": "off",
       },
     },
   ],

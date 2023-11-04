@@ -7,6 +7,7 @@ export const Ga4 = () => {
   return (
     <>
       <Head>
+        <link rel="shortcut icon" href="favicon.ico" />
         <ScriptGa />
       </Head>
     </>
