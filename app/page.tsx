@@ -2,6 +2,7 @@ import * as styles from "./page.css"
 import { getAllPosts } from "src/utils/read-md"
 import { PostSelectSingle } from "@/components/client/PostSelectSingle/PostSelectSingle"
 import Link from "next/link"
+import { gitHubUrl, qiitaUrl, siteSourceCodeUrl, twitterUrl } from "@/utils/constants"
 
 export default function Home() {
   const allPosts = getAllPosts(["slug", "title", "coverImage", "date", "tags", "content"])
@@ -12,16 +13,16 @@ export default function Home() {
         <a href="./">sena-v.com</a>
       </div>
       <div className={styles.linkContainer}>
-        <Link href="https://github.com/sena-v" className={styles.link}>
+        <Link href={gitHubUrl} className={styles.link}>
           Github
         </Link>
-        <Link href="https://qiita.com/sena_v" className={styles.link}>
+        <Link href={qiitaUrl} className={styles.link}>
           Qiita
         </Link>
-        <Link href="https://twitter.com/card1nal_tetra" className={styles.link}>
+        <Link href={twitterUrl} className={styles.link}>
           X(Twitter)
         </Link>
-        <Link href="https://github.com/sena-v/blog.sena-v.com.next" className={styles.link}>
+        <Link href={siteSourceCodeUrl} className={styles.link}>
           SourceCode
         </Link>
       </div>

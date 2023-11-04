@@ -12,7 +12,7 @@ export interface ItemType {
 }
 
 // postsが格納されているディレクトリを取得する
-// memo: process.cwd() はカレントディレクトリ
+// process.cwd() はカレントディレクトリ
 const postsDirectory = join(process.cwd(), "posts")
 
 // posts配下にあるディレクトリ名(slug)をすべて取得する
@@ -44,7 +44,7 @@ export const getPostBySlug = (postDate: string, fields: string[] = []) => {
   }
 
   // 指定された値を取得してくる
-  // memo: slugが指定されたとき、contentが指定されたとき、frontmatterの中身が指定されたときで返却の仕方が異なる
+  // slugが指定されたとき、contentが指定されたとき、frontmatterの中身が指定されたときで返却の仕方が異なる
   fields.forEach((field) => {
     if (field === "slug") {
       items[field] = data.slug
