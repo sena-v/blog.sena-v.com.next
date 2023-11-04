@@ -7,46 +7,11 @@ import { ItemType } from "@/utils/read-md"
 
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
 import { okaidia } from "react-syntax-highlighter/dist/cjs/styles/prism"
-import { useSearchParams, useRouter } from "next/navigation"
 import { SharingButtons } from "@/components/ShareButton/ShareButton"
-import { siteUrl } from "@/utils/constants"
+import { usePostSelectSingle } from "./usePostSelectSingle"
 
-export const CodeBlock = ({ inline, className, children }: any) => {
-  if (inline) {
-    return <code className={className}>{children}</code>
-  }
-  const match = /language-(\w+)/.exec(className || "")
-  const lang = match && match[1] ? match[1] : ""
-  return (
-    <SyntaxHighlighter style={okaidia} language={lang}>
-      {String(children).replace(/\n$/, "")}
-    </SyntaxHighlighter>
-  )
-}
-
-export const PostSelectSingle = ({ posts }: { posts: ItemType[] }) => {
-  const router = useRouter()
-  const searchParams = useSearchParams()
-
-  const findIndexByValue = (targetValue: string): number => {
-    for (let i = 0; i < posts.length; i++) {
-      if (posts[i].slug === targetValue) {
-        return i // 一致する要素のインデックスを返す
-      }
-    }
-    return 0 // 一致する要素が見つからない場合は0を返す(topを表示)
-  }
-
-  // slugが一致する対象の記事を取得
-  const postIndex = findIndexByValue(searchParams.get("slug") ?? "")
-  const post = posts[postIndex]
-
-  // slugを指定して記事を表示
-  const moveNextIndexPage = (index: number) => {
-    router.push(`/?slug=${posts[index].slug}`)
-  }
-
-  const currentUrl = `${siteUrl}/?slug=${posts[postIndex].slug}`
+export function PostSelectSingle({ posts }: { posts: ItemType[] }) {
+  const { post, postIndex, currentUrl, moveNextIndexPage } = usePostSelectSingle(posts)
 
   const CoverImage = () => {
     if (!post.coverImage) return <></>
@@ -91,5 +56,18 @@ export const PostSelectSingle = ({ posts }: { posts: ItemType[] }) => {
         </button>
       </div>
     </div>
+  )
+}
+
+function CodeBlock({ inline, className, children }: any) {
+  if (inline) {
+    return <code className={className}>{children}</code>
+  }
+  const match = /language-(\w+)/.exec(className || "")
+  const lang = match && match[1] ? match[1] : ""
+  return (
+    <SyntaxHighlighter style={okaidia} language={lang}>
+      {String(children).replace(/\n$/, "")}
+    </SyntaxHighlighter>
   )
 }
