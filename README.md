@@ -4,33 +4,35 @@ https://sena-v.com/
 
 ## Stack
 
-Next / TypeScript / Recoil / netlify
+
+
+
+- Next.js App Router with TypeScript
+- Using Next.js's Metadata
+- React Server Components (RSCs)
+- Styling with vanilla-extract, Google Fonts
+- Auto Check Code intelligence with Prettier, Eslint
+- Build and hosting to Netlify
 
 ## branch
 
----
 
-## main
+### main
 
 production
 リリース ok の場合、PR で main にマージする
 
-リリースは Acitions にてビルドして Deploy
-https://qiita.com/nwtgck/items/e9a355c2ccb03d8e8eb0
-
-※netlify-build の環境依存エラーを無視・ビルド時間節約できるため
-
-## custom_blog
+### layout / customize_blog
 
 デザイン変更・設定追加・機能追加等
 
-## post/slug
+### post/post_date
 
-記事追加用。更新前に main に対して PR → マージする
+記事追加用。
 
 ---
 
-### develop cmd
+## develop cmd
 
 ```
 # start server
@@ -46,17 +48,9 @@ npm run ci
 
 ### deploy
 
-以下テスト終了後、main ブランチマージ時自動デプロイ
+テストはPR時にGitHub Actionsで実施、netlify側でビルド・デプロイを実行
 
-- netlify 側 Deploy Check
 
 ---
 
 ### other
-
-参考
-https://tamalog.szmd.jp/next-markdown-blog/
-
-next/image の LightHouse 指摘は LightHouse のバグのため issue 監視すること
-(2022-08-17 release Staged)
-https://github.com/GoogleChrome/lighthouse/issues/11631#issuecomment-1217146090
