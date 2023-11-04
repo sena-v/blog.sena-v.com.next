@@ -23,5 +23,5 @@ jobs:
           restore-keys: npm-
       - name: install npm package
         run: npm ci
-      - name: type check
+      - name: type lint build check
         run: npm run ci
