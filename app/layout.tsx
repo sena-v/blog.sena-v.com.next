@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     description: siteDescription,
     images: [
       {
-        url: `${siteUrl}/ogp.png`,
+        url: `${siteUrl}/background.png`,
         width: 1200,
         height: 630,
         alt: siteTitle,
