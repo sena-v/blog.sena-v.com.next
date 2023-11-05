@@ -5,15 +5,7 @@ import { getAllPosts } from "src/utils/read-md"
 import * as styles from "./page.css"
 
 import { PostSelectSingle } from "@/components/client/PostSelectSingle/PostSelectSingle"
-import {
-  gitHubUrl,
-  qiitaUrl,
-  siteDescription,
-  siteSourceCodeUrl,
-  siteTitle,
-  siteUrl,
-  twitterUrl,
-} from "@/utils/constants"
+import { gitHubUrl, qiitaUrl, siteSourceCodeUrl, siteTitle, siteUrl, twitterUrl } from "@/utils/constants"
 
 // layout.tsxだとクエリパラメータを取得できないので、page.tsxでメタデータを生成する
 interface Props {
@@ -22,23 +14,23 @@ interface Props {
 
 // 動的設定を用いてメタデータを生成する(urlが何であっても同じメタデータを返すことができる)
 export async function generateMetadata(props: Props): Promise<Metadata> {
-  const { urlWithQuery } = getAllPostAndTargetSlug(props)
+  const { targetPostTitle, urlWithQuery } = getAllPostAndTargetSlug(props)
 
   return {
     title: siteTitle,
-    description: siteDescription,
+    description: targetPostTitle,
     openGraph: {
       type: "website",
       locale: "ja_JP",
       url: urlWithQuery,
       siteName: siteTitle,
-      description: siteDescription,
+      description: targetPostTitle,
       images: `${siteUrl}/background.jpg`,
     },
     twitter: {
       card: "summary_large_image",
       title: siteTitle,
-      description: siteDescription,
+      description: targetPostTitle,
     },
   }
 }
@@ -88,5 +80,7 @@ const getAllPostAndTargetSlug = (props: Props) => {
 
   const urlWithQuery = `${siteUrl}/?slug=${targetSlug}`
 
-  return { allPosts, targetIndex, urlWithQuery }
+  const targetPostTitle = allPosts[targetIndex].title
+
+  return { allPosts, targetIndex, targetPostTitle, urlWithQuery }
 }
