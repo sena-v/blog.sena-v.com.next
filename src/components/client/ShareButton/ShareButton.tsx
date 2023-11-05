@@ -1,3 +1,5 @@
+"use client"
+
 import { FaFacebook, FaTwitter } from "react-icons/fa"
 import { SiHatenabookmark } from "react-icons/si"
 import { FacebookShareButton, TwitterShareButton, HatenaShareButton } from "react-share"

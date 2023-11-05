@@ -22,8 +22,7 @@ interface Props {
 
 // 動的設定を用いてメタデータを生成する(urlが何であっても同じメタデータを返すことができる)
 export async function generateMetadata(props: Props): Promise<Metadata> {
-  const { searchParams } = props
-  const queryUrl = searchParams.slug !== undefined ? `/?slug=${searchParams.slug}` : ""
+  const { urlWithQuery } = getAllPostAndTargetSlug(props)
 
   return {
     title: siteTitle,
@@ -31,7 +30,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
     openGraph: {
       type: "website",
       locale: "ja_JP",
-      url: `${siteUrl}${queryUrl}`,
+      url: urlWithQuery,
       siteName: siteTitle,
       description: siteDescription,
       images: `${siteUrl}/background.jpg`,
@@ -44,8 +43,8 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   }
 }
 
-export default function Home() {
-  const allPosts = getAllPosts(["slug", "title", "coverImage", "date", "tags", "content"])
+export default function Home(props: Props) {
+  const { allPosts, targetIndex } = getAllPostAndTargetSlug(props)
 
   return (
     <main className={styles.main}>
@@ -66,7 +65,28 @@ export default function Home() {
           SourceCode
         </Link>
       </div>
-      <PostSelectSingle posts={allPosts} />
+      <PostSelectSingle posts={allPosts} targetIndex={targetIndex} />
     </main>
   )
+}
+
+const getAllPostAndTargetSlug = (props: Props) => {
+  const allPosts = getAllPosts(["slug", "title", "coverImage", "date", "tags", "content"])
+
+  // slugが一致する対象の記事を取得
+  const targetIndex = (() => {
+    for (let i = 0; i < allPosts.length; i++) {
+      if (allPosts[i].slug === props.searchParams.slug) {
+        return i // 一致する要素のインデックスを返す
+      }
+    }
+    return 0 // 一致する要素が見つからない場合は0を返す(topを表示)
+  })()
+
+  // slugが一致する対象の記事のslugを取得(構造上一致しない場合はtop記事のslugが返る)
+  const targetSlug = allPosts[targetIndex].slug
+
+  const urlWithQuery = `${siteUrl}/?slug=${targetSlug}`
+
+  return { allPosts, targetIndex, urlWithQuery }
 }
