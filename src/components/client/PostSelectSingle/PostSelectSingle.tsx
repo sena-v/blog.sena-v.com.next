@@ -4,7 +4,7 @@ import ReactMarkdown from "react-markdown"
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
 import { okaidia } from "react-syntax-highlighter/dist/cjs/styles/prism"
 
-import styles from "./PostSelectSingle.module.css"
+import * as styles from "./PostSelectSingle.css"
 import { usePostSelectSingle } from "./usePostSelectSingle"
 
 import { SharingButtons } from "@/components/ShareButton/ShareButton"
@@ -17,8 +17,8 @@ export function PostSelectSingle({ posts }: { posts: ItemType[] }) {
     if (!post.coverImage) return <></>
 
     return (
-      <div className={styles.container_post_image}>
-        <img src={post.coverImage} alt={"coverImage"} className={styles.post_image} width="10" height="10" />
+      <div className={styles.containerPostImage}>
+        <img src={post.coverImage} alt={"coverImage"} className={styles.postImage} width="10" height="10" />
       </div>
     )
   }
@@ -26,8 +26,8 @@ export function PostSelectSingle({ posts }: { posts: ItemType[] }) {
   const components = {
     code: CodeBlock,
     img: (props: any) => (
-      <div className={styles.container_post_image}>
-        <img {...props} alt={props.alt ?? "postImage"} className={styles.post_image} width="10" height="10" />
+      <div className={styles.containerPostImage}>
+        <img {...props} alt={props.alt ?? "postImage"} className={styles.postImage} width="10" height="10" />
       </div>
     ),
   }
@@ -38,18 +38,18 @@ export function PostSelectSingle({ posts }: { posts: ItemType[] }) {
       <SharingButtons title={post.title} url={currentUrl} />
       <CoverImage />
       <ReactMarkdown components={components}>{post.content}</ReactMarkdown>
-      <p className={styles.post_date}>{post.date}</p>
-      <div className={styles.button_container}>
+      <p className={styles.postDate}>{post.date}</p>
+      <div className={styles.buttonContainer}>
         <button
-          className={`${styles.button} ${styles.left_button}`}
+          className={`${styles.button} ${styles.leftButton}`}
           onClick={() => moveNextIndexPage(postIndex < 0 ? postIndex - 1 : 0)}
         >
           {"<<<"}
         </button>
-        <div className={styles.button_space} />
-        <p className={styles.button_space}> - {postIndex + 1} - </p>
-        <div className={styles.button_space} />
-        <button className={`${styles.button} ${styles.right_button}`} onClick={() => moveNextIndexPage(postIndex + 1)}>
+        <div className={styles.buttonSpace} />
+        <p className={styles.buttonSpace}> - {postIndex + 1} - </p>
+        <div className={styles.buttonSpace} />
+        <button className={`${styles.button} ${styles.rightButton}`} onClick={() => moveNextIndexPage(postIndex + 1)}>
           {">>>"}
         </button>
       </div>
