@@ -15,15 +15,23 @@ import {
   twitterUrl,
 } from "@/utils/constants"
 
+// layout.tsxだとクエリパラメータを取得できないので、page.tsxでメタデータを生成する
+interface Props {
+  searchParams: Record<string, string | string[] | undefined>
+}
+
 // 動的設定を用いてメタデータを生成する(urlが何であっても同じメタデータを返すことができる)
-export async function generateMetadata(): Promise<Metadata> {
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const { searchParams } = props
+  const queryUrl = searchParams ? `/?slug=${searchParams.slug}` : ""
+
   return {
     title: siteTitle,
     description: siteDescription,
     openGraph: {
       type: "website",
       locale: "ja_JP",
-      url: siteUrl,
+      url: `${siteUrl}${queryUrl}`,
       siteName: siteTitle,
       description: siteDescription,
       images: `${siteUrl}/background.jpg`,
