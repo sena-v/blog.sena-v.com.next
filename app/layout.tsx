@@ -13,14 +13,6 @@ export const metadata: Metadata = {
     url: siteUrl,
     siteName: siteTitle,
     description: siteDescription,
-    images: [
-      {
-        url: `${siteUrl}/background.png`,
-        width: 1200,
-        height: 630,
-        alt: siteTitle,
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
