@@ -32,8 +32,6 @@ export function PostSelectSingle({ posts }: { posts: ItemType[] }) {
     ),
   }
 
-  useEffect(() => globalThis.scroll(0, 0), [post])
-
   return (
     <div className={styles.container}>
       <h1>{post.title}</h1>
