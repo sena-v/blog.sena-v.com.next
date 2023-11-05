@@ -1,7 +1,8 @@
-import { siteUrl } from "@/utils/constants"
-import { ItemType } from "@/utils/read-md"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useEffect } from "react"
+
+import { siteUrl } from "@/utils/constants"
+import { ItemType } from "@/utils/read-md"
 
 export const usePostSelectSingle = (posts: ItemType[]) => {
   const router = useRouter()

@@ -1,14 +1,14 @@
 "use client"
 
-import styles from "./PostSelectSingle.module.css"
 import ReactMarkdown from "react-markdown"
-import { useEffect } from "react"
-import { ItemType } from "@/utils/read-md"
-
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
 import { okaidia } from "react-syntax-highlighter/dist/cjs/styles/prism"
-import { SharingButtons } from "@/components/ShareButton/ShareButton"
+
+import styles from "./PostSelectSingle.module.css"
 import { usePostSelectSingle } from "./usePostSelectSingle"
+
+import { SharingButtons } from "@/components/ShareButton/ShareButton"
+import { ItemType } from "@/utils/read-md"
 
 export function PostSelectSingle({ posts }: { posts: ItemType[] }) {
   const { post, postIndex, currentUrl, moveNextIndexPage } = usePostSelectSingle(posts)

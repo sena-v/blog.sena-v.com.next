@@ -25,7 +25,7 @@ module.exports = {
     sourceType: "module",
     project: ["./tsconfig.json"],
   },
-  plugins: ["react"],
+  plugins: ["react", "import", "unused-imports"],
   rules: {
     // 適さないルールを無効化
     "@typescript-eslint/explicit-function-return-type": "off", // 関数の戻り値の型を記述必須にする
@@ -53,6 +53,43 @@ module.exports = {
         },
       },
     ],
+
+    // 参考: https://qiita.com/yukiji/items/5ba9e065ac6ed57d05a4
+    "import/order": [
+      "error",
+      {
+        groups: [
+          "builtin", // 組み込みモジュール
+          "external", // npmでインストールした外部ライブラリ
+          "internal", // 自作モジュール
+          ["parent", "sibling"],
+          "object",
+          "type",
+          "index",
+        ],
+        "newlines-between": "always", // グループ毎にで改行を入れる
+        pathGroupsExcludedImportTypes: ["builtin"],
+        alphabetize: {
+          order: "asc", // 昇順にソート
+          caseInsensitive: true, // 小文字大文字を区別する
+        },
+        pathGroups: [
+          // 指定した順番にソートされる
+          {
+            pattern: "@/components/common",
+            group: "internal",
+            position: "before",
+          },
+          {
+            pattern: "@/components/hooks",
+            group: "internal",
+            position: "before",
+          },
+        ],
+      },
+    ],
+
+    "unused-imports/no-unused-imports": "error",
   },
   overrides: [
     // Next.js needs default exports for pages and API points
