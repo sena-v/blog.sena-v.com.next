@@ -23,7 +23,7 @@ interface Props {
 // 動的設定を用いてメタデータを生成する(urlが何であっても同じメタデータを返すことができる)
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const { searchParams } = props
-  const queryUrl = searchParams !== undefined ? `/?slug=${searchParams.slug}` : ""
+  const queryUrl = searchParams.slug !== undefined ? `/?slug=${searchParams.slug}` : ""
 
   return {
     title: siteTitle,
