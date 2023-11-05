@@ -1,3 +1,5 @@
+export const siteTitle = "sena-v.com"
+export const siteDescription = "tech and hobby blog by sena-v (Next.js App Router)"
 export const siteUrl = "https://sena-v.com"
 export const gitHubUrl = "https://github.com/sena-v"
 export const qiitaUrl = "https://qiita.com/sena_v"

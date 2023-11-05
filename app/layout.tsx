@@ -2,23 +2,30 @@ import type { Metadata } from "next"
 
 import "./font.css"
 import { Ga4 } from "@/components/client/Ga4/Ga4"
+import { siteDescription, siteTitle, siteUrl } from "@/utils/constants"
 
 export const metadata: Metadata = {
-  title: "sena-v.com",
-  description: "tech and hobby blog by sena-v (Next.js App Router)",
+  title: siteTitle,
+  description: siteDescription,
   openGraph: {
     type: "website",
     locale: "ja_JP",
-    url: "https://sena-v.com",
-    siteName: "sena-v.com",
+    url: siteUrl,
+    siteName: siteTitle,
+    description: siteDescription,
     images: [
       {
-        url: "https://sena-v.com/ogp.png",
+        url: `${siteUrl}/ogp.png`,
         width: 1200,
         height: 630,
-        alt: "sena-v.com",
+        alt: siteTitle,
       },
     ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteTitle,
+    description: siteDescription,
   },
 }
 

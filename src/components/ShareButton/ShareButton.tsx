@@ -1,7 +1,8 @@
-import { FacebookShareButton, TwitterShareButton, HatenaShareButton } from "react-share"
-import * as styles from "./ShareButton.css"
 import { FaFacebook, FaTwitter } from "react-icons/fa"
 import { SiHatenabookmark } from "react-icons/si"
+import { FacebookShareButton, TwitterShareButton, HatenaShareButton } from "react-share"
+
+import * as styles from "./ShareButton.css"
 
 interface SharingButtonsProps {
   title: string
