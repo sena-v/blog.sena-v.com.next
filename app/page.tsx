@@ -5,6 +5,7 @@ import { getAllPosts } from "src/utils/read-md"
 import * as styles from "./page.css"
 
 import { PostSelectSingle } from "@/components/client/PostSelectSingle/PostSelectSingle"
+import { SearchMenu } from "@/components/client/SearchMenu/SearchMenu"
 import { gitHubUrl, qiitaUrl, siteSourceCodeUrl, siteTitle, siteUrl, twitterUrl } from "@/utils/constants"
 
 // layout.tsxだとクエリパラメータを取得できないので、page.tsxでメタデータを生成する
@@ -44,18 +45,19 @@ export default function Home(props: Props) {
         <a href="./">sena-v.com</a>
       </div>
       <div className={styles.linkContainer}>
-        <Link href={gitHubUrl} className={styles.link}>
-          Github
-        </Link>
-        <Link href={qiitaUrl} className={styles.link}>
-          Qiita
-        </Link>
-        <Link href={twitterUrl} className={styles.link}>
-          X(Twitter)
-        </Link>
-        <Link href={siteSourceCodeUrl} className={styles.link}>
-          SourceCode
-        </Link>
+        <div className={styles.link}>
+          <Link href={gitHubUrl}>Github</Link>
+        </div>
+        <div className={styles.link}>
+          <Link href={qiitaUrl}>Qiita</Link>
+        </div>
+        <div className={styles.link}>
+          <Link href={twitterUrl}>X(Twitter)</Link>
+        </div>
+        <div className={styles.link}>
+          <Link href={siteSourceCodeUrl}>SourceCode</Link>
+        </div>
+        <SearchMenu />
       </div>
       <PostSelectSingle posts={allPosts} targetIndex={targetIndex} />
     </main>
