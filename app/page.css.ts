@@ -19,7 +19,6 @@ export const main = style({
   flexDirection: "column",
   justifyContent: "space-between",
   alignItems: "center",
-  padding: "1rem",
   minHeight: "100vh",
   backgroundColor: "white",
   backgroundImage: "url('/background.jpg')",

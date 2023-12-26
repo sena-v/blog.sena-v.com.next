@@ -23,3 +23,15 @@ export const foldableMenu = style({
 
   cursor: "pointer",
 })
+
+export const modal = style({
+  width: "100%",
+  height: "100%",
+  position: "fixed",
+  backgroundColor: "rgba(0,0,0,0.3)",
+  zIndex: 10,
+})
+
+export const modalDisabled = style({
+  display: "none",
+})

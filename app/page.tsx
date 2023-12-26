@@ -5,7 +5,7 @@ import { getAllPosts } from "src/utils/read-md"
 import * as styles from "./page.css"
 
 import { PostSelectSingle } from "@/components/client/PostSelectSingle/PostSelectSingle"
-import { SearchMenu } from "@/components/client/SearchMenu/SearchMenu"
+import { SearchMenuButton, SearchMenuModal } from "@/components/client/SearchMenuModal/SearchMenuModal"
 import { gitHubUrl, qiitaUrl, siteSourceCodeUrl, siteTitle, siteUrl, twitterUrl } from "@/utils/constants"
 
 // layout.tsxだとクエリパラメータを取得できないので、page.tsxでメタデータを生成する
@@ -57,9 +57,10 @@ export default function Home(props: Props) {
         <div className={styles.link}>
           <Link href={siteSourceCodeUrl}>SourceCode</Link>
         </div>
-        <SearchMenu />
+        <SearchMenuButton />
       </div>
       <PostSelectSingle posts={allPosts} targetIndex={targetIndex} />
+      <SearchMenuModal />
     </main>
   )
 }
