@@ -3,9 +3,9 @@ import Link from "next/link"
 import { getAllPosts } from "src/utils/read-md"
 
 import * as styles from "./page.css"
+import { SearchMenuButton, SearchMenuModal } from "./SearchMenuModal"
 
 import { PostSelectSingle } from "@/components/client/PostSelectSingle/PostSelectSingle"
-import { SearchMenuButton, SearchMenuModal } from "@/components/client/SearchMenuModal/SearchMenuModal"
 import { gitHubUrl, qiitaUrl, siteSourceCodeUrl, siteTitle, siteUrl, twitterUrl } from "@/utils/constants"
 
 // layout.tsxだとクエリパラメータを取得できないので、page.tsxでメタデータを生成する
