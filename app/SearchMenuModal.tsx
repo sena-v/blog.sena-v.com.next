@@ -2,6 +2,7 @@ import { cookies } from "next/headers"
 
 import * as styles from "./SearchMenuModal.css"
 
+import { ModalBody } from "@/components/client/SearchMemuModalBoby/SearchMenuModalBody"
 import { toggleModal } from "@/functions/cookie"
 
 export const SearchMenuButton = async () => {
@@ -17,6 +18,8 @@ export const SearchMenuButton = async () => {
 export const SearchMenuModal = () => {
   const isModalOpen = cookies().get("searchMenuModal")?.value
   const modalClassString = isModalOpen === "true" ? styles.modal : `${styles.modal} ${styles.modalDisabled}`
+
+  // const a = getAllTagsAndYears()
 
   const ModalSideComponent = () => {
     return (
@@ -38,12 +41,7 @@ export const SearchMenuModal = () => {
 
       <div className={styles.modalBodyContainer}>
         <ModalSideComponent />
-        <div className={styles.modalBody}>
-          <form action={toggleModal}>
-            <button type="submit">❌</button>
-            aaaaaaaaa
-          </form>
-        </div>
+        <ModalBody />
         <ModalSideComponent />
       </div>
 

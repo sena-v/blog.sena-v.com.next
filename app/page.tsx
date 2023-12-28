@@ -1,6 +1,7 @@
 import { Metadata } from "next"
+import { cookies } from "next/headers"
 import Link from "next/link"
-import { getAllPosts } from "src/utils/read-md"
+import { getAllPosts, getFilteredPost, ItemType } from "src/utils/read-md"
 
 import * as styles from "./page.css"
 import { SearchMenuButton, SearchMenuModal } from "./SearchMenuModal"
@@ -15,7 +16,7 @@ interface Props {
 
 // 動的設定を用いてメタデータを生成する(urlが何であっても同じメタデータを返すことができる)
 export async function generateMetadata(props: Props): Promise<Metadata> {
-  const { targetPostTitle, urlWithQuery } = getAllPostAndTargetSlug(props)
+  const { targetPostTitle, urlWithQuery } = initPostsData(props)
 
   return {
     title: siteTitle,
@@ -37,7 +38,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 }
 
 export default function Home(props: Props) {
-  const { allPosts, targetIndex } = getAllPostAndTargetSlug(props)
+  const { posts, targetIndex } = initPostsData(props)
 
   return (
     <main className={styles.main}>
@@ -59,19 +60,28 @@ export default function Home(props: Props) {
         </div>
         <SearchMenuButton />
       </div>
-      <PostSelectSingle posts={allPosts} targetIndex={targetIndex} />
+      <PostSelectSingle posts={posts} targetIndex={targetIndex} />
       <SearchMenuModal />
     </main>
   )
 }
 
-const getAllPostAndTargetSlug = (props: Props) => {
-  const allPosts = getAllPosts(["slug", "title", "coverImage", "date", "tags", "content"])
+const initPostsData = (props: Props) => {
+  // cookieにfilterParamsがセットされているかどうかで表示する記事を判定
+  const posts: ItemType[] = (() => {
+    const allPosts = getAllPosts(["slug", "title", "coverImage", "date", "tags", "content"])
+    const filterParams = decodeURI(cookies().get("filterParams")?.value ?? "")
+
+    if (!filterParams) return allPosts
+    const filteredPost = getFilteredPost(filterParams)
+
+    return filterParams ? filteredPost : allPosts
+  })()
 
   // slugが一致する対象の記事を取得
   const targetIndex = (() => {
-    for (let i = 0; i < allPosts.length; i++) {
-      if (allPosts[i].slug === props.searchParams.slug) {
+    for (let i = 0; i < posts.length; i++) {
+      if (posts[i].slug === props.searchParams.slug) {
         return i // 一致する要素のインデックスを返す
       }
     }
@@ -79,11 +89,10 @@ const getAllPostAndTargetSlug = (props: Props) => {
   })()
 
   // slugが一致する対象の記事のslugを取得(構造上一致しない場合はtop記事のslugが返る)
-  const targetSlug = allPosts[targetIndex].slug
+  const targetSlug = posts[targetIndex].slug
+  const targetPostTitle = posts[targetIndex].title
 
   const urlWithQuery = `${siteUrl}/?slug=${targetSlug}`
 
-  const targetPostTitle = allPosts[targetIndex].title
-
-  return { allPosts, targetIndex, targetPostTitle, urlWithQuery }
+  return { posts, targetIndex, targetPostTitle, urlWithQuery }
 }

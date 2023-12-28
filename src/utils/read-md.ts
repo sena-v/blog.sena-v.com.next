@@ -17,9 +17,10 @@ export interface ItemType {
 const postsDirectory = join(process.cwd(), "posts")
 
 // posts配下にあるディレクトリ名(slug)をすべて取得する
-export const getPostSlugs = () => {
+export const getPostDates = () => {
   // まずはファイル名、ディレクトリ名を両方取得する
   const allDirents = fs.readdirSync(postsDirectory, { withFileTypes: true })
+
   // ディレクトリ名のみに絞り込んで返す
   return allDirents.filter((dirent) => dirent.isDirectory()).map(({ name }) => name)
 }
@@ -29,7 +30,7 @@ export const getPostSlugs = () => {
  * @param slug
  * @param fields 取得したい値 (slug | content | title | tags)
  */
-export const getPostBySlug = (postDate: string, fields: string[] = []) => {
+export const getPostByDate = (postDate: string, fields: string[] = []) => {
   // ファイルを読み込む
   const fullPath = join(postsDirectory, postDate, "index.md")
   const fileContents = fs.readFileSync(fullPath, "utf8")
@@ -75,9 +76,9 @@ export const getPostBySlug = (postDate: string, fields: string[] = []) => {
  * @param fields 取得したい値 (slug | content | title | tags)
  */
 export const getAllPosts = (fields: string[] = []) => {
-  const slugs = getPostSlugs()
-  const posts = slugs
-    .map((slug) => getPostBySlug(slug, fields))
+  const dates = getPostDates()
+  const posts = dates
+    .map((date) => getPostByDate(date, fields))
     .sort((a, b) => {
       // 日付順ソート
       const slugA = a.date
@@ -94,4 +95,74 @@ export const getAllPosts = (fields: string[] = []) => {
     })
 
   return posts
+}
+
+export const getFilteredPost = (filterParams: string) => {
+  // stringでcookieに保存された値から各パラメータを取得する
+  const { titleWords, selectedTags, years }: { titleWords: string[]; selectedTags: string[]; years: string[] } =
+    JSON.parse(filterParams)
+
+  const posts = getAllPosts(["slug", "title", "tags", "date"])
+
+  // 全値が一致する要素のみ配列化する
+  const filteredPost: ItemType[] = posts.filter((post) => {
+    const isTitleMatched =
+      titleWords.length === 0 ? true : titleWords.every((titleWord) => post.title.includes(titleWord))
+    const isTagMatched = selectedTags.every((tag) => post.tags.includes(tag))
+    const isYearMatched = years.some((y) => post.date.includes(y))
+
+    return isTitleMatched && isTagMatched && isYearMatched && post
+  })
+
+  return filteredPost
+}
+
+export const getAllTagsAndYears = () => {
+  const posts = getAllPosts(["slug", "title", "tags", "date"])
+
+  const tags = posts.map((post) => post.tags).flat()
+  const years = posts.map((post) => post.date.slice(0, 4))
+
+  const sortAndCount = (recordArr: Record<string, number>) => {
+    return Object.entries(recordArr).sort((a, b) => {
+      const isAlphabetA = /^[a-zA-Z]/.test(a[0])
+      const isAlphabetB = /^[a-zA-Z]/.test(b[0])
+
+      if (isAlphabetA && isAlphabetB) {
+        // 両方ともアルファベット
+        return b[1] - a[1]
+      } else if (isAlphabetA) {
+        // Aがアルファベット
+        return -1
+      } else if (isAlphabetB) {
+        // Bがアルファベット
+        return 1
+      } else {
+        // どちらもアルファベットでない
+        return b[1] - a[1]
+      }
+    })
+  }
+
+  // 同名をまとめてカウントした値と合わせて返す
+  const countOccurrences = (arr: string[]): Record<string, number> => {
+    const result: Record<string, number> = {}
+
+    arr.forEach((value) => {
+      if (result[value]) {
+        result[value]++
+      } else {
+        result[value] = 1
+      }
+    })
+
+    return result
+  }
+
+  const tagsCount = sortAndCount(countOccurrences(tags))
+  const yearsCount = sortAndCount(countOccurrences(years)).sort((a, b) => {
+    return Number(b[0]) - Number(a[0])
+  })
+
+  return { tagsCount, yearsCount }
 }
