@@ -12,15 +12,25 @@ export const toggleModal = async () => {
   }
 }
 
-export const setSearchModalParams = async (formData: FormData) => {
-  // formDataをdecodableな形でcookieに保存する
-  formData.forEach((value, key) => {})
-
-  cookies().set("searchModalParams", JSON.stringify({ aaaa: "bbbb" }))
-
-  console.log(formData) // cookies().get("searchMenuModal")?.value)
+export interface SearchModalParamsType {
+  titleWords: string[]
+  selectedTags: string[]
+  years: string[]
 }
 
-export const clearSearchModalParams = async (formData: FormData) => {
+// 記事の絞り込み条件をクッキーに保存
+export const setSearchModalParams = async (formData: SearchModalParamsType) => {
+  cookies().set(
+    "searchModalParams",
+    JSON.stringify({
+      titleWords: formData.titleWords,
+      selectedTags: formData.selectedTags,
+      years: formData.years ? formData.years : [],
+    }),
+  )
+}
+
+export const clearSearchModalParams = async () => {
   cookies().delete("searchModalParams")
+  cookies().delete("searchMenuModal")
 }

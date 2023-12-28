@@ -75,7 +75,9 @@ export const getPostByDate = (postDate: string, fields: string[] = []) => {
  * すべての記事から指定したfieldsの値を取得する
  * @param fields 取得したい値 (slug | content | title | tags)
  */
-export const getAllPosts = (fields: string[] = []) => {
+export const getAllPosts = () => {
+  const fields = ["slug", "title", "coverImage", "date", "tags", "content"]
+
   const dates = getPostDates()
   const posts = dates
     .map((date) => getPostByDate(date, fields))
@@ -99,17 +101,19 @@ export const getAllPosts = (fields: string[] = []) => {
 
 export const getFilteredPost = (filterParams: string) => {
   // stringでcookieに保存された値から各パラメータを取得する
-  const { titleWords, selectedTags, years }: { titleWords: string[]; selectedTags: string[]; years: string[] } =
+  const { titleWords, selectedTags, years }: { titleWords: string; selectedTags: string[]; years: string[] } =
     JSON.parse(filterParams)
 
-  const posts = getAllPosts(["slug", "title", "tags", "date"])
+  const _titleWords = titleWords.split(" ")
+  const _selectedTags = selectedTags ?? []
 
   // 全値が一致する要素のみ配列化する
+  const posts = getAllPosts()
   const filteredPost: ItemType[] = posts.filter((post) => {
     const isTitleMatched =
-      titleWords.length === 0 ? true : titleWords.every((titleWord) => post.title.includes(titleWord))
-    const isTagMatched = selectedTags.every((tag) => post.tags.includes(tag))
-    const isYearMatched = years.some((y) => post.date.includes(y))
+      _titleWords.length === 0 ? true : _titleWords.every((titleWord) => post.title.includes(titleWord))
+    const isTagMatched = _selectedTags.length === 0 ? true : _selectedTags.every((tag) => post.tags.includes(tag))
+    const isYearMatched = years.length === 0 ? true : years.some((y) => post.date.includes(y))
 
     return isTitleMatched && isTagMatched && isYearMatched && post
   })
@@ -118,7 +122,7 @@ export const getFilteredPost = (filterParams: string) => {
 }
 
 export const getAllTagsAndYears = () => {
-  const posts = getAllPosts(["slug", "title", "tags", "date"])
+  const posts = getAllPosts()
 
   const tags = posts.map((post) => post.tags).flat()
   const years = posts.map((post) => post.date.slice(0, 4))

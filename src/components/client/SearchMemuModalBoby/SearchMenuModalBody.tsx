@@ -1,10 +1,24 @@
 "use client"
 
+import { redirect } from "next/navigation"
+import { SubmitHandler, useForm } from "react-hook-form"
+
 import * as styles from "./SearchMenuModalBody.css"
 
-import { clearSearchModalParams, setSearchModalParams, toggleModal } from "@/functions/cookie"
+import { SearchModalParamsType, clearSearchModalParams, setSearchModalParams, toggleModal } from "@/functions/cookie"
 
 export const ModalBody = () => {
+  const { register, handleSubmit } = useForm<SearchModalParamsType>()
+
+  const onSubmit: SubmitHandler<SearchModalParamsType> = async (data) => {
+    await setSearchModalParams(data)
+  }
+
+  const resetSelect = async () => {
+    await clearSearchModalParams()
+    redirect("/")
+  }
+
   return (
     <div className={styles.modalBody}>
       <form action={toggleModal}>
@@ -12,21 +26,22 @@ export const ModalBody = () => {
           <button type="submit">❌</button>
         </div>
       </form>
-      <form action={setSearchModalParams}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div>
-          ・フリーワード <input type="text" name="freeWord" />
+          ・フリーワード <input {...register("titleWords")} />
         </div>
         <div>・ジャンルタグ </div>
         <div>
-          ・年数 <input type="checkbox" name="years" value="2023" />
+          <input type="hidden" {...register("years")} value="" disabled />
+          ・年数 <input type="checkbox" {...register("years")} value="2023" />
           2023
-          <input type="checkbox" name="years" value="2022" />
+          <input type="checkbox" {...register("years")} value="2022" />
           2022
         </div>
         <button type="submit">⭕️</button>
       </form>
-      <form action={clearSearchModalParams}>
-        <button type="submit">クリア</button>
+      <form action={resetSelect}>
+        <button type="submit">絞り込みをクリア</button>
       </form>
     </div>
   )

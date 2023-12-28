@@ -16,7 +16,8 @@ interface Props {
 
 // 動的設定を用いてメタデータを生成する(urlが何であっても同じメタデータを返すことができる)
 export async function generateMetadata(props: Props): Promise<Metadata> {
-  const { targetPostTitle, urlWithQuery } = initPostsData(props)
+  const filterParams = decodeURI(cookies().get("searchModalParams")?.value ?? "")
+  const { targetPostTitle, urlWithQuery } = initPostsData(props, filterParams)
 
   return {
     title: siteTitle,
@@ -38,7 +39,8 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 }
 
 export default function Home(props: Props) {
-  const { posts, targetIndex } = initPostsData(props)
+  const filterParams = cookies().get("searchModalParams")?.value
+  const { posts, targetIndex } = initPostsData(props, filterParams)
 
   return (
     <main className={styles.main}>
@@ -66,16 +68,17 @@ export default function Home(props: Props) {
   )
 }
 
-const initPostsData = (props: Props) => {
+const initPostsData = (props: Props, filterParams: string | undefined) => {
   // cookieにfilterParamsがセットされているかどうかで表示する記事を判定
   const posts: ItemType[] = (() => {
-    const allPosts = getAllPosts(["slug", "title", "coverImage", "date", "tags", "content"])
-    const filterParams = decodeURI(cookies().get("filterParams")?.value ?? "")
+    const allPosts = getAllPosts()
 
     if (!filterParams) return allPosts
     const filteredPost = getFilteredPost(filterParams)
 
-    return filterParams ? filteredPost : allPosts
+    // 正しくフィルタリングされている場合はフィルタリング結果を返す
+    if (filterParams && filteredPost.length > 0) return filteredPost
+    else return allPosts
   })()
 
   // slugが一致する対象の記事を取得
