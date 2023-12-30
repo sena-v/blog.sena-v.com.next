@@ -3,6 +3,8 @@ import { join } from "path"
 
 import matter from "gray-matter"
 
+import { SearchModalParamsType } from "@/functions/cookie"
+
 export interface ItemType {
   slug: string
   content: string
@@ -99,13 +101,13 @@ export const getAllPosts = () => {
   return posts
 }
 
-export const getFilteredPost = (filterParams: string) => {
+export const getFilteredPost = (filterParams: string | SearchModalParamsType) => {
   // stringでcookieに保存された値から各パラメータを取得する
-  const { titleWords, selectedTags, years }: { titleWords: string; selectedTags: string[]; years: string[] } =
-    JSON.parse(filterParams)
+  const { titleWords, tags, years }: { titleWords: string; tags: string[]; years: string[] } =
+    typeof filterParams === "string" ? JSON.parse(filterParams) : filterParams
 
   const _titleWords = titleWords.split(" ")
-  const _selectedTags = selectedTags ?? []
+  const _selectedTags = tags || []
 
   // 全値が一致する要素のみ配列化する
   const posts = getAllPosts()
@@ -124,8 +126,8 @@ export const getFilteredPost = (filterParams: string) => {
 export const getAllTagsAndYears = () => {
   const posts = getAllPosts()
 
-  const tags = posts.map((post) => post.tags).flat()
-  const years = posts.map((post) => post.date.slice(0, 4))
+  const _tags = posts.map((post) => post.tags).flat()
+  const _years = posts.map((post) => post.date.slice(0, 4))
 
   const sortAndCount = (recordArr: Record<string, number>) => {
     return Object.entries(recordArr).sort((a, b) => {
@@ -163,10 +165,10 @@ export const getAllTagsAndYears = () => {
     return result
   }
 
-  const tagsCount = sortAndCount(countOccurrences(tags))
-  const yearsCount = sortAndCount(countOccurrences(years)).sort((a, b) => {
+  const tags: Array<[string, number]> = sortAndCount(countOccurrences(_tags))
+  const years: Array<[string, number]> = sortAndCount(countOccurrences(_years)).sort((a, b) => {
     return Number(b[0]) - Number(a[0])
   })
 
-  return { tagsCount, yearsCount }
+  return { tags, years }
 }

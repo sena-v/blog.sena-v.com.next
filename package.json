@@ -6,7 +6,7 @@
     "build": "next build",
     "ci": "next lint && npm run typecheck && npm run build",
     "clean-up-branch": "git checkout main && git branch --merged main | grep -v -e main | xargs -I{} git branch -d {}",
-    "dev": "npm run format && npm outdated; echo '\r'; next dev",
+    "dev": "rm -r .next; npm run format && npm outdated; echo '\r'; next dev",
     "format": "prettier --write --log-level silent . ",
     "lint": "next lint",
     "start": "next start",

@@ -10,12 +10,17 @@ import { PostSelectSingle } from "@/components/client/PostSelectSingle/PostSelec
 import { gitHubUrl, qiitaUrl, siteSourceCodeUrl, siteTitle, siteUrl, twitterUrl } from "@/utils/constants"
 
 // layout.tsxだとクエリパラメータを取得できないので、page.tsxでメタデータを生成する
-interface Props {
+interface PropsTypes {
   searchParams: Record<string, string | string[] | undefined>
 }
 
+export interface PostDataTypes {
+  posts: ItemType[]
+  filterResult: boolean | undefined
+}
+
 // 動的設定を用いてメタデータを生成する(urlが何であっても同じメタデータを返すことができる)
-export async function generateMetadata(props: Props): Promise<Metadata> {
+export async function generateMetadata(props: PropsTypes): Promise<Metadata> {
   const filterParams = decodeURI(cookies().get("searchModalParams")?.value ?? "")
   const { targetPostTitle, urlWithQuery } = initPostsData(props, filterParams)
 
@@ -38,9 +43,9 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   }
 }
 
-export default function Home(props: Props) {
+export default function Home(props: PropsTypes) {
   const filterParams = cookies().get("searchModalParams")?.value
-  const { posts, targetIndex } = initPostsData(props, filterParams)
+  const { data, targetIndex } = initPostsData(props, filterParams)
 
   return (
     <main className={styles.main}>
@@ -62,29 +67,29 @@ export default function Home(props: Props) {
         </div>
         <SearchMenuButton />
       </div>
-      <PostSelectSingle posts={posts} targetIndex={targetIndex} />
-      <SearchMenuModal />
+      <PostSelectSingle data={data} targetIndex={targetIndex} />
+      <SearchMenuModal data={data} />
     </main>
   )
 }
 
-const initPostsData = (props: Props, filterParams: string | undefined) => {
+const initPostsData = (props: PropsTypes, filterParams: string | undefined) => {
   // cookieにfilterParamsがセットされているかどうかで表示する記事を判定
-  const posts: ItemType[] = (() => {
+  const data: PostDataTypes = (() => {
     const allPosts = getAllPosts()
 
-    if (!filterParams) return allPosts
+    if (!filterParams) return { posts: allPosts, filterResult: undefined }
     const filteredPost = getFilteredPost(filterParams)
 
     // 正しくフィルタリングされている場合はフィルタリング結果を返す
-    if (filterParams && filteredPost.length > 0) return filteredPost
-    else return allPosts
+    if (filterParams && filteredPost.length > 0) return { posts: filteredPost, filterResult: true }
+    else return { posts: allPosts, filterResult: false }
   })()
 
   // slugが一致する対象の記事を取得
   const targetIndex = (() => {
-    for (let i = 0; i < posts.length; i++) {
-      if (posts[i].slug === props.searchParams.slug) {
+    for (let i = 0; i < data.posts.length; i++) {
+      if (data.posts[i].slug === props.searchParams.slug) {
         return i // 一致する要素のインデックスを返す
       }
     }
@@ -92,10 +97,10 @@ const initPostsData = (props: Props, filterParams: string | undefined) => {
   })()
 
   // slugが一致する対象の記事のslugを取得(構造上一致しない場合はtop記事のslugが返る)
-  const targetSlug = posts[targetIndex].slug
-  const targetPostTitle = posts[targetIndex].title
+  const targetSlug = data.posts[targetIndex].slug
+  const targetPostTitle = data.posts[targetIndex].title
 
   const urlWithQuery = `${siteUrl}/?slug=${targetSlug}`
 
-  return { posts, targetIndex, targetPostTitle, urlWithQuery }
+  return { data, targetIndex, targetPostTitle, urlWithQuery }
 }

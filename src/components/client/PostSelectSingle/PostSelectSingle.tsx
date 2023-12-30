@@ -1,13 +1,13 @@
+import { PostDataTypes } from "app/page"
+
 import { MarkDown } from "./MarkDown"
 import * as styles from "./PostSelectSingle.css"
 import { usePostSelectSingle } from "./usePostSelectSingle"
 import { SharingButtons } from "../ShareButton/ShareButton"
 import { UnderPagingButton } from "../UnderPagingButton/UnderPagingButton"
 
-import { ItemType } from "@/utils/read-md"
-
-export function PostSelectSingle(props: { posts: ItemType[]; targetIndex: number }) {
-  const { targetPost, currentUrl } = usePostSelectSingle(props)
+export function PostSelectSingle(props: { data: PostDataTypes; targetIndex: number }) {
+  const { targetPost, currentUrl } = usePostSelectSingle(props.data.posts, props.targetIndex)
 
   const CoverImage = () => {
     if (!targetPost.coverImage) return <></>
@@ -26,7 +26,7 @@ export function PostSelectSingle(props: { posts: ItemType[]; targetIndex: number
       <CoverImage />
       <MarkDown post={targetPost} />
       <p className={styles.postDate}>{targetPost.date}</p>
-      <UnderPagingButton {...props} />
+      <UnderPagingButton posts={props.data.posts} targetIndex={props.targetIndex} />
     </div>
   )
 }

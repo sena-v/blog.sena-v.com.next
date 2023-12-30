@@ -14,20 +14,21 @@ export const toggleModal = async () => {
 
 export interface SearchModalParamsType {
   titleWords: string[]
-  selectedTags: string[]
+  tags: string[]
   years: string[]
 }
 
 // 記事の絞り込み条件をクッキーに保存
 export const setSearchModalParams = async (formData: SearchModalParamsType) => {
-  cookies().set(
-    "searchModalParams",
-    JSON.stringify({
-      titleWords: formData.titleWords,
-      selectedTags: formData.selectedTags,
-      years: formData.years ? formData.years : [],
-    }),
-  )
+  const data = {
+    titleWords: formData.titleWords,
+    tags: formData.tags,
+    years: formData.years ? formData.years : [],
+  }
+
+  cookies().set("searchModalParams", JSON.stringify(data))
+
+  console.log("setSearchModalParams", data)
 }
 
 export const clearSearchModalParams = async () => {
