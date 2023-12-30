@@ -35,13 +35,14 @@ export const SearchMenuModalBody = (props: {
         <div className={styles.modalTitle}>Search Menu</div>
       </form>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          ・フリーワード <input {...register("titleWords")} />
+        <div>・フリーワード</div>
+        <div className={styles.selectArea}>
+          <input {...register("titleWords")} />
         </div>
         <div>・ジャンルタグ </div>
-        <div>
+        <div className={styles.selectArea}>
           {props.tags.map((tag) => (
-            <span key={tag[0]}>
+            <span key={tag[0]} className={styles.tags}>
               <label>{tag[0]}</label>
               <input type="checkbox" {...register("tags")} value={tag[0]} />
             </span>
@@ -49,7 +50,7 @@ export const SearchMenuModalBody = (props: {
         </div>
         <div>
           ・年数
-          <div>
+          <div className={styles.selectArea}>
             {props.years.map((year) => (
               <span key={year[0]}>
                 <label>{year[0]}</label>
@@ -58,7 +59,11 @@ export const SearchMenuModalBody = (props: {
             ))}
           </div>
         </div>
-        <button type="submit">⭕️</button>
+        <div className={styles.submitButtonArea}>
+          <button type="submit" className={styles.button}>
+            Search articles
+          </button>
+        </div>
       </form>
       <div className={styles.searchResult}>絞り込み後件数：{props.postsCount}</div>
       <div className={styles.errorMessage}>
@@ -66,9 +71,13 @@ export const SearchMenuModalBody = (props: {
         <br />
         {props.filterResult === false && "※複合条件の場合検索結果が少なくなります"}
       </div>
-      <form action={resetSelect}>
-        <button type="submit">絞り込みをクリア</button>
-      </form>
+      <div className={styles.submitButtonArea}>
+        <form action={resetSelect}>
+          <button type="submit" className={styles.button}>
+            Delete all & return to site top
+          </button>
+        </form>
+      </div>
     </div>
   )
 }

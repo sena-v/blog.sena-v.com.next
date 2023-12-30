@@ -41,17 +41,53 @@ export const closeButton = style({
 })
 
 export const modalTitle = style({
-  fontSize: "20px",
+  fontSize: "30px",
+  textAlign: "center",
+
+  fontFamily: "'Caveat', cursive",
+})
+
+export const selectArea = style({
+  margin: "5px 15px",
+})
+
+export const submitButtonArea = style({
   textAlign: "center",
 })
 
+export const button = style({
+  height: "40px",
+  width: "230px",
+
+  background: "#333",
+  color: "#ccc",
+  border: "0",
+  fontSize: "14px",
+  borderRadius: "4px",
+  fontFamily: "'Raleway', sans-serif",
+  transition: "0.3s",
+  overflow: "hidden",
+
+  ":hover": {
+    color: "white",
+  },
+})
+
+export const tags = style({
+  display: "inline-block",
+  height: "30px",
+})
+
 export const searchResult = style({
-  margin: "10px auto",
+  margin: "10px 0px 5px 0px",
   textAlign: "center",
 })
 
 export const errorMessage = style({
-  margin: "20px auto",
+  height: "50px",
+  margin: "0px 0px 5px 0px",
+
   textAlign: "center",
+  fontSize: "14px",
   color: "red",
 })
