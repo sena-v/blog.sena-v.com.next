@@ -22,6 +22,11 @@ export const foldableMenu = style({
   backgroundColor: "#3d3d3d",
 
   cursor: "pointer",
+  transition: "0.2s",
+
+  ":hover": {
+    backgroundColor: "#4d4d4d",
+  },
 })
 
 export const modal = style({
