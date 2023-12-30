@@ -62,4 +62,10 @@ export const link = style({
   fontStyle: "bold",
 
   color: "white",
+
+  transition: "0.2s",
+
+  ":hover": {
+    backgroundColor: "rgba(30,30,30,0.2)",
+  },
 })
