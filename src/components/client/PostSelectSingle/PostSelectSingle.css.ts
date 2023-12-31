@@ -46,6 +46,13 @@ export const footer = style({
   textAlign: "center",
 })
 
+/* リンクのスタイル */
+export const link = style({
+  color: "rgba(60,100,230)",
+  textDecoration: "none",
+  fontWeight: "bold",
+})
+
 export const containerPostImage = style({
   backgroundColor: "#ffffff",
   display: "block",
@@ -57,11 +64,9 @@ export const containerPostImage = style({
 })
 
 export const postImage = style({
-  objectFit: "cover",
-  height: "200px",
-  width: "auto",
-  maxHeight: "100%",
-  maxWidth: "auto",
+  objectFit: "contain",
+  height: "100%",
+  width: "100%",
 })
 
 export const postDate = style({

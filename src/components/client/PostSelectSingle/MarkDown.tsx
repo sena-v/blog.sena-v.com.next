@@ -10,6 +10,7 @@ import { ItemType } from "@/utils/read-md"
 
 export function MarkDown({ post }: { post: ItemType }) {
   const components = {
+    a: (props: any) => <a {...props} className={styles.link} />,
     code: CodeBlock,
     img: (props: any) => (
       <div className={styles.containerPostImage}>
@@ -25,6 +26,7 @@ function CodeBlock({ inline, className, children }: any) {
   if (inline) {
     return <code className={className}>{children}</code>
   }
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   const match = /language-(\w+)/.exec(className || "")
   const lang = match && match[1] ? match[1] : ""
   return (
