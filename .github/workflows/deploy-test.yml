@@ -30,5 +30,9 @@ jobs:
       - name: Wait Before Invalidate
         run: sleep 120
 
+      # prodでは本番に向けたいのでenvを設定
+      - name: Set NODE_ENV to production
+        run: echo "NODE_ENV=production" >> $GITHUB_ENV
+
       - name: Check e2e
         run: npx playwright e2e
