@@ -27,8 +27,6 @@ export const setSearchModalParams = async (formData: SearchModalParamsType) => {
   }
 
   cookies().set("searchModalParams", JSON.stringify(data))
-
-  console.log("setSearchModalParams", data)
 }
 
 export const clearSearchModalParams = async () => {

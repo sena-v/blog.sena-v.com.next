@@ -11,7 +11,7 @@ export const modalBody = style({
   border: "1px solid black",
 })
 
-export const closeButtonArea = style({
+export const headerButtonContainer = style({
   textAlign: "right",
 })
 
@@ -40,6 +40,24 @@ export const closeButton = style({
   },
 })
 
+export const initButton = style({
+  height: "40px",
+  width: "80px",
+
+  color: "black",
+  backgroundColor: "white",
+  border: "0",
+  fontSize: "14px",
+  borderRadius: "4px",
+  fontFamily: "'Raleway', sans-serif",
+  transition: "0.3s",
+  overflow: "hidden",
+
+  ":hover": {
+    fontWeight: "bold",
+  },
+})
+
 export const modalTitle = style({
   fontSize: "30px",
   textAlign: "center",
@@ -47,15 +65,38 @@ export const modalTitle = style({
   fontFamily: "'Caveat', cursive",
 })
 
+export const selectAreaContainer = style({
+  margin: "15px auto",
+})
+
 export const selectArea = style({
-  margin: "5px 15px",
+  display: "inline-block",
+  width: "100%",
+  margin: "0px 15px",
+})
+
+export const inputTitleWords = style({
+  width: "95%",
+  height: "20px",
+
+  borderWidth: "0 0 1px 0",
+  borderStyle: "solid",
+  borderColor: "rgba(0,76,170,0.4)",
+
+  ":focus": {
+    outline: "none",
+  },
 })
 
 export const submitButtonArea = style({
   textAlign: "center",
 })
 
-export const button = style({
+export const headerButtonArea = style({
+  display: "inline-block",
+})
+
+export const searchButton = style({
   height: "40px",
   width: "230px",
 
@@ -73,9 +114,31 @@ export const button = style({
   },
 })
 
-export const tags = style({
+const commonCheckBoxButtonValue = {
   display: "inline-block",
   height: "30px",
+  lineHeight: "30px",
+  color: "#FFFFFF",
+
+  padding: "0 10px",
+  margin: "2px 2px",
+
+  borderRadius: "15px",
+}
+
+export const checkBoxButton = style({
+  ...commonCheckBoxButtonValue,
+
+  background: "rgba(0,76,170,0.4)",
+})
+export const selectedCheckBoxButton = style({
+  ...commonCheckBoxButtonValue,
+
+  background: "rgba(0,76,170,1)",
+})
+
+export const footerAreaContainer = style({
+  margin: "60px auto",
 })
 
 export const searchResult = style({
@@ -90,4 +153,12 @@ export const errorMessage = style({
   textAlign: "center",
   fontSize: "14px",
   color: "red",
+
+  animation: "shake .1s linear infinite",
+})
+
+export const label = style({
+  display: "inline-block",
+  width: "auto",
+  maxWidth: "100%",
 })
