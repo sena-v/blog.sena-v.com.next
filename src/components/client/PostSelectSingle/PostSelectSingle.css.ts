@@ -66,6 +66,13 @@ export const postImage = style({
   objectFit: "contain",
   height: "100%",
   width: "100%",
+
+  overflow: "hidden",
+  transition: "0.3s ease",
+
+  ":hover": {
+    transform: "scale(0.95)",
+  },
 })
 
 export const postDate = style({
