@@ -16,7 +16,7 @@ export const SearchMenuModalBody = (props: {
   const { register, handleSubmit } = useForm<SearchModalParamsType>()
 
   const onSubmit: SubmitHandler<SearchModalParamsType> = async (data) => {
-    await setSearchModalParams(data)
+    await setSearchModalParams(data as SearchModalParamsType)
   }
 
   const resetSelect = async () => {
