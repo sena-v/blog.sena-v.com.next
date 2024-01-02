@@ -19,7 +19,6 @@ export const main = style({
   flexDirection: "column",
   justifyContent: "space-between",
   alignItems: "center",
-  padding: "1rem",
   minHeight: "100vh",
   backgroundColor: "white",
   backgroundImage: "url('/background.jpg')",
@@ -39,13 +38,14 @@ export const title = style({
   fontStyle: "bold",
 })
 export const linkContainer = style({
-  maxWidth: "1100px",
-  width: "var(--max-width)",
-  margin: "4px auto",
+  width: "950px",
+  margin: "0px auto",
   fontFamily: "'Caveat', cursive",
   fontSize: "20px",
   color: "white",
   fontStyle: "bold",
+
+  display: "flex",
 
   "@media": {
     "screen and (max-width:1080px)": {
@@ -55,6 +55,17 @@ export const linkContainer = style({
 })
 
 export const link = style({
-  margin: "100px",
+  height: "35px",
+  lineHeight: "35px",
+  width: "190px",
+  textAlign: "center",
+  fontStyle: "bold",
+
   color: "white",
+
+  transition: "0.2s",
+
+  ":hover": {
+    backgroundColor: "rgba(30,30,30,0.2)",
+  },
 })

@@ -90,6 +90,7 @@ module.exports = {
     ],
 
     "unused-imports/no-unused-imports": "error",
+    "@next/next/no-img-element": "off",
   },
   overrides: [
     // Next.js needs default exports for pages and API points

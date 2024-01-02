@@ -1,20 +1,28 @@
 import { Metadata } from "next"
+import { cookies } from "next/headers"
 import Link from "next/link"
-import { getAllPosts } from "src/utils/read-md"
+import { getAllPosts, getFilteredPost, ItemType } from "src/utils/read-md"
 
 import * as styles from "./page.css"
+import { SearchMenuButton, SearchMenuModal } from "./SearchMenuModal"
 
 import { PostSelectSingle } from "@/components/client/PostSelectSingle/PostSelectSingle"
 import { gitHubUrl, qiitaUrl, siteSourceCodeUrl, siteTitle, siteUrl, twitterUrl } from "@/utils/constants"
 
 // layout.tsxだとクエリパラメータを取得できないので、page.tsxでメタデータを生成する
-interface Props {
+interface PropsTypes {
   searchParams: Record<string, string | string[] | undefined>
 }
 
+export interface PostDataTypes {
+  posts: ItemType[]
+  filterResult: boolean | undefined
+}
+
 // 動的設定を用いてメタデータを生成する(urlが何であっても同じメタデータを返すことができる)
-export async function generateMetadata(props: Props): Promise<Metadata> {
-  const { targetPostTitle, urlWithQuery } = getAllPostAndTargetSlug(props)
+export async function generateMetadata(props: PropsTypes): Promise<Metadata> {
+  const filterParams = decodeURI(cookies().get("searchModalParams")?.value ?? "")
+  const { targetPostTitle, urlWithQuery } = initPostsData(props, filterParams)
 
   return {
     title: siteTitle,
@@ -35,8 +43,9 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   }
 }
 
-export default function Home(props: Props) {
-  const { allPosts, targetIndex } = getAllPostAndTargetSlug(props)
+export default function Home(props: PropsTypes) {
+  const filterParams = cookies().get("searchModalParams")?.value
+  const { data, targetIndex } = initPostsData(props, filterParams)
 
   return (
     <main className={styles.main}>
@@ -44,31 +53,43 @@ export default function Home(props: Props) {
         <a href="./">sena-v.com</a>
       </div>
       <div className={styles.linkContainer}>
-        <Link href={gitHubUrl} className={styles.link}>
-          Github
-        </Link>
-        <Link href={qiitaUrl} className={styles.link}>
-          Qiita
-        </Link>
-        <Link href={twitterUrl} className={styles.link}>
-          X(Twitter)
-        </Link>
-        <Link href={siteSourceCodeUrl} className={styles.link}>
-          SourceCode
-        </Link>
+        <div className={styles.link}>
+          <Link href={gitHubUrl}>Github</Link>
+        </div>
+        <div className={styles.link}>
+          <Link href={qiitaUrl}>Qiita</Link>
+        </div>
+        <div className={styles.link}>
+          <Link href={twitterUrl}>X(Twitter)</Link>
+        </div>
+        <div className={styles.link}>
+          <Link href={siteSourceCodeUrl}>SourceCode</Link>
+        </div>
+        <SearchMenuButton />
       </div>
-      <PostSelectSingle posts={allPosts} targetIndex={targetIndex} />
+      <PostSelectSingle data={data} targetIndex={targetIndex} />
+      <SearchMenuModal data={data} />
     </main>
   )
 }
 
-const getAllPostAndTargetSlug = (props: Props) => {
-  const allPosts = getAllPosts(["slug", "title", "coverImage", "date", "tags", "content"])
+const initPostsData = (props: PropsTypes, filterParams: string | undefined) => {
+  // cookieにfilterParamsがセットされているかどうかで表示する記事を判定
+  const data: PostDataTypes = (() => {
+    const allPosts = getAllPosts()
+
+    if (!filterParams) return { posts: allPosts, filterResult: undefined }
+    const filteredPost = getFilteredPost(filterParams)
+
+    // 正しくフィルタリングされている場合はフィルタリング結果を返す
+    if (filterParams && filteredPost.length > 0) return { posts: filteredPost, filterResult: true }
+    else return { posts: allPosts, filterResult: false }
+  })()
 
   // slugが一致する対象の記事を取得
   const targetIndex = (() => {
-    for (let i = 0; i < allPosts.length; i++) {
-      if (allPosts[i].slug === props.searchParams.slug) {
+    for (let i = 0; i < data.posts.length; i++) {
+      if (data.posts[i].slug === props.searchParams.slug) {
         return i // 一致する要素のインデックスを返す
       }
     }
@@ -76,11 +97,10 @@ const getAllPostAndTargetSlug = (props: Props) => {
   })()
 
   // slugが一致する対象の記事のslugを取得(構造上一致しない場合はtop記事のslugが返る)
-  const targetSlug = allPosts[targetIndex].slug
+  const targetSlug = data.posts[targetIndex].slug
+  const targetPostTitle = data.posts[targetIndex].title
 
   const urlWithQuery = `${siteUrl}/?slug=${targetSlug}`
 
-  const targetPostTitle = allPosts[targetIndex].title
-
-  return { allPosts, targetIndex, targetPostTitle, urlWithQuery }
+  return { data, targetIndex, targetPostTitle, urlWithQuery }
 }
