@@ -53,26 +53,18 @@ export default function Home(props: PropsTypes) {
         <a href="./">sena-v.com</a>
       </div>
       <div className={styles.linkContainer}>
-        <div className={styles.link}>
-          <Link href={gitHubUrl} target="_blank" data-testid="button-github">
-            Github
-          </Link>
-        </div>
-        <div className={styles.link}>
-          <Link href={qiitaUrl} target="_blank" data-testid="button-qiita">
-            Qiita
-          </Link>
-        </div>
-        <div className={styles.link}>
-          <Link href={twitterUrl} target="_blank" data-testid="button-twitter">
-            X(Twitter)
-          </Link>
-        </div>
-        <div className={styles.link}>
-          <Link href={siteSourceCodeUrl} target="_blank" data-testid="button-source">
-            SourceCode
-          </Link>
-        </div>
+        <Link href={gitHubUrl} target="_blank" data-testid="button-github">
+          <div className={styles.link}>Github</div>
+        </Link>
+        <Link href={qiitaUrl} target="_blank" data-testid="button-qiita">
+          <div className={styles.link}>Qiita</div>
+        </Link>
+        <Link href={twitterUrl} target="_blank" data-testid="button-twitter">
+          <div className={styles.link}>X(Twitter)</div>
+        </Link>
+        <Link href={siteSourceCodeUrl} target="_blank" data-testid="button-source">
+          <div className={styles.link}>SourceCode</div>
+        </Link>
         <SearchMenuButton />
       </div>
       <PostSelectSingle data={data} targetIndex={targetIndex} />
