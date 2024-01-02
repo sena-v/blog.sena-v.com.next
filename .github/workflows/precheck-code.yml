@@ -1,0 +1,56 @@
+name: Netlify
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  Check-type_lint_build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/checkout@v3
+      - name: setup node latest
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+      - name: load or cache node dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: npm-${{ hashFiles('package-lock.json') }}
+          restore-keys: npm-
+      - name: install npm package
+        run: npm ci
+      - name: type lint build check
+        run: npm run ci
+
+  E2e_Test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/checkout@v3
+      - name: setup node latest
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+      - name: load or cache node dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: npm-${{ hashFiles('package-lock.json') }}
+          restore-keys: npm-
+      - name: install npm package
+        run: npm ci
+
+      - name: Playwright install
+        run: npx playwright install --with-deps
+
+      # E2e実行前にnetlify側のデプロイを待機(2分)
+      - name: build next.js
+        run: npm run build
+
+      - name: Check e2e
+        run: npx playwright test
