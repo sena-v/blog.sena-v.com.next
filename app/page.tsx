@@ -54,16 +54,24 @@ export default function Home(props: PropsTypes) {
       </div>
       <div className={styles.linkContainer}>
         <div className={styles.link}>
-          <Link href={gitHubUrl}>Github</Link>
+          <Link href={gitHubUrl} target="_blank" data-testid="button-github">
+            Github
+          </Link>
         </div>
         <div className={styles.link}>
-          <Link href={qiitaUrl}>Qiita</Link>
+          <Link href={qiitaUrl} target="_blank" data-testid="button-qiita">
+            Qiita
+          </Link>
         </div>
         <div className={styles.link}>
-          <Link href={twitterUrl}>X(Twitter)</Link>
+          <Link href={twitterUrl} target="_blank" data-testid="button-twitter">
+            X(Twitter)
+          </Link>
         </div>
         <div className={styles.link}>
-          <Link href={siteSourceCodeUrl}>SourceCode</Link>
+          <Link href={siteSourceCodeUrl} target="_blank" data-testid="button-source">
+            SourceCode
+          </Link>
         </div>
         <SearchMenuButton />
       </div>
