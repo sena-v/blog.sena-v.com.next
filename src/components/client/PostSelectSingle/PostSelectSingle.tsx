@@ -14,7 +14,14 @@ export function PostSelectSingle(props: { data: PostDataTypes; targetIndex: numb
 
     return (
       <div className={styles.containerPostImage}>
-        <img src={targetPost.coverImage} alt={"coverImage"} className={styles.postImage} width="10" height="10" />
+        <img
+          src={targetPost.coverImage}
+          alt={"coverImage"}
+          className={styles.postImage}
+          width="10"
+          height="10"
+          loading="lazy"
+        />
       </div>
     )
   }

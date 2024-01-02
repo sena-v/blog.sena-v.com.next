@@ -14,7 +14,14 @@ export function MarkDown({ post }: { post: ItemType }) {
     code: CodeBlock,
     img: (props: any) => (
       <div className={styles.containerPostImage}>
-        <img {...props} alt={props.alt ?? "postImage"} className={styles.postImage} width="10" height="10" />
+        <img
+          {...props}
+          alt={props.alt ?? "postImage"}
+          className={styles.postImage}
+          width="10"
+          height="10"
+          loading="lazy"
+        />
       </div>
     ),
   }
