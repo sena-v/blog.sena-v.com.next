@@ -1,8 +1,9 @@
 name: Netlify
 
 on:
-  pull_request:
-    types: [opened, synchronize]
+  push:
+    branches:
+      - main
 
 jobs:
   Check-type_lint_build:
