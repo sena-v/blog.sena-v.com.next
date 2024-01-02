@@ -48,9 +48,5 @@ jobs:
       - name: Playwright install
         run: npx playwright install --with-deps
 
-      # E2e実行前にnetlify側のデプロイを待機(2分)
-      - name: start next.js
-        run: npm run build && npm start
-
-      - name: Check e2e
-        run: npx playwright e2e
+      - name: build and run e2e
+        run: npm run build && npm start & npx playwright test
