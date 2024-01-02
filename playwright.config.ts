@@ -7,7 +7,7 @@ import { defineConfig, devices } from "@playwright/test"
 // require('dotenv').config();
 
 const serveConfig = (() => {
-  if (process.env.NODE_ENV === "production")
+  if (process.env.NODE_ENV !== "production")
     return {
       webServer: {
         command: "npm run start",
