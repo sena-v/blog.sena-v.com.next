@@ -1,4 +1,4 @@
-name: Netlify
+name: testing prod environment
 
 on:
   push:

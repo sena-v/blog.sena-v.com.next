@@ -1,4 +1,4 @@
-name: Netlify
+name: testing pr code
 
 on:
   pull_request:
