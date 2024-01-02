@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    types:
+      - closed
 
 jobs:
   Check-type_lint_build:
