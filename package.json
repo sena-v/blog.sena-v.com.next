@@ -26,6 +26,7 @@
     "react-share": "^5.0.3"
   },
   "devDependencies": {
+    "@cloudflare/next-on-pages": "^1.8.3",
     "@playwright/test": "^1.40.1",
     "@types/node": "^20",
     "@types/react": "^18",

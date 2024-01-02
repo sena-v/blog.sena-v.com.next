@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  Check-type_lint_build:
+  Check-e2e-after-deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

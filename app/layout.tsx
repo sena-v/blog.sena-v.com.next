@@ -1,6 +1,8 @@
 import "./font.css"
 import { Ga4 } from "@/components/client/Ga4/Ga4"
 
+export const runtime = "edge"
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ja">
