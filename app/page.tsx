@@ -4,6 +4,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { getAllPosts, getFilteredPost, ItemType } from "src/utils/read-md"
 
+import { _Caveat } from "./font"
 import * as styles from "./page.css"
 import { SearchMenuButton, SearchMenuModal } from "./SearchMenuModal"
 
@@ -54,12 +55,12 @@ export default function Home(props: PropsTypes) {
       <div className={styles.backgroundImageContainer}>
         <Image src="/background.jpg" className={styles.backgroundImage} alt="bgImage" width={1000} height={1000} />
       </div>
-      <div className={styles.title}>
+      <div className={`${styles.title} ${_Caveat.className}`}>
         <form action={moveSiteTop}>
           <button className={styles.siteTopButton}>sena-v.com</button>
         </form>
       </div>
-      <div className={styles.linkContainer}>
+      <div className={`${styles.linkContainer} ${_Caveat.className}`}>
         <Link href={gitHubUrl} target="_blank" data-testid="button-github">
           <div className={styles.link}>Github</div>
         </Link>

@@ -1,5 +1,6 @@
 "use client"
 
+import { _Caveat } from "app/font"
 import { SubmitHandler, useForm } from "react-hook-form"
 
 import * as styles from "./SearchMenuModalBody.css"
@@ -80,7 +81,7 @@ export const SearchMenuModalBody = (props: {
           </div>
         </div>
       </div>
-      <div className={styles.modalTitle}>Search Menu</div>
+      <div className={`${styles.modalTitle} ${_Caveat.className}`}>Search Menu</div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.selectAreaContainer}>
           <div>・フリーワード(タイトル)</div>
