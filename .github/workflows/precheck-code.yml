@@ -46,7 +46,7 @@ jobs:
         run: npm ci
 
       - name: Playwright install & build next.js
-        run: npx -q playwright install --with-deps & npm run build
+        run: npx playwright install --with-deps & npm run build
 
       - name: Check e2e
         run: npx playwright test
