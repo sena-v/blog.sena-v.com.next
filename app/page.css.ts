@@ -20,12 +20,24 @@ export const main = style({
   justifyContent: "space-between",
   alignItems: "center",
   minHeight: "100vh",
-  backgroundColor: "white",
-  backgroundImage: "url('/background.jpg')",
+  backgroundColor: "transparent",
   backgroundSize: "cover",
   backgroundRepeat: "no-repeat",
   backgroundPosition: "right 62% bottom",
   overflow: "hidden",
+})
+
+export const backgroundImageContainer = style({
+  position: "fixed",
+  top: 0,
+  left: 0,
+  width: "100%",
+  height: "auto",
+  zIndex: "-1",
+})
+export const backgroundImage = style({
+  width: "135%",
+  zIndex: "-1",
 })
 
 export const title = style({
