@@ -32,8 +32,8 @@ export const SearchMenuModalBody = (props: {
 
     return (
       <>
-        {props.tags.map((tag) => (
-          <label key={tag[0]} className={styles.label}>
+        {props.tags.map((tag, index) => (
+          <label key={tag[0]} className={styles.label} data-testid={`tag_${index}`}>
             <span className={_tags.includes(tag[0]) ? styles.selectedCheckBoxButton : styles.checkBoxButton}>
               <input type="checkbox" {...register("tags")} value={tag[0]} hidden />
               {tag[0]}
@@ -49,8 +49,8 @@ export const SearchMenuModalBody = (props: {
 
     return (
       <>
-        {props.years.map((year) => (
-          <label key={year[0]} className={styles.label}>
+        {props.years.map((year, index) => (
+          <label key={year[0]} className={styles.label} data-testid={`year_${index}`}>
             <span className={_years.includes(year[0]) ? styles.selectedCheckBoxButton : styles.checkBoxButton}>
               <input type="checkbox" {...register("years")} value={year[0]} hidden />
               {year[0]}
@@ -62,7 +62,7 @@ export const SearchMenuModalBody = (props: {
   }
 
   return (
-    <div className={styles.modalBody}>
+    <div className={styles.modalBody} data-testid="search-modal">
       <div className={styles.headerButtonContainer}>
         <div className={styles.headerButtonArea}>
           <form action={resetSelect}>
@@ -107,7 +107,9 @@ export const SearchMenuModalBody = (props: {
               Search articles
             </button>
           </div>
-          <div className={styles.searchResult}>現在の総表示記事数：{props.postsCount}</div>
+          <div className={styles.searchResult} data-testid="current-search-count">
+            現在の総表示記事数：{props.postsCount}
+          </div>
           <div className={styles.errorMessage}>
             {props.filterResult === false && "検索結果が0件のため全投稿を表示しています"}
             <br />
