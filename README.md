@@ -4,15 +4,14 @@ https://sena-v.com/
 
 ## Stack
 
-
-
-
 - Next.js App Router with TypeScript
-- Using Next.js's Metadata
 - React Server Components (RSCs)
+- 100% Server Actions
+- Using Next.js's Metadata
 - Styling with vanilla-extract, Google Fonts
 - Auto Check Code intelligence with Prettier, Eslint
-- Build and hosting to Netlify
+- Integration Testing with Playwright
+- Build and hosting to Vercel
 
 ## branch
 
@@ -44,12 +43,15 @@ open http://localhost:3000
 # lint & typechek & buildcheck
 npm run ci
 
+# run e2e locally
+npm run build && npm run e2e
+
 ```
 
 ### deploy
 
-テストはPR時にGitHub Actionsで実施、netlify側でビルド・デプロイを実行
-
+テストはPR時にGitHub Actionsで実施、vercel側でビルド・デプロイを実行
+本番環境にはデプロイ後e2eが走るため、デプロイ時のみ発生する問題はここでキャッチ可能
 
 ---
 
