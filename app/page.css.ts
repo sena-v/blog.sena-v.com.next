@@ -69,3 +69,14 @@ export const link = style({
     backgroundColor: "rgba(30,30,30,0.2)",
   },
 })
+
+export const siteTopButton = style({
+  backgroundColor: "transparent",
+  border: "none",
+  cursor: "pointer",
+  outline: "none",
+  padding: "0",
+  font: "inherit",
+  color: "inherit",
+  appearance: "none",
+})

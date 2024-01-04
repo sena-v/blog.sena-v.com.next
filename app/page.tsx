@@ -8,6 +8,7 @@ import { SearchMenuButton, SearchMenuModal } from "./SearchMenuModal"
 
 import { PostSelectSingle } from "@/components/client/PostSelectSingle/PostSelectSingle"
 import { gitHubUrl, qiitaUrl, siteSourceCodeUrl, siteTitle, siteUrl, twitterUrl } from "@/utils/constants"
+import { moveSiteTop } from "@/utils/routerUtil"
 
 // layout.tsxだとクエリパラメータを取得できないので、page.tsxでメタデータを生成する
 interface PropsTypes {
@@ -50,7 +51,9 @@ export default function Home(props: PropsTypes) {
   return (
     <main className={styles.main}>
       <div className={styles.title}>
-        <a href="./">sena-v.com</a>
+        <form action={moveSiteTop}>
+          <button className={styles.siteTopButton}>sena-v.com</button>
+        </form>
       </div>
       <div className={styles.linkContainer}>
         <Link href={gitHubUrl} target="_blank" data-testid="button-github">
