@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import ReactMarkdown from "react-markdown"
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
 import { okaidia } from "react-syntax-highlighter/dist/cjs/styles/prism"
@@ -14,7 +15,7 @@ export function MarkDown({ post }: { post: ItemType }) {
     code: CodeBlock,
     img: (props: any) => (
       <div className={styles.containerPostImage}>
-        <img
+        <Image
           {...props}
           alt={props.alt ?? "postImage"}
           className={styles.postImage}

@@ -1,4 +1,5 @@
 import { PostDataTypes } from "app/page"
+import Image from "next/image"
 
 import { MarkDown } from "./MarkDown"
 import * as styles from "./PostSelectSingle.css"
@@ -14,7 +15,7 @@ export function PostSelectSingle(props: { data: PostDataTypes; targetIndex: numb
 
     return (
       <div className={styles.containerPostImage}>
-        <img
+        <Image
           src={targetPost.coverImage}
           alt={"coverImage"}
           className={styles.postImage}
