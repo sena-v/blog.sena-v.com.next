@@ -36,7 +36,8 @@ export const backgroundImageContainer = style({
   zIndex: "-1",
 })
 export const backgroundImage = style({
-  width: "135%",
+  width: "100%",
+  height: "auto",
   zIndex: "-1",
 })
 
