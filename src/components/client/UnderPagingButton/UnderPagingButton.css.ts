@@ -17,6 +17,7 @@ export const button = style({
   cursor: "pointer",
   fontSize: "16px",
   textAlign: "center",
+
   ":hover": {
     backgroundColor: "#474c50",
   },

@@ -1,11 +1,11 @@
 "use client"
 
-import { redirect } from "next/navigation"
 import { SubmitHandler, useForm } from "react-hook-form"
 
 import * as styles from "./SearchMenuModalBody.css"
 
-import { SearchModalParamsType, clearSearchModalParams, setSearchModalParams, toggleModal } from "@/functions/cookie"
+import { SearchModalParamsType, setSearchModalParams, toggleModal } from "@/functions/cookie"
+import { moveSiteTop } from "@/utils/routerUtil"
 
 export const SearchMenuModalBody = (props: {
   tags: Array<[string, number]>
@@ -13,15 +13,15 @@ export const SearchMenuModalBody = (props: {
   postsCount: number
   filterResult: boolean | undefined
 }) => {
-  const { register, handleSubmit, watch } = useForm<SearchModalParamsType>()
+  const { register, handleSubmit, watch, reset } = useForm<SearchModalParamsType>()
 
   const onSubmit: SubmitHandler<SearchModalParamsType> = async (data) => {
     await setSearchModalParams(data)
   }
 
   const resetSelect = async () => {
-    await clearSearchModalParams()
-    redirect("/")
+    reset()
+    await moveSiteTop()
   }
 
   const watchData = watch()
