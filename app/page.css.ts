@@ -45,15 +45,14 @@ export const title = style({
   maxWidth: "1100px",
   width: "var(--max-width)",
   margin: "10px auto",
-  fontFamily: "'Caveat', cursive",
   fontSize: "100px",
   color: "white",
   fontStyle: "bold",
 })
+
 export const linkContainer = style({
   width: "950px",
   margin: "0px auto",
-  fontFamily: "'Caveat', cursive",
   fontSize: "20px",
   color: "white",
   fontStyle: "bold",

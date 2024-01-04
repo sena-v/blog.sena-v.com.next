@@ -61,8 +61,6 @@ export const initButton = style({
 export const modalTitle = style({
   fontSize: "30px",
   textAlign: "center",
-
-  fontFamily: "'Caveat', cursive",
 })
 
 export const selectAreaContainer = style({
