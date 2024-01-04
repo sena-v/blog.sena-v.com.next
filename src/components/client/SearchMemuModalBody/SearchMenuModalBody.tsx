@@ -1,11 +1,11 @@
 "use client"
 
-import { _Caveat } from "app/font"
 import { SubmitHandler, useForm } from "react-hook-form"
 
 import * as styles from "./SearchMenuModalBody.css"
 
 import { SearchModalParamsType, setSearchModalParams, toggleModal } from "@/functions/cookie"
+import { _Caveat } from "@/utils/font"
 import { moveSiteTop } from "@/utils/routerUtil"
 
 export const SearchMenuModalBody = (props: {
