@@ -4,9 +4,9 @@ import Image from "next/image"
 import Link from "next/link"
 import { getAllPosts, getFilteredPost, ItemType } from "src/utils/read-md"
 
-import { _Caveat } from "./font"
 import * as styles from "./page.css"
 import { SearchMenuButton, SearchMenuModal } from "./SearchMenuModal"
+import { _Caveat } from "../src/utils/font"
 
 import { PostSelectSingle } from "@/components/client/PostSelectSingle/PostSelectSingle"
 import { gitHubUrl, qiitaUrl, siteSourceCodeUrl, siteTitle, siteUrl, twitterUrl } from "@/utils/constants"

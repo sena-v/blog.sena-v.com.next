@@ -10,7 +10,7 @@ import { getAllTagsAndYears } from "@/utils/read-md"
 export const SearchMenuButton = async () => {
   return (
     <form action={toggleModal}>
-      <button type="submit" className={styles.button}>
+      <button type="submit" className={styles.button} data-testid="button-open-modal">
         <div className={styles.foldableMenu}>Search Menu</div>
       </button>
     </form>
@@ -31,7 +31,7 @@ export const SearchMenuModal = (props: { data: PostDataTypes }) => {
 
   const ModalSideComponent = () => {
     return (
-      <div>
+      <div data-testid="button-outer-modal">
         <form action={toggleModal}>
           <button type="submit" className={styles.modalBodySpaceSide}></button>
         </form>
@@ -40,7 +40,7 @@ export const SearchMenuModal = (props: { data: PostDataTypes }) => {
   }
 
   return (
-    <div className={modalClassString}>
+    <div className={modalClassString} data-testid="search-menu">
       <div>
         <form action={toggleModal}>
           <button type="submit" className={styles.modalBodySpaceTop}></button>

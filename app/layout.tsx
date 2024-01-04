@@ -1,4 +1,4 @@
-import "./font"
+import "../src/utils/font"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 
 import { Ga4 } from "@/components/client/Ga4/Ga4"
