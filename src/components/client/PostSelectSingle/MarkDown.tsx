@@ -16,12 +16,12 @@ export function MarkDown({ post }: { post: ItemType }) {
     img: (props: any) => (
       <div className={styles.containerPostImage}>
         <Image
-          {...props}
           alt={props.alt ?? "postImage"}
+          src={props.src}
           className={styles.postImage}
-          width="10"
-          height="10"
-          loading="lazy"
+          width={500}
+          height={500}
+          priority={true}
         />
       </div>
     ),
