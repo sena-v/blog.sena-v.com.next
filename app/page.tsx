@@ -8,6 +8,7 @@ import * as styles from "./page.css"
 import { SearchMenuButton, SearchMenuModal } from "./SearchMenuModal"
 import { _Caveat } from "../src/utils/font"
 
+import { GoTopButton } from "@/components/client/GoTopButton/GoTopButton"
 import { PostSelectSingle } from "@/components/client/PostSelectSingle/PostSelectSingle"
 import { gitHubUrl, qiitaUrl, siteSourceCodeUrl, siteTitle, siteUrl, twitterUrl } from "@/utils/constants"
 import { moveSiteTop } from "@/utils/routerUtil"
@@ -75,7 +76,10 @@ export default function Home(props: PropsTypes) {
         </Link>
         <SearchMenuButton />
       </div>
-      <PostSelectSingle data={data} targetIndex={targetIndex} />
+      <div className={styles.postSingleContainer}>
+        <PostSelectSingle data={data} targetIndex={targetIndex} />
+        <GoTopButton />
+      </div>
       <SearchMenuModal data={data} />
     </main>
   )

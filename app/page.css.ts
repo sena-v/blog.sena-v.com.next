@@ -66,6 +66,13 @@ export const linkContainer = style({
   },
 })
 
+export const postSingleContainer = style({
+  width: "950px",
+  margin: "0px auto",
+
+  display: "flex",
+})
+
 export const link = style({
   height: "35px",
   lineHeight: "35px",
