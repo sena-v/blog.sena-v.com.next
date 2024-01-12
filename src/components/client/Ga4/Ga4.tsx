@@ -10,8 +10,8 @@ export const Ga4 = () => {
     <>
       <Head>
         <link rel="shortcut icon" href="favicon.ico" />
-        <ScriptGa />
       </Head>
+      <ScriptGa />
     </>
   )
 }
