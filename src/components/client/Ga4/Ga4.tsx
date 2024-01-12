@@ -17,7 +17,6 @@ export const Ga4 = () => {
 }
 
 const ScriptGa = () => {
-  console.log("GA_MEASUREMENT")
   const pathname = usePathname()
   const searchParams = useSearchParams()
 
