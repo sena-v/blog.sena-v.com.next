@@ -48,10 +48,10 @@ export const modalBodyContainer = style({
   width: "100%",
 
   display: "flex",
+  justifyContent: "center",
 })
 
 export const modalBody = style({
-  margin: "0 auto",
   height: modalHeight,
   width: "800px",
 
@@ -70,7 +70,7 @@ export const modalBodySpaceTop = style({
 
 export const modalBodySpaceSide = style({
   height: modalHeight,
-  width: "290px",
+  width: "310px",
 
   backgroundColor: "transparent",
   border: "none",
