@@ -4,11 +4,6 @@ module.exports = {
     es2021: true,
     jest: true,
   },
-  settings: {
-    react: {
-      version: "detect", // updateが早いとlinterがエラーを吐くためreactのバージョンは見ない
-    },
-  },
   extends: [
     "plugin:react/recommended",
     "plugin:@next/next/recommended",
