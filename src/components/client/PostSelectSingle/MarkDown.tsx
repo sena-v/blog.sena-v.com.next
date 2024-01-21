@@ -34,8 +34,8 @@ function CodeBlock({ inline, className, children }: any) {
   if (inline) {
     return <code className={className}>{children}</code>
   }
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-  const match = /language-(\w+)/.exec(className || "")
+
+  const match = /language-(\w+)/.exec(className as string)
   const lang = match && match[1] ? match[1] : ""
 
   // htmlTagが指定された場合、divの子要素ににそのままhtmlを埋め込む
