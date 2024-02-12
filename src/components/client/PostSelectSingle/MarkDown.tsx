@@ -5,6 +5,7 @@ import ReactMarkdown from "react-markdown"
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
 import { okaidia } from "react-syntax-highlighter/dist/cjs/styles/prism"
 
+import * as styles2 from "./MarkDown.css"
 import * as styles from "./PostSelectSingle.css"
 
 import { ItemType } from "@/utils/read-md"
@@ -31,8 +32,15 @@ export function MarkDown({ post }: { post: ItemType }) {
 }
 
 function CodeBlock({ inline, className, children }: any) {
-  if (inline) {
-    return <code className={className}>{children}</code>
+  // 改行コードがない場合インラインと判定する
+  const isInline = (children as string).includes("\n") ? false : true
+
+  if (isInline) {
+    return (
+      <span className={styles2.codeContainer}>
+        <code className={styles2.code}>{children}</code>
+      </span>
+    )
   }
 
   const match = /language-(\w+)/.exec(className as string)
