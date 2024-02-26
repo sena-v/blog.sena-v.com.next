@@ -11,7 +11,9 @@ export const SearchMenuButton = async () => {
   return (
     <form action={toggleModal}>
       <button type="submit" className={styles.button} data-testid="button-open-modal">
-        <div className={styles.foldableMenu}>Search Menu</div>
+        <div className={styles.foldableMenu} data-testid="open-search-menu">
+          Search Menu
+        </div>
       </button>
     </form>
   )

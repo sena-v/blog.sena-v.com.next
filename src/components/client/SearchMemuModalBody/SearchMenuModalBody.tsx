@@ -74,7 +74,7 @@ export const SearchMenuModalBody = (props: {
         <div className={styles.headerButtonArea}>
           <div>
             <form action={toggleModal}>
-              <button type="submit" className={styles.closeButton}>
+              <button type="submit" className={styles.closeButton} data-testid="close-search-menu">
                 ❌
               </button>
             </form>
