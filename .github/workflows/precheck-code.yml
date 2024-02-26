@@ -70,8 +70,6 @@ jobs:
           path: ~/.npm
           key: npm-${{ hashFiles('package-lock.json') }}
           restore-keys: npm-
-      - name: install npm package
-        run: npm ci
 
       - name: Cypress run
         uses: cypress-io/github-action@v6
