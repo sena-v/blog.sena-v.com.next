@@ -66,7 +66,7 @@ export const SearchMenuModalBody = (props: {
       <div className={styles.headerButtonContainer}>
         <div className={styles.headerButtonArea}>
           <form action={resetSelect}>
-            <button type="submit" className={styles.initButton}>
+            <button type="submit" className={styles.initButton} data-testid="init-filter">
               Init Filter
             </button>
           </form>
@@ -74,7 +74,7 @@ export const SearchMenuModalBody = (props: {
         <div className={styles.headerButtonArea}>
           <div>
             <form action={toggleModal}>
-              <button type="submit" className={styles.closeButton}>
+              <button type="submit" className={styles.closeButton} data-testid="close-search-menu">
                 ❌
               </button>
             </form>
@@ -103,7 +103,7 @@ export const SearchMenuModalBody = (props: {
         </div>
         <div className={styles.footerAreaContainer}>
           <div className={styles.submitButtonArea}>
-            <button type="submit" className={styles.searchButton}>
+            <button type="submit" className={styles.searchButton} data-testid="search-articles">
               Search articles
             </button>
           </div>
