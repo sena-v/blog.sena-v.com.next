@@ -1,7 +1,7 @@
 context("CI e2e testing", () => {
   beforeEach(() => {
-    const rootUrl = process.env.NODE_ENV === "production" ? "https://sena-v.com/" : "http://localhost:3000/"
-    cy.visit(rootUrl)
+    // const rootUrl = process.env.NODE_ENV === "production" ? "https://sena-v.com/" : "http://localhost:3000/"
+    cy.visit("http://localhost:3000/")
   })
 
   it("ページの初期動作確認", () => {
