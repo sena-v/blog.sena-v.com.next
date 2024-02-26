@@ -14,7 +14,7 @@
     "typecheck": "tsc"
   },
   "dependencies": {
-    "@vercel/speed-insights": "^1.0.9",
+    "@vercel/speed-insights": "^1.0.10",
     "gray-matter": "^4.0.3",
     "next": "14.1.0",
     "next-intercept-stdout": "^1.0.1",
@@ -33,7 +33,7 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/react-syntax-highlighter": "^15.5.11",
-    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.2",
     "@vanilla-extract/next-plugin": "^2.3.6",
     "eslint": "^8",
     "eslint-config-next": "14.1.0",
@@ -46,7 +46,7 @@
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "4.6.0",
-    "eslint-plugin-unused-imports": "^3.0.0",
+    "eslint-plugin-unused-imports": "^3.1.0",
     "prettier": "^3.2.5",
     "react-syntax-highlighter": "^15.5.0",
     "typescript": "^5"
