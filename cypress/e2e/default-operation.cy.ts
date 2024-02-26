@@ -18,7 +18,7 @@ context("CI e2e testing", () => {
 
     // 遷移して次の記事のタイトルが現在のタイトルと違うことを確認
     cy.get('[data-testid="paging-plus"]').click({ force: true })
-    cy.wait(1000 * 2)
+    cy.wait(1000 * 3)
     cy.get("h1").then((el) => {
       // h1が複数存在する可能性があるため先頭を取得
       expect(el[0].innerText).not.to.equal(firstPostTitle)
@@ -37,23 +37,24 @@ context("CI e2e testing", () => {
   it("モーダルの動作確認", () => {
     // モーダルを開いた時、要素が表示されている
     cy.get('[data-testid="open-search-menu"]').click({ force: true })
+    cy.wait(1000 * 3)
     cy.get('[data-testid="search-menu"]').should("be.visible")
 
     // モーダルを閉じた時、要素が非表示になる
     cy.get('[data-testid="close-search-menu"]').click({ force: true })
+    cy.wait(1000 * 3)
     cy.get('[data-testid="search-menu"]').should("not.be.visible")
 
     // モーダルを開いて、現在の検索総件数が表示される(文字が表示されている)
     cy.get('[data-testid="open-search-menu"]').click({ force: true })
+    cy.wait(1000 * 3)
     cy.get('[data-testid="current-search-count"]').should("not.have.text", "現在の総表示記事数：0")
 
     // input要素が初期状態falseであることを確認
     cy.get('[data-testid="tag_1"]').then((el) => {
-      cy.wait(1000 * 2)
       expect((el[0].children[0].children[0] as HTMLInputElement).checked).to.equal(false)
     })
     cy.get('[data-testid="year_1"]').then((el) => {
-      cy.wait(1000 * 2)
       expect((el[0].children[0].children[0] as HTMLInputElement).checked).to.equal(false)
     })
 
@@ -78,7 +79,7 @@ context("CI e2e testing", () => {
     // タグクリック後の検索総件数の数値を取得し、クリックで数値が変わらないことを確認
     cy.get('[data-testid="current-search-count"]').then((el) => {
       const postsCountString2 = el[0].innerText
-      cy.wait(1000 * 2)
+      cy.wait(1000 * 3)
       expect(postsCountString1).to.equal(postsCountString2)
     })
 
@@ -96,10 +97,10 @@ context("CI e2e testing", () => {
     // // 条件を入れて検索ボタンをクリックすると検索総件数の数値が変わる(最初のstringと異なる)
     cy.get('[data-testid="tag_1"]').click()
     cy.get('[data-testid="search-articles"]').click({ force: true })
+    cy.wait(1000 * 3)
     cy.get('[data-testid="current-search-count"]').then((el) => {
       const postsCountString3 = el[0].innerText
       // 検索した後のtextに差分がある=結果が違うと判断
-      cy.wait(1000 * 2)
       expect(postsCountString1).not.to.equal(postsCountString3)
     })
 
@@ -107,6 +108,7 @@ context("CI e2e testing", () => {
     // cy.getByRole("button", { name: "Init Filter" }).click()
     cy.get('[data-testid="init-filter"]').click()
     cy.get('[data-testid="open-search-menu"]').click({ force: true })
+    cy.wait(1000 * 3)
 
     // tag_1がinitialize後にfalseになっていることを確認
     cy.get('[data-testid="tag_1"]').then((el) => {
@@ -117,7 +119,6 @@ context("CI e2e testing", () => {
     cy.get('[data-testid="current-search-count"]').then((el) => {
       const postsCountString4 = el[0].innerText
       // 検索した後のtextに差分がある=結果が違うと判断
-      cy.wait(1000 * 2)
       expect(postsCountString1).to.equal(postsCountString4)
     })
   })
