@@ -102,7 +102,6 @@ context("CI e2e testing", () => {
     // cy.getByRole("button", { name: "Init Filter" }).click()
     cy.get('[data-testid="init-filter"]').click()
     cy.get('[data-testid="open-search-menu"]').click({ force: true })
-    // cy.getByRole("button", { name: "Search Menu" }).click()
 
     // tag_1がinitialize後にfalseになっていることを確認
     cy.get('[data-testid="tag_1"]').then((el) => {
