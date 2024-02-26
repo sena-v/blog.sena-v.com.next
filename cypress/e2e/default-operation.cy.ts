@@ -78,6 +78,7 @@ context("CI e2e testing", () => {
     // タグクリック後の検索総件数の数値を取得し、クリックで数値が変わらないことを確認
     cy.get('[data-testid="current-search-count"]').then((el) => {
       const postsCountString2 = el[0].innerText
+      cy.wait(1000)
       expect(postsCountString1).to.equal(postsCountString2)
     })
 
