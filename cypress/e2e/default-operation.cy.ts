@@ -17,14 +17,14 @@ context("CI e2e testing", () => {
     })
 
     // 遷移して次の記事のタイトルが現在のタイトルと違うことを確認
-    cy.get('[data-testid="paging-plus"]').click({ force: true })
+    cy.get('[data-testid="paging-plus"]').click()
     cy.get("h1").then((el) => {
       // h1が複数存在する可能性があるため先頭を取得
       expect(el[0].innerText).not.to.equal(firstPostTitle)
     })
 
     // 前の記事に戻ってタイトルが一致することを確認
-    cy.get('[data-testid="paging-minus"]').click({ force: true })
+    cy.get('[data-testid="paging-minus"]').click()
 
     // タイトルが変化することを確認
     cy.get("h1").then((el) => {
