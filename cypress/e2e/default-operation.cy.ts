@@ -17,7 +17,7 @@ context("CI e2e testing", () => {
     })
 
     // 遷移して次の記事のタイトルが現在のタイトルと違うことを確認
-    cy.get('[data-testid="paging-plus"]').click({ force: true })
+    cy.get('[data-testid="paging-plus"]').click()
     cy.wait(1000 * 3)
     cy.get("h1").then((el) => {
       // h1が複数存在する可能性があるため先頭を取得
@@ -25,7 +25,7 @@ context("CI e2e testing", () => {
     })
 
     // 前の記事に戻ってタイトルが一致することを確認
-    cy.get('[data-testid="paging-minus"]').click({ force: true })
+    cy.get('[data-testid="paging-minus"]').click()
 
     // タイトルが変化することを確認
     cy.get("h1").then((el) => {
@@ -36,17 +36,17 @@ context("CI e2e testing", () => {
 
   it("モーダルの動作確認", () => {
     // モーダルを開いた時、要素が表示されている
-    cy.get('[data-testid="open-search-menu"]').click({ force: true })
+    cy.get('[data-testid="open-search-menu"]').click()
     cy.wait(1000 * 3)
     cy.get('[data-testid="search-menu"]').should("be.visible")
 
     // モーダルを閉じた時、要素が非表示になる
-    cy.get('[data-testid="close-search-menu"]').click({ force: true })
+    cy.get('[data-testid="close-search-menu"]').click()
     cy.wait(1000 * 3)
     cy.get('[data-testid="search-menu"]').should("not.be.visible")
 
     // モーダルを開いて、現在の検索総件数が表示される(文字が表示されている)
-    cy.get('[data-testid="open-search-menu"]').click({ force: true })
+    cy.get('[data-testid="open-search-menu"]').click()
     cy.wait(1000 * 3)
     cy.get('[data-testid="current-search-count"]').should("not.have.text", "現在の総表示記事数：0")
 
@@ -96,7 +96,7 @@ context("CI e2e testing", () => {
 
     // // 条件を入れて検索ボタンをクリックすると検索総件数の数値が変わる(最初のstringと異なる)
     cy.get('[data-testid="tag_1"]').click()
-    cy.get('[data-testid="search-articles"]').click({ force: true })
+    cy.get('[data-testid="search-articles"]').click()
     cy.wait(1000 * 3)
     cy.get('[data-testid="current-search-count"]').then((el) => {
       const postsCountString3 = el[0].innerText
@@ -107,7 +107,7 @@ context("CI e2e testing", () => {
     // モーダルの選択初期化ボタンを押し、再度モーダルに戻ると選択リセットと検索総件数の数値が変わる
     // cy.getByRole("button", { name: "Init Filter" }).click()
     cy.get('[data-testid="init-filter"]').click()
-    cy.get('[data-testid="open-search-menu"]').click({ force: true })
+    cy.get('[data-testid="open-search-menu"]').click()
     cy.wait(1000 * 3)
 
     // tag_1がinitialize後にfalseになっていることを確認
