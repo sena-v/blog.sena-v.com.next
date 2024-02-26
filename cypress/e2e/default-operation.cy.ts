@@ -18,6 +18,7 @@ context("CI e2e testing", () => {
 
     // 遷移して次の記事のタイトルが現在のタイトルと違うことを確認
     cy.get('[data-testid="paging-plus"]').click({ force: true })
+    cy.wait(1000)
     cy.get("h1").then((el) => {
       // h1が複数存在する可能性があるため先頭を取得
       expect(el[0].innerText).not.to.equal(firstPostTitle)
@@ -48,9 +49,11 @@ context("CI e2e testing", () => {
 
     // input要素が初期状態falseであることを確認
     cy.get('[data-testid="tag_1"]').then((el) => {
+      cy.wait(1000)
       expect((el[0].children[0].children[0] as HTMLInputElement).checked).to.equal(false)
     })
     cy.get('[data-testid="year_1"]').then((el) => {
+      cy.wait(1000)
       expect((el[0].children[0].children[0] as HTMLInputElement).checked).to.equal(false)
     })
 
@@ -95,6 +98,7 @@ context("CI e2e testing", () => {
     cy.get('[data-testid="current-search-count"]').then((el) => {
       const postsCountString3 = el[0].innerText
       // 検索した後のtextに差分がある=結果が違うと判断
+      cy.wait(1000)
       expect(postsCountString1).not.to.equal(postsCountString3)
     })
 
@@ -112,6 +116,7 @@ context("CI e2e testing", () => {
     cy.get('[data-testid="current-search-count"]').then((el) => {
       const postsCountString4 = el[0].innerText
       // 検索した後のtextに差分がある=結果が違うと判断
+      cy.wait(1000)
       expect(postsCountString1).to.equal(postsCountString4)
     })
   })
