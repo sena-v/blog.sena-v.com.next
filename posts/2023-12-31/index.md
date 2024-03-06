@@ -148,3 +148,23 @@ TypeScriptでのドメイン駆動設計は現状フロント側でも思うこ�
 
 引っ越して半年程度経ったため大体の家具系や便利ツール系は揃い、そこらのガジェット系YouTuberよりも使いやすい、  
 自動化された家になったため、今後は必須系だけではなく遊びのあるものも加えてより面白い部屋にしたいと思っています。
+
+
+<div className="x-post">
+ <div className="x-post-name">無職やめ太郎（本名）<div>
+ <div className="x-post-text">
+ ワイがHireRooさんのコーディングテストを受けて、その回答内容をイベントで公開するやで。なんだか恥ずかしいやで。
+ </div>
+</div>
+<div className="x-post">
+ <div className="x-post-name">Satoshi Nakamura / sak<div>
+ <div className="x-post-text">
+ 参加します！
+ </div>
+</div>
+<div className="x-post">
+ <div className="x-post-name">無職やめ太郎（本名）<div>
+ <div className="x-post-text">
+ ありがとうございます！
+ </div>
+</div>
