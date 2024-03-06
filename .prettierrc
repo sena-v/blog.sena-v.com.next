@@ -4,7 +4,7 @@
 
   "overrides": [
     {
-      "files": "*.js",
+      "files": "post-to-md.js",
       "options": {
         "semi": true
       }
