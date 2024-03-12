@@ -16,14 +16,33 @@ export const code = style({
 })
 
 export const postContainer = style({
-  height: "200px",
-  inlineSize: "850px",
-  wordBreak: "break-all",
+  height: "auto",
+  inlineSize: "530px",
+  whiteSpace: "normal",
   overflowWrap: "break-word",
+  margin: "10px auto",
+  padding: "12px",
+
+  border: "1px solid #b0b0b0",
+  borderRadius: "12px",
+
+  fontSize: "17px",
+  fontFamily: "Helvetica",
 })
-export const postName = style({
+export const postNameArea = style({
+  height: "50px",
   width: "100%",
+  paddingBottom: "10px",
 })
-export const postText = style({
+export const postTextArea = style({
   width: "100%",
+  fontSize: "20px",
+})
+
+export const iconImage = style({
+  width: "50px",
+  height: "50px",
+  borderRadius: "50%",
+  marginRight: "10px",
+  verticalAlign: "middle",
 })

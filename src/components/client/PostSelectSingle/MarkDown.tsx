@@ -87,8 +87,11 @@ const createStringThreadToPostHtml = (htmlString: string) => {
       {threads.map((thread, index) => {
         return (
           <div key={index} className={styles2.postContainer}>
-            <div className={styles2.postName}>{thread.name}</div>
-            <div className={styles2.postText}>{thread.text}</div>
+            <div className={styles2.postNameArea}>
+              <img src="background.jpg" className={styles2.iconImage} />
+              {thread.name}
+            </div>
+            <div className={styles2.postTextArea}>{thread.text}</div>
           </div>
         )
       })}
