@@ -47,14 +47,9 @@ function CodeBlock({ inline, className, children }: any) {
   const lang = match && match[1] ? match[1] : ""
 
   // htmlTagが指定された場合、divの子要素ににそのままhtmlを埋め込む
-  if (lang === "htmlTag") {
-    return (
-      <div
-        dangerouslySetInnerHTML={{
-          __html: children,
-        }}
-      />
-    )
+  if (lang === "threadToPost") {
+    // 先頭にフラグ文字が入っていた場合、スレッド形式の投稿を記事形式に変換する
+    return createStringThreadToPostHtml(children as string)
   }
 
   // 言語にcodeSandboxが設定され、本文内にurlがある場合codeSandboxのパーツを表示する
@@ -73,5 +68,30 @@ function CodeBlock({ inline, className, children }: any) {
     <SyntaxHighlighter style={okaidia} language={lang}>
       {String(children).replace(/\n$/, "")}
     </SyntaxHighlighter>
+  )
+}
+
+const createStringThreadToPostHtml = (htmlString: string) => {
+  // 変換前に対応文字列を使用してオブジェクトに変換する
+  const threads = htmlString
+    .split(",")
+    .filter((v) => !!v)
+    .map((str) => {
+      const [name, text] = str.split("@")
+      return { name, text }
+    })
+    .filter((v) => !!v.text && !!v.name)
+
+  return (
+    <>
+      {threads.map((thread, index) => {
+        return (
+          <div key={index} className={styles2.postContainer}>
+            <div className={styles2.postName}>{thread.name}</div>
+            <div className={styles2.postText}>{thread.text}</div>
+          </div>
+        )
+      })}
+    </>
   )
 }

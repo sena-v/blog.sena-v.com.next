@@ -14,3 +14,16 @@ export const code = style({
   padding: "0 5px",
   margin: "0 2px",
 })
+
+export const postContainer = style({
+  height: "200px",
+  inlineSize: "850px",
+  wordBreak: "break-all",
+  overflowWrap: "break-word",
+})
+export const postName = style({
+  width: "100%",
+})
+export const postText = style({
+  width: "100%",
+})
