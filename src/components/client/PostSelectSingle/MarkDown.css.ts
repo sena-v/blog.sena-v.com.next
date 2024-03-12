@@ -20,7 +20,7 @@ export const postContainer = style({
   inlineSize: "530px",
   whiteSpace: "normal",
   overflowWrap: "break-word",
-  margin: "10px auto",
+  margin: "15px auto",
   padding: "12px",
 
   border: "1px solid #b0b0b0",
@@ -34,6 +34,23 @@ export const postNameArea = style({
   width: "100%",
   paddingBottom: "10px",
 })
+
+export const postNameGrid = style({
+  fontSize: "16px",
+  fontWeight: "bold",
+
+  verticalAlign: "middle",
+  display: "inline-grid",
+})
+
+export const postNameID = style({
+  fontSize: "16px",
+  fontWeight: "normal",
+  color: "#8e8c8c",
+
+  verticalAlign: "middle",
+})
+
 export const postTextArea = style({
   width: "100%",
   fontSize: "20px",
@@ -45,4 +62,25 @@ export const iconImage = style({
   borderRadius: "50%",
   marginRight: "10px",
   verticalAlign: "middle",
+})
+
+export const foldableThreadButtonContainer = style({
+  width: "100%",
+  textAlign: "center",
+})
+
+export const foldableThreadNone = style({
+  border: "1px solid #333",
+  height: 0,
+  opacity: 0,
+  padding: "0 10px",
+  transition: ".5s",
+  visibility: "hidden",
+})
+
+export const foldableThreadVisible = style({
+  opacity: 1,
+  padding: "10px",
+  transition: ".5s",
+  visibility: "visible",
 })

@@ -1,6 +1,7 @@
 "use client"
 
 import Image from "next/image"
+import { useState } from "react"
 import ReactMarkdown from "react-markdown"
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
 import { okaidia } from "react-syntax-highlighter/dist/cjs/styles/prism"
@@ -72,8 +73,10 @@ function CodeBlock({ inline, className, children }: any) {
 }
 
 const createStringThreadToPostHtml = (htmlString: string) => {
+  const [isThreadOpen, setIsThreadOpen] = useState(false)
+
   // 変換前に対応文字列を使用してオブジェクトに変換する
-  const threads = htmlString
+  const [top, ...threads] = htmlString
     .split(",")
     .filter((v) => !!v)
     .map((str) => {
@@ -82,19 +85,31 @@ const createStringThreadToPostHtml = (htmlString: string) => {
     })
     .filter((v) => !!v.text && !!v.name)
 
+  const SinglePost = (data: { name: string; text: string }, index: number) => {
+    return (
+      <div key={index} className={styles2.postContainer}>
+        <div className={styles2.postNameArea}>
+          <img src="background.jpg" className={styles2.iconImage} />
+          <div className={styles2.postNameGrid}>
+            <div>{data.name}</div>
+            <div className={styles2.postNameID}>@sena-v.com</div>
+          </div>
+        </div>
+        <div className={styles2.postTextArea}>{data.text}</div>
+      </div>
+    )
+  }
+
+  // トップ記事以外は折りたたみたいので分離
   return (
     <>
-      {threads.map((thread, index) => {
-        return (
-          <div key={index} className={styles2.postContainer}>
-            <div className={styles2.postNameArea}>
-              <img src="background.jpg" className={styles2.iconImage} />
-              {thread.name}
-            </div>
-            <div className={styles2.postTextArea}>{thread.text}</div>
-          </div>
-        )
-      })}
+      {top && SinglePost(top, 0)}
+      <div className={styles2.foldableThreadButtonContainer}>
+        <input type="button" onClick={() => setIsThreadOpen(!isThreadOpen)} value="スレッドを開く" />
+      </div>
+      <div className={!isThreadOpen ? styles2.foldableThreadNone : styles2.foldableThreadVisible}>
+        {threads.map((thread, index) => SinglePost(thread, index))}
+      </div>
     </>
   )
 }
