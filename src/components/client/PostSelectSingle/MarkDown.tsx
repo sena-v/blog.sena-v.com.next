@@ -102,14 +102,16 @@ const createStringThreadToPostHtml = (htmlString: string) => {
 
   // トップ記事以外は折りたたみたいので分離
   return (
-    <>
+    <div className={styles2.foldableThreadContainer}>
       {top && SinglePost(top, 0)}
       <div className={styles2.foldableThreadButtonContainer}>
-        <input type="button" onClick={() => setIsThreadOpen(!isThreadOpen)} value="スレッドを開く" />
+        <span className={styles2.foldableThreadButton} onClick={() => setIsThreadOpen(!isThreadOpen)}>
+          スレッドを開く
+        </span>
       </div>
       <div className={!isThreadOpen ? styles2.foldableThreadNone : styles2.foldableThreadVisible}>
         {threads.map((thread, index) => SinglePost(thread, index))}
       </div>
-    </>
+    </div>
   )
 }

@@ -64,9 +64,48 @@ export const iconImage = style({
   verticalAlign: "middle",
 })
 
+export const foldableThreadContainer = style({
+  marginTop: "40px",
+})
+
 export const foldableThreadButtonContainer = style({
   width: "100%",
   textAlign: "center",
+})
+
+export const foldableThreadButton = style({
+  backgroundColor: "transparent",
+  border: "none",
+  cursor: "pointer",
+  outline: "none",
+  appearance: "none",
+
+  position: "relative",
+  display: "flex",
+  justifyContent: "space-around",
+  alignItems: "center",
+  margin: "0 auto",
+  maxWidth: "100px",
+  padding: "10px 25px",
+  color: "#313131",
+  transition: "0.3s ease-in-out",
+  fontWeight: 600,
+
+  ":hover": {
+    top: "1.5px",
+  },
+
+  "::before": {
+    position: "absolute",
+    content: "",
+    width: "100%",
+    height: "3px",
+    top: "100%",
+    left: 0,
+    borderRadius: "3px",
+    background: "#aeaeae",
+    transition: ".5s",
+  },
 })
 
 export const foldableThreadNone = style({
