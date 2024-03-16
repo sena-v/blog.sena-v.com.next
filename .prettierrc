@@ -1,4 +1,13 @@
 {
   "printWidth": 120,
-  "semi": false
+  "semi": false,
+
+  "overrides": [
+    {
+      "files": "post-to-md.js",
+      "options": {
+        "semi": true
+      }
+    }
+  ]
 }

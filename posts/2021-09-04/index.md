@@ -5,8 +5,6 @@ slug: "nuxt-ts-pj-review"
 coverImage: "posts-image/2021-09-04.jpg"
 ---
 
-![](../images/posts-image/2021-09-04.jpg)
-
 Nuxt + TypeScript の環境でフロント～バックエンドまでトータル開発をしたのでその時の所感。
 
 # 良かった所

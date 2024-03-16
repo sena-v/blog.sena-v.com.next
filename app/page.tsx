@@ -54,7 +54,14 @@ export default function Home(props: PropsTypes) {
   return (
     <main className={styles.main}>
       <div className={styles.backgroundImageContainer}>
-        <Image src="/background.jpg" className={styles.backgroundImage} alt="bgImage" width={1000} height={1000} />
+        <Image
+          src="/background.jpg"
+          className={styles.backgroundImage}
+          alt="bgImage"
+          width={1000}
+          height={1000}
+          priority
+        />
       </div>
       <div className={`${styles.title} ${_Caveat.className}`}>
         <form action={moveSiteTop}>
