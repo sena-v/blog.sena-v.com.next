@@ -8,12 +8,12 @@ jobs:
   Check-type_lint_build:
     runs-on: ubuntu-latest
     steps:
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: checkout branch
         uses: actions/checkout@v4
       - name: setup node latest
-        uses: actions/setup-node@4
+        uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 20
           cache: "npm"
       - name: load or cache node dependencies
         uses: actions/cache@v4
@@ -29,12 +29,12 @@ jobs:
   E2e_Test_Playwright:
     runs-on: ubuntu-latest
     steps:
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: checkout branch
         uses: actions/checkout@v4
       - name: setup node latest
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: 20
           cache: "npm"
       - name: load or cache node dependencies
         uses: actions/cache@v4
@@ -57,12 +57,12 @@ jobs:
   E2e_Test_Cypress:
     runs-on: ubuntu-latest
     steps:
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: checkout branch
         uses: actions/checkout@v4
       - name: setup node latest
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: 20
           cache: "npm"
       - name: load or cache node dependencies
         uses: actions/cache@v4
