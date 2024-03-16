@@ -8,21 +8,25 @@ jobs:
   Check-type_lint_build:
     runs-on: ubuntu-latest
     steps:
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: checkout branch
         uses: actions/checkout@v4
+
       - name: setup node latest
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 20
           cache: "npm"
+
       - name: load or cache node dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.npm
           key: npm-${{ hashFiles('package-lock.json') }}
           restore-keys: npm-
+
       - name: install npm package
         run: npm ci
+
       - name: type lint build check
         run: npm run ci
 
@@ -31,19 +35,22 @@ jobs:
     container:
       image: mcr.microsoft.com/playwright:v1.42.1-jammy
     steps:
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: checkout branch
         uses: actions/checkout@v4
+
       - name: setup node latest
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 20
           cache: "npm"
+
       - name: load or cache node dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.npm
           key: npm-${{ hashFiles('package-lock.json') }}
           restore-keys: npm-
+
       - name: install npm package
         run: npm ci
 
