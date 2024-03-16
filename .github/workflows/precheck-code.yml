@@ -7,8 +7,6 @@ on:
 jobs:
   Check-type_lint_build:
     runs-on: ubuntu-latest
-    container:
-      image: mcr.microsoft.com/playwright:v1.42.1-jammy
     steps:
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/checkout@v4
@@ -30,6 +28,8 @@ jobs:
 
   E2e_Test_Playwright:
     runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.42.1-jammy
     steps:
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/checkout@v4
