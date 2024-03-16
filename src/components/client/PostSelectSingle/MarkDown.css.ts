@@ -17,7 +17,7 @@ export const code = style({
 
 export const postContainer = style({
   height: "auto",
-  inlineSize: "530px",
+  inlineSize: "580px",
   whiteSpace: "normal",
   overflowWrap: "break-word",
   margin: "15px auto",
@@ -53,7 +53,7 @@ export const postNameID = style({
 
 export const postTextArea = style({
   width: "100%",
-  fontSize: "20px",
+  fontSize: "18px",
 })
 
 export const iconImage = style({

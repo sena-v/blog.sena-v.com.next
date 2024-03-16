@@ -12,6 +12,7 @@ globalStyle("a", {
 
 globalStyle("p", {
   lineHeight: "30px",
+  marginTop: "20px",
 })
 
 export const main = style({
