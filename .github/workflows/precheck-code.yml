@@ -10,69 +10,52 @@ jobs:
     steps:
       - name: checkout branch
         uses: actions/checkout@v4
+
       - name: setup node latest
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: "npm"
+
       - name: load or cache node dependencies
         uses: actions/cache@v4
         with:
           path: ~/.npm
           key: npm-${{ hashFiles('package-lock.json') }}
           restore-keys: npm-
+
       - name: install npm package
         run: npm ci
+
       - name: type lint build check
         run: npm run ci
 
   E2e_Test_Playwright:
     runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.42.1-jammy
     steps:
       - name: checkout branch
         uses: actions/checkout@v4
+
       - name: setup node latest
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: "npm"
+
       - name: load or cache node dependencies
         uses: actions/cache@v4
         with:
           path: ~/.npm
           key: npm-${{ hashFiles('package-lock.json') }}
           restore-keys: npm-
+
       - name: install npm package
         run: npm ci
-
-      - name: Playwright install
-        run: npx playwright install --with-deps
 
       - name: build next.js
         run: npm run build
 
       - name: Check e2e
         run: npx playwright test
-
-  E2e_Test_Cypress:
-    runs-on: ubuntu-latest
-    steps:
-      - name: checkout branch
-        uses: actions/checkout@v4
-      - name: setup node latest
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: "npm"
-      - name: load or cache node dependencies
-        uses: actions/cache@v4
-        with:
-          path: ~/.npm
-          key: npm-${{ hashFiles('package-lock.json') }}
-          restore-keys: npm-
-
-      - name: Cypress run
-        uses: cypress-io/github-action@v6
-        with:
-          build: npm run build
-          start: npm start
