@@ -1,6 +1,5 @@
 import { Metadata } from "next"
 import { cookies } from "next/headers"
-import Image from "next/image"
 import Link from "next/link"
 import { getAllPosts, getFilteredPost, ItemType } from "src/utils/read-md"
 
@@ -54,14 +53,14 @@ export default function Home(props: PropsTypes) {
   return (
     <main className={styles.main}>
       <div className={styles.backgroundImageContainer}>
-        <Image
+        {/* <Image
           src="/background.jpg"
           className={styles.backgroundImage}
           alt="bgImage"
           width={1000}
           height={1000}
-          priority
-        />
+          loading="lazy"
+        /> */}
       </div>
       <div className={`${styles.title} ${_Caveat.className}`}>
         <form action={moveSiteTop}>
