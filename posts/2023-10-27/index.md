@@ -1,6 +1,6 @@
 ---
 title: "ブログのNext14対応+App Router対応"
-tags: ["TypeScript","React"]
+tags: ["TypeScript","React","Next"]
 slug: next-14-app-router
 coverImage: "react.png"
 ---

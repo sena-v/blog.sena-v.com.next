@@ -5,8 +5,6 @@ slug: "2021-javascript"
 coverImage: "posts-image/2021-01-01.png"
 ---
 
-![](../images/posts-image/2021-01-01.png)
-
 年度替わりの 3 月までに基礎固めをしようと思ったため、2021 年現在で JavaScript を学ぶために  
 最短アプローチはどうすればよいか？を振り返りと方針がためを含め纏めました。
 
@@ -82,8 +80,6 @@ JavaScript の現場に行っても一切困ることはありません。
 ※自分は API で情報取得を実施し、内部で処理、text を出力するコンソールアプリを作成しました。  
 参考：[【JavaScript】なろうランキングを API で一括取得する](https://sena-v.com/narou-rank-get)  
 
-![結果](../images/posts-image/2020-11-19-01.png)  
-
 # 書いて覚えるフェーズが終わったら
 
 ---
@@ -133,10 +129,6 @@ TypeScript へ移行していることからあまりいい書籍が出ていな
 
 とはいえエンジニアにとってスキルありなしの差は一年でかなり大きくなるため、Effective JavaScript や  
 開眼 JavaScript 等既存の本で勉強できる箇所は吸収するようにしましょう。  
-
-<div style="text-align:center">  
-<a href="https://www.amazon.co.jp/%E9%96%8B%E7%9C%BC-JavaScript-%E2%80%95%E8%A8%80%E8%AA%9E%E4%BB%95%E6%A7%98%E3%81%8B%E3%82%89%E5%AD%A6%E3%81%B6JavaScript%E3%81%AE%E6%9C%AC%E8%B3%AA-Cody-Lindley/dp/487311621X/ref=as_li_ss_il?__mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A&crid=KQGPAWCZMPN&dchild=1&keywords=%E9%96%8B%E7%9C%BC+javascript&qid=1609700068&sprefix=%E3%81%8B%E3%81%84%E3%81%8C%E3%82%93%2Caps%2C297&sr=8-1&linkCode=li3&tag=sena0c9-22&linkId=68de17155cfeb70eefbc7a3abbdddd50&language=ja_JP" target="_blank"><img border="0" src="//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=487311621X&Format=_SL250_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&tag=sena0c9-22&language=ja_JP" ></a><img src="https://ir-jp.amazon-adsystem.com/e/ir?t=sena0c9-22&language=ja_JP&l=li3&o=9&a=487311621X" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />  
-<a href="https://www.amazon.co.jp/Effective-JavaScript-David-Herman/dp/4798131113/ref=as_li_ss_il?__mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A&crid=2X5ANOSO8E3A4&dchild=1&keywords=effective+javascript&qid=1609701110&sprefix=Effective+javas%2Caps%2C248&sr=8-1&linkCode=li3&tag=sena0c9-22&linkId=abc40da2604a203c90d4962539a0aa69&language=ja_JP" target="_blank"><img border="0" src="//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=4798131113&Format=_SL250_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&tag=sena0c9-22&language=ja_JP" ></a><img src="https://ir-jp.amazon-adsystem.com/e/ir?t=sena0c9-22&language=ja_JP&l=li3&o=9&a=4798131113" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /></div>
 
 ## 「最新のフレームワーク」でベスプラを学ぶ
 
@@ -196,10 +188,6 @@ JavaScript については用途が長い歴史の中で変わってきている
 
 ---
 
-<div style="margin-left:150px">  
-<blockquote class="twitter-tweet" style="text-align:center"><p lang="ja" dir="ltr">- TypeScript のチュートリアルをやる<a href="https://t.co/YyaC6C8rSe">https://t.co/YyaC6C8rSe</a>- Next.js のチュートリアルをやる <a href="https://t.co/xMMVvzHwK5">https://t.co/xMMVvzHwK5</a>- <a href="https://t.co/RH5SgCGNIJ">https://t.co/RH5SgCGNIJ</a> と <a href="https://t.co/rffxTL9zui">https://t.co/rffxTL9zui</a> を読んで、面白そうなライブラリをひたすら手元で試してみる- クラウドなにか一つ決めて勉強する。Firebase,AWS,GCP</p>&mdash; OSSタダ乗りおじさん (@mizchi) <a href="https://twitter.com/mizchi/status/1346313712785707009?ref_src=twsrc%5Etfw">January 5, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>  
-</div>  
-
-@mizchi さんの投稿にもありましたが、やはり大枠は node から React 等が一番良さそうです。  
+[@mizchi さんの投稿](https://twitter.com/mizchi/status/1346313712785707009?ref_src=twsrc%5Etfw)にもありましたが、やはり大枠は node から React 等が一番良さそうです。  
 といっても「基本を身に着けてから React をうまく扱えるか？」の部分が最初の難関となるので  
 ネット上の講座等も<u>ES6 以降が学べるか精査した上で</u>身につけると最短速度で学習が進むと思います。
