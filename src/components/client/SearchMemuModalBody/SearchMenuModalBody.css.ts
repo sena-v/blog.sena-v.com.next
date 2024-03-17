@@ -41,7 +41,7 @@ export const closeButton = style({
 
 export const initButton = style({
   height: "40px",
-  width: "80px",
+  width: "100px",
 
   color: "black",
   backgroundColor: "white",

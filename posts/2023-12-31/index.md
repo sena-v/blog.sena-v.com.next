@@ -1,6 +1,6 @@
 ---
 title: "2023年振り返り"
-tags: ["振り返り", "技術"]
+tags: ["振り返り", "技術","Next"]
 slug: log-202301-202312
 coverImage: "nextjs.png"
 ---

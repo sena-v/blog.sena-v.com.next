@@ -1,6 +1,6 @@
 ---
 title: "2020年最新技術とそれに関する知見"
-tags: ["技術"]
+tags: ["技術","Next"]
 slug: "2020-tech-trend"
 coverImage: "posts-image/2020-11-27-01.png"
 ---
