@@ -5,6 +5,9 @@ import { gitHubUrl, qiitaUrl, siteSourceCodeUrl, twitterUrl } from "@/utils/cons
 const rootUrl = process.env.NODE_ENV === "production" ? "https://sena-v.com/" : "http://localhost:3000/"
 
 test("ページの初期動作確認", async ({ page, context }) => {
+  // CI上だとcoldStartでサーバーが立ち上がるまでに時間がかかるため、待機時間を設ける
+  if (process.env.CI) await page.waitForTimeout(1000 * 3)
+
   await page.goto(rootUrl)
   await page.waitForTimeout(1000 * 5)
 
