@@ -17,14 +17,7 @@ export function MarkDown({ post }: { post: ItemType }) {
     code: CodeBlock,
     img: (props: any) => (
       <div className={styles.containerPostImage}>
-        <Image
-          alt={props.alt ?? "postImage"}
-          src={props.src}
-          className={styles.postImage}
-          width={500}
-          height={500}
-          priority={true}
-        />
+        <Image alt={props.alt ?? "postImage"} src={props.src} className={styles.postImage} width={500} height={500} />
       </div>
     ),
   }
@@ -89,7 +82,7 @@ const createStringThreadToPostHtml = (htmlString: string) => {
     return (
       <div key={index} className={styles2.postContainer}>
         <div className={styles2.postNameArea}>
-          <Image alt="icon" src="background.jpg" className={styles2.iconImage} loading="lazy" />
+          <Image alt="icon" src="background.jpg" className={styles2.iconImage} />
           <div className={styles2.postNameGrid}>
             <div>{data.name}</div>
             <div className={styles2.postNameID}>@sena-v.com</div>
