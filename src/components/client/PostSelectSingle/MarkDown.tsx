@@ -89,7 +89,7 @@ const createStringThreadToPostHtml = (htmlString: string) => {
     return (
       <div key={index} className={styles2.postContainer}>
         <div className={styles2.postNameArea}>
-          <img src="background.jpg" className={styles2.iconImage} />
+          <Image alt="icon" src="background.jpg" className={styles2.iconImage} loading="lazy" />
           <div className={styles2.postNameGrid}>
             <div>{data.name}</div>
             <div className={styles2.postNameID}>@sena-v.com</div>
