@@ -30,6 +30,13 @@ export async function generateMetadata(props: PropsTypes): Promise<Metadata> {
   const filterParams = decodeURI(cookies().get("searchModalParams")?.value ?? "")
   const { targetPostTitle, urlWithQuery } = initPostsData(props, filterParams)
 
+  const shareTitle = `${targetPostTitle} - ${siteTitle}`
+  // タイトル有無で使用imageを変更
+  const image =
+    targetPostTitle !== undefined
+      ? new ImageResponse(<OGPImage targetPostTitle={targetPostTitle} />)
+      : `${siteUrl}/background.jpg`
+
   return {
     title: siteTitle,
     description: targetPostTitle,
@@ -37,19 +44,13 @@ export async function generateMetadata(props: PropsTypes): Promise<Metadata> {
       type: "website",
       locale: "ja_JP",
       url: urlWithQuery,
-      siteName: `${targetPostTitle} - ${siteTitle}`,
-      images:
-        targetPostTitle !== undefined
-          ? new ImageResponse(<OGPImage targetPostTitle={targetPostTitle} />)
-          : `${siteUrl}/background.jpg`,
+      siteName: shareTitle,
+      images: image,
     },
     twitter: {
       card: "summary_large_image",
-      title: `${targetPostTitle} - ${siteTitle}`,
-      images:
-        targetPostTitle !== undefined
-          ? new ImageResponse(<OGPImage targetPostTitle={targetPostTitle} />)
-          : `${siteUrl}/background.jpg`,
+      title: shareTitle,
+      images: image,
     },
   }
 }
