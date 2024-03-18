@@ -57,8 +57,6 @@ export const postTextArea = style({
 })
 
 export const iconImage = style({
-  width: "50px",
-  height: "50px",
   borderRadius: "50%",
   marginRight: "10px",
   verticalAlign: "middle",
