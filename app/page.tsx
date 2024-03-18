@@ -32,25 +32,24 @@ export async function generateMetadata(props: PropsTypes): Promise<Metadata> {
 
   const shareTitle = `${targetPostTitle} - ${siteTitle}`
   // タイトル有無で使用imageを変更
-  const image =
-    targetPostTitle !== undefined
-      ? new ImageResponse(<OGPImage targetPostTitle={targetPostTitle} />)
-      : `${siteUrl}/background.jpg`
+  // const image =
+  //   targetPostTitle !== undefined
+  //     ? new ImageResponse(<OGPImage targetPostTitle={targetPostTitle} />)
+  //     : `${siteUrl}/background.jpg`
 
   return {
-    title: siteTitle,
-    description: targetPostTitle,
+    title: shareTitle,
     openGraph: {
       type: "website",
       locale: "ja_JP",
       url: urlWithQuery,
       siteName: shareTitle,
-      images: image,
+      images: new ImageResponse(<OGPImage targetPostTitle={targetPostTitle} />),
     },
     twitter: {
       card: "summary_large_image",
       title: shareTitle,
-      images: image,
+      images: new ImageResponse(<OGPImage targetPostTitle={targetPostTitle} />),
     },
   }
 }
