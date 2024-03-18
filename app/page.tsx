@@ -37,8 +37,7 @@ export async function generateMetadata(props: PropsTypes): Promise<Metadata> {
       type: "website",
       locale: "ja_JP",
       url: urlWithQuery,
-      siteName: siteTitle,
-      description: targetPostTitle,
+      siteName: `${targetPostTitle} - ${siteTitle}`,
       images:
         targetPostTitle !== undefined
           ? new ImageResponse(<OGPImage targetPostTitle={targetPostTitle} />)
@@ -46,8 +45,11 @@ export async function generateMetadata(props: PropsTypes): Promise<Metadata> {
     },
     twitter: {
       card: "summary_large_image",
-      title: siteTitle,
-      description: targetPostTitle,
+      title: `${targetPostTitle} - ${siteTitle}`,
+      images:
+        targetPostTitle !== undefined
+          ? new ImageResponse(<OGPImage targetPostTitle={targetPostTitle} />)
+          : `${siteUrl}/background.jpg`,
     },
   }
 }
