@@ -2,7 +2,6 @@ import { Metadata } from "next"
 import { cookies } from "next/headers"
 import Image from "next/image"
 import Link from "next/link"
-import { ImageResponse } from "next/og"
 import { getAllPosts, getFilteredPost, ItemType } from "src/utils/read-md"
 
 import * as styles from "./page.css"
@@ -11,7 +10,6 @@ import { _Caveat } from "../src/utils/font"
 
 import { GoTopButton } from "@/components/client/GoTopButton/GoTopButton"
 import { PostSelectSingle } from "@/components/client/PostSelectSingle/PostSelectSingle"
-import { OGPImage } from "@/components/server/ogpImage"
 import { gitHubUrl, qiitaUrl, siteSourceCodeUrl, siteTitle, siteUrl, twitterUrl } from "@/utils/constants"
 import { moveSiteTop } from "@/utils/routerUtil"
 
@@ -31,7 +29,7 @@ export async function generateMetadata(props: PropsTypes): Promise<Metadata> {
   const { targetPostTitle, urlWithQuery } = initPostsData(props, filterParams)
 
   const shareTitle = `${targetPostTitle} - ${siteTitle}`
-  const images = new ImageResponse(<OGPImage targetPostTitle={targetPostTitle} />)
+  const images = `${siteUrl}/background.jpg`
 
   return {
     title: shareTitle,
@@ -43,7 +41,7 @@ export async function generateMetadata(props: PropsTypes): Promise<Metadata> {
       images,
     },
     twitter: {
-      card: "summary_large_image",
+      card: "summary",
       title: shareTitle,
       images,
     },
