@@ -10,4 +10,15 @@ export function middleware(request: NextRequest) {
       return new NextResponse(null, { status: 401 })
     }
   }
+
+  // RSCで現在のurlを取れるようにheader情報へ現在のurlを追加
+  const requestHeaders = new Headers(request.headers)
+  requestHeaders.set("x-url", request.url)
+
+  return NextResponse.next({
+    request: {
+      // Apply new request headers
+      headers: requestHeaders,
+    },
+  })
 }
