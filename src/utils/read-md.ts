@@ -172,3 +172,9 @@ export const getAllTagsAndYears = () => {
 
   return { tags, years }
 }
+
+// 指定したslugを持つ記事を検索
+export const getTargetPostFromSlug = (slug: string) => {
+  const posts = getAllPosts()
+  return posts.find((post) => post.slug === slug)
+}
