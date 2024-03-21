@@ -28,6 +28,15 @@ export const postContainer = style({
 
   fontSize: "17px",
   fontFamily: "Helvetica",
+
+  "@media": {
+    "screen and (max-width:767px)": {
+      margin: "0 auto",
+      width: "90%",
+      padding: "10px",
+      marginBlock: "10px auto",
+    },
+  },
 })
 export const postNameArea = style({
   height: "50px",

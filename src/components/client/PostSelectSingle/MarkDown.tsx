@@ -59,9 +59,11 @@ function CodeBlock({ inline, className, children }: any) {
   }
 
   return (
-    <SyntaxHighlighter style={okaidia} language={lang}>
-      {String(children).replace(/\n$/, "")}
-    </SyntaxHighlighter>
+    <div style={{ overflow: "scroll" }}>
+      <SyntaxHighlighter style={okaidia} language={lang}>
+        {String(children).replace(/\n$/, "")}
+      </SyntaxHighlighter>
+    </div>
   )
 }
 

@@ -35,11 +35,23 @@ export const backgroundImageContainer = style({
   width: "100%",
   height: "auto",
   zIndex: "-1",
+
+  "@media": {
+    "screen and (max-width:767px)": {
+      height: "100%",
+    },
+  },
 })
 export const backgroundImage = style({
   width: "100%",
   height: "auto",
   zIndex: "-1",
+
+  "@media": {
+    "screen and (max-width:767px)": {
+      height: "100%",
+    },
+  },
 })
 
 export const title = style({
@@ -61,7 +73,7 @@ export const linkContainer = style({
   display: "flex",
 
   "@media": {
-    "screen and (max-width:1080px)": {
+    "screen and (max-width:1000px)": {
       display: "none",
     },
   },
@@ -72,6 +84,13 @@ export const postSingleContainer = style({
   margin: "0px auto",
 
   display: "flex",
+
+  "@media": {
+    "screen and (max-width:767px)": {
+      margin: "0 auto",
+      width: "98%",
+    },
+  },
 })
 
 export const link = style({

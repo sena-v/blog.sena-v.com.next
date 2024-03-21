@@ -6,6 +6,14 @@ export const container = style({
   backgroundColor: "#fff",
   padding: "20px",
   boxShadow: "0 0 10px rgba(0, 0, 0, 0export const  1)",
+
+  "@media": {
+    "screen and (max-width:767px)": {
+      margin: "0 auto",
+      width: "98%",
+      padding: "2px",
+    },
+  },
 })
 
 /* ヘッダーのスタイル */
