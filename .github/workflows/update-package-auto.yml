@@ -1,0 +1,66 @@
+name: update package auto
+
+on:
+  # 週1回、月曜朝4時にアップデートをチェックしてPRを作成
+  schedule:
+    - cron: "0 4 * * 1"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  check_update:
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.42.1-jammy
+    outputs:
+      value: ${{ steps.stepid.outputs.update_result }}
+    if:
+    steps:
+      - name: checkout branch
+        uses: actions/checkout@v4
+
+      - name: setup node latest
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+
+      ###################################################
+      # ncuを使ってパッケージ更新チェックを行い、PRを作成する
+      #
+      # × dependabot(ログ・PRが見づらい)
+      # × renovate(権限厳しいPJだと使えなかったりする)
+      ###################################################
+      - name: run update check shell script
+        run: zsh .github/workflows/bin/create-update-branch.sh
+
+      - name: create pull request
+        if: ${{ env.UPDATE_RESULT }} == True
+        run: |
+          gh pr create \
+            -B main \
+            -t 'update packages $(date "+%Y%m%d")' \
+            -a ${{ github.actor }}
+
+      - name: set result to output
+        run: |
+          echo "update_result=${{ env.UPDATE_RESULT }}" >> $GITHUB_OUTPUT
+          echo "pr_name=${{ env.BRANCH_NAME }}" >> $GITHUB_OUTPUT
+
+  create-pr:
+    runs-on: ubuntu-latest
+    needs:
+      if: ${{ needs.check_update.outputs.update_result }} == True
+    env:
+      PR_URL: ${{ needs.check_update.outputs.pr_name }}
+
+    steps:
+      # - name: Approve PR
+      #   run: gh pr review "$PR_URL" --approve
+
+      # - name: Enable auto-merge for Steward PRs
+      #   run: gh pr merge --merge --auto "$PR_URL"
+
+      - run: echo "成功！"
