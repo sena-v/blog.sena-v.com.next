@@ -37,7 +37,7 @@ jobs:
         run: zsh .github/workflows/bin/create-update-branch.sh
 
       - name: create pull request
-        if: ${{ env.UPDATE_RESULT }} == True
+        if: ${{ env.UPDATE_RESULT == 'True' }}
         run: |
           gh pr create \
             -B main \
@@ -45,14 +45,15 @@ jobs:
             -a ${{ github.actor }}
 
       - name: set result to output
+        id: stepid
         run: |
           echo "update_result=${{ env.UPDATE_RESULT }}" >> $GITHUB_OUTPUT
           echo "pr_name=${{ env.BRANCH_NAME }}" >> $GITHUB_OUTPUT
 
   create-pr:
     runs-on: ubuntu-latest
-    needs:
-      if: ${{ needs.check_update.outputs.update_result }} == True
+    needs: check_update
+    if: ${{ needs.check_update.outputs.update_result == 'True' }}
     env:
       PR_URL: ${{ needs.check_update.outputs.pr_name }}
 
