@@ -4,6 +4,7 @@ on:
   # 週1回、月曜朝4時にアップデートをチェックしてPRを作成
   schedule:
     - cron: "0 4 * * 1"
+  workflow_dispatch:
 
 permissions:
   contents: write
