@@ -34,7 +34,7 @@ jobs:
       # × renovate(権限厳しいPJだと使えなかったりする)
       ###################################################
       - name: run update check shell script
-        run: zsh .github/workflows/bin/create-update-branch.sh
+        run: sh .github/workflows/bin/create-update-branch.sh
 
       - name: create pull request
         if: ${{ env.UPDATE_RESULT == 'True' }}
