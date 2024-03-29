@@ -1,3 +1,6 @@
+# CI上で対象のgit操作を許可する
+git config --global --add safe.directory /__w/blog.sena-v.com.next/blog.sena-v.com.next
+
 # ブランチ名称を定義
 BRANCH_NAME="update/$(date "+%Y%m%d")"
 
