@@ -17,7 +17,6 @@ jobs:
       image: mcr.microsoft.com/playwright:v1.42.1-jammy
     outputs:
       value: ${{ steps.stepid.outputs.update_result }}
-    if:
     steps:
       - name: checkout branch
         uses: actions/checkout@v4
