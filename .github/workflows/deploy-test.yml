@@ -9,7 +9,7 @@ jobs:
   Run_e2e_for_Prod:
     runs-on: ubuntu-latest
     container:
-      image: mcr.microsoft.com/playwright:v1.43.1-jammy
+      image: mcr.microsoft.com/playwright:v1.43.0-jammy
     steps:
       - name: checkout branch
         uses: actions/checkout@v4
