@@ -48,7 +48,7 @@ export const Main = () => {
 
 参考  
 [node.js 「通常の関数」と「アロー関数」のパフォーマンスを計測する](https://mebee.info/2021/11/01/post-26379/)  
-[Twitter集合知: 「アロー関数式派の明確なメリットとは」](https://twitter.com/clockmaker/status/1555399611535491073?lang=ja)
+[Twitter集合知: 「アロー関数式派の明確なメリットとは」](https://x.com/clockmaker/status/1555399611535491073?lang=ja)
 
 ## パフォーマンスだけなら他の戦略をすべてやってからでも良いのでは？
 

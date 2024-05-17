@@ -1,7 +1,7 @@
 import fs from "fs"
 
 const postToPost = function () {
-  if (!document.URL.includes("https://twitter.com/") || !document.URL.includes("status")) {
+  if (!document.URL.includes("https://x.com/") || !document.URL.includes("status")) {
     throw new Error("X(Twitter)のスレッド表示できるページで実行してください")
   }
 
