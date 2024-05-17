@@ -188,6 +188,6 @@ JavaScript については用途が長い歴史の中で変わってきている
 
 ---
 
-[@mizchi さんの投稿](https://twitter.com/mizchi/status/1346313712785707009?ref_src=twsrc%5Etfw)にもありましたが、やはり大枠は node から React 等が一番良さそうです。  
+[@mizchi さんの投稿](https://x.com/mizchi/status/1346313712785707009?ref_src=twsrc%5Etfw)にもありましたが、やはり大枠は node から React 等が一番良さそうです。  
 といっても「基本を身に着けてから React をうまく扱えるか？」の部分が最初の難関となるので  
 ネット上の講座等も<u>ES6 以降が学べるか精査した上で</u>身につけると最短速度で学習が進むと思います。
