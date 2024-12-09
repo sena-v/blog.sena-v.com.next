@@ -3,5 +3,5 @@ export const siteDescription = "tech and hobby blog by sena-v (Next.js App Route
 export const siteUrl = "https://sena-v.com"
 export const gitHubUrl = "https://github.com/sena-v"
 export const qiitaUrl = "https://qiita.com/sena_v"
-export const twitterUrl = "https://x.com/card1nal_tetra"
+export const twitterUrl = "https://x.com/card1nal_tetra?mx=2"
 export const siteSourceCodeUrl = "https://github.com/sena-v/blog.sena-v.com.next"
