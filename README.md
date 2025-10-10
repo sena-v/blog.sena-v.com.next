@@ -13,6 +13,10 @@ https://sena-v.com/
 - Integration Testing with Playwright
 - Build and hosting to Vercel
 
+## Requirements
+
+- Node.js 22.x
+
 ## branch
 
 
