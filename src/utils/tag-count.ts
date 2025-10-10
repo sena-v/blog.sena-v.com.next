@@ -11,8 +11,7 @@ export const countTags = (allPosts: ItemType[]) => {
   // 全タグから重複を削除
   const tagReducedList = tagAllList.filter((x: string, i: number, self: string[]) => self.indexOf(x) === i)
 
-  // 後にtype TagCountTypeになるが初期化時は空のためany
-  const tagCount: any = { ALL: tagReducedList.length }
+  const tagCount: Record<string, number> = { ALL: tagReducedList.length }
 
   // 重複文字でループしてタグ数をカウント
   for (let i = 0; i < tagReducedList.length; i++) {

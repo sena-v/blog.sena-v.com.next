@@ -1,23 +1,37 @@
 "use client"
 
 import Image from "next/image"
-import { useState } from "react"
-import ReactMarkdown from "react-markdown"
+import { useState, type ComponentPropsWithoutRef, type ReactNode } from "react"
+import ReactMarkdown, { type Components } from "react-markdown"
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
 import { okaidia } from "react-syntax-highlighter/dist/cjs/styles/prism"
+
+import { ItemType } from "@/utils/read-md"
 
 import * as styles2 from "./MarkDown.css"
 import * as styles from "./PostSelectSingle.css"
 
-import { ItemType } from "@/utils/read-md"
+type MarkdownAnchorProps = ComponentPropsWithoutRef<"a">
+type MarkdownImageProps = ComponentPropsWithoutRef<"img">
+interface MarkdownCodeProps extends ComponentPropsWithoutRef<"code"> {
+  inline?: boolean
+  className?: string
+  children?: ReactNode
+}
 
 export function MarkDown({ post }: { post: ItemType }) {
-  const components = {
-    a: (props: any) => <a {...props} className={styles.link} />,
-    code: CodeBlock,
-    img: (props: any) => (
+  const components: Components = {
+    a: (anchorProps: MarkdownAnchorProps) => <a {...anchorProps} className={styles.link} />,
+    code: CodeBlock as Components["code"],
+    img: (imageProps: MarkdownImageProps) => (
       <div className={styles.containerPostImage}>
-        <Image alt={props.alt ?? "postImage"} src={props.src} className={styles.postImage} width={500} height={500} />
+        <Image
+          alt={imageProps.alt ?? "postImage"}
+          src={typeof imageProps.src === "string" ? imageProps.src : ""}
+          className={styles.postImage}
+          width={500}
+          height={500}
+        />
       </div>
     ),
   }
@@ -25,32 +39,45 @@ export function MarkDown({ post }: { post: ItemType }) {
   return <ReactMarkdown components={components}>{post.content}</ReactMarkdown>
 }
 
-function CodeBlock({ inline, className, children }: any) {
+const normaliseChildrenToText = (value: ReactNode): string => {
+  if (typeof value === "string") {
+    return value
+  }
+
+  if (Array.isArray(value)) {
+    return value.map((child) => normaliseChildrenToText(child)).join("")
+  }
+
+  return ""
+}
+
+const CodeBlock = ({ inline, className, children }: MarkdownCodeProps) => {
   // 改行コードがない場合インラインと判定する
-  const isInline = (children as string).includes("\n") ? false : true
+  const codeContent = normaliseChildrenToText(children)
+  const isInline = inline ?? !codeContent.includes("\n")
 
   if (isInline) {
     return (
       <span className={styles2.codeContainer}>
-        <code className={styles2.code}>{children}</code>
+        <code className={styles2.code}>{codeContent}</code>
       </span>
     )
   }
 
-  const match = /language-(\w+)/.exec(className as string)
+  const match = className ? /language-(\w+)/.exec(className) : null
   const lang = match && match[1] ? match[1] : ""
 
   // htmlTagが指定された場合、divの子要素ににそのままhtmlを埋め込む
   if (lang === "threadToPost") {
     // 先頭にフラグ文字が入っていた場合、スレッド形式の投稿を記事形式に変換する
-    return createStringThreadToPostHtml(children as string)
+    return createStringThreadToPostHtml(codeContent)
   }
 
   // 言語にcodeSandboxが設定され、本文内にurlがある場合codeSandboxのパーツを表示する
   if (lang === "codeSandbox") {
     return (
       <iframe
-        src={children}
+        src={codeContent}
         style={{ width: "100%", height: "500px", border: 0, borderRadius: "4px", overflow: "hidden" }}
         allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
         sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
@@ -61,7 +88,7 @@ function CodeBlock({ inline, className, children }: any) {
   return (
     <div style={{ overflow: "scroll" }}>
       <SyntaxHighlighter style={okaidia} language={lang}>
-        {String(children).replace(/\n$/, "")}
+        {codeContent.replace(/\n$/, "")}
       </SyntaxHighlighter>
     </div>
   )

@@ -8,7 +8,10 @@ module.exports = {
     "plugin:react/recommended",
     "plugin:@next/next/recommended",
     "plugin:@typescript-eslint/recommended",
-    "standard-with-typescript",
+    "plugin:import/recommended",
+    "plugin:import/typescript",
+    "plugin:n/recommended",
+    "plugin:promise/recommended",
     "prettier",
   ],
   ignorePatterns: [
@@ -26,6 +29,16 @@ module.exports = {
     project: ["./tsconfig.json"],
   },
   plugins: ["react", "import", "unused-imports"],
+  settings: {
+    react: {
+      version: "detect",
+    },
+    "import/resolver": {
+      typescript: {
+        project: "./tsconfig.json",
+      },
+    },
+  },
   rules: {
     // 適さないルールを無効化
     "@typescript-eslint/explicit-function-return-type": "off", // 関数の戻り値の型を記述必須にする
@@ -42,7 +55,9 @@ module.exports = {
     // ルールを調整
     "@next/next/no-html-link-for-pages": ["error", "pages"], // Linkコンポーネントを使用しない
     "import/no-default-export": "error", // default exportを使用しない
+    "n/no-missing-import": "off",
     "@typescript-eslint/no-explicit-any": 1, //2, // any型を禁止 - 2が禁止のため修正完了まで警告レベルを指定
+    "react/prop-types": "off",
 
     // RSCのServerActions用にコンポーネントの引数にPromise<void>を渡した場合許可する
     "@typescript-eslint/no-misused-promises": [

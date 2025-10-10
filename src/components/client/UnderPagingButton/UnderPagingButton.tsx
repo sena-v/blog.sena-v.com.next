@@ -3,9 +3,9 @@
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 
-import * as styles from "./UnderPagingButton.css"
-
 import { ItemType } from "@/utils/read-md"
+
+import * as styles from "./UnderPagingButton.css"
 
 export const UnderPagingButton = (props: { posts: ItemType[]; targetIndex: number }) => {
   const { posts, targetIndex } = props

@@ -1,4 +1,3 @@
-import { PostDataTypes } from "app/page"
 import Image from "next/image"
 
 import { MarkDown } from "./MarkDown"
@@ -6,6 +5,8 @@ import * as styles from "./PostSelectSingle.css"
 import { usePostSelectSingle } from "./usePostSelectSingle"
 import { SharingButtons } from "../ShareButton/ShareButton"
 import { UnderPagingButton } from "../UnderPagingButton/UnderPagingButton"
+
+import type { PostDataTypes } from "app/page"
 
 export function PostSelectSingle(props: { data: PostDataTypes; targetIndex: number }) {
   const { targetPost, currentUrl } = usePostSelectSingle(props.data.posts, props.targetIndex)

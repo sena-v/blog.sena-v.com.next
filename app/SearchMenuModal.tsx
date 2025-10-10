@@ -1,11 +1,12 @@
 import { cookies } from "next/headers"
 
-import { PostDataTypes } from "./page"
-import * as styles from "./SearchMenuModal.css"
-
 import { SearchMenuModalBody } from "@/components/client/SearchMemuModalBody/SearchMenuModalBody"
 import { toggleModal } from "@/functions/cookie"
 import { getAllTagsAndYears } from "@/utils/read-md"
+
+import * as styles from "./SearchMenuModal.css"
+
+import type { PostDataTypes } from "./page"
 
 export const SearchMenuButton = async () => {
   return (
