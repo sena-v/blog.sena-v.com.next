@@ -1,6 +1,6 @@
-import { Caveat } from "next/font/google"
+import { caveatFontClass } from "./font.css"
 
-export const _Caveat = Caveat({
-  weight: "400",
-  subsets: ["latin"],
-})
+// Expose a static className so CI builds do not depend on remote font downloads.
+export const _Caveat = {
+  className: caveatFontClass,
+} as const
