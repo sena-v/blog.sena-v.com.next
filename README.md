@@ -16,6 +16,7 @@ https://sena-v.com/
 ## Requirements
 
 - Node.js 22.x
+- npm installs rely on the repo's `.npmrc` so every Vercel build uses a fresh `/tmp/npm-cache` and always revalidates downloads. この設定を削除するとキャッシュ破損時に `npm install` がコケるから注意してね。
 
 ## branch
 
