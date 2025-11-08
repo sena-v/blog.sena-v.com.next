@@ -1,6 +1,7 @@
-import { Caveat } from "next/font/google"
+import { caveatFontClassName } from "./font.css"
 
-export const _Caveat = Caveat({
-  weight: "400",
-  subsets: ["latin"],
-})
+export { caveatFontClassName }
+
+export const _Caveat = {
+  className: caveatFontClassName,
+}

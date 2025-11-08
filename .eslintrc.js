@@ -44,7 +44,7 @@ module.exports = {
     "import/no-default-export": "error", // default exportを使用しない
     "@typescript-eslint/no-explicit-any": 1, //2, // any型を禁止 - 2が禁止のため修正完了まで警告レベルを指定
 
-    // RSCのServerActions用にコンポーネントの引数にPromise<void>を渡した場合許可する
+    // RSCのServerActions用にコンポーネント引数にPromise<void>を渡した場合許可する
     "@typescript-eslint/no-misused-promises": [
       2,
       {
@@ -98,6 +98,12 @@ module.exports = {
       files: ["pages/**/*", "app/**/*", "*.config.ts"],
       rules: {
         "import/no-default-export": 0,
+      },
+    },
+    {
+      files: ["app/head.tsx"],
+      rules: {
+        "@next/next/no-page-custom-font": "off",
       },
     },
   ],
