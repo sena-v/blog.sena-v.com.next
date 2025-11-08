@@ -2,11 +2,14 @@
   "name": "next-markdown-blog",
   "version": "1.1.0",
   "private": true,
+  "engines": {
+    "node": ">=18.18.0"
+  },
   "scripts": {
-    "build": "rm -r .next; next build",
+    "build": "rm -rf .next && next build",
     "ci": "next lint && npm run typecheck && npm run build",
     "clean-up-branch": "git checkout main && git pull && git branch --merged main | grep -v -e main | xargs -I{} git branch -d {}",
-    "dev": "rm -r .next; npm run format && npm outdated; echo '\r'; next dev",
+    "dev": "rm -rf .next && npm run format && npm outdated; echo '\r'; next dev",
     "e2e:playwright": "npx playwright test",
     "format": "prettier --write --log-level silent . ",
     "lint": "next lint",
