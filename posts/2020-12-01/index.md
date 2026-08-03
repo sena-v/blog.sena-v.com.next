@@ -12,7 +12,8 @@ React 内の各ツールと Vue を比較しながら React をやる方向に�
 
 # React
 
-![](../images/posts-image/2020-12-01-01.png)![](../images/posts-image/2020-12-01-02.jpg)
+![Reactのロゴ](../images/posts-image/2020-12-01-01.png)
+![Next.jsのロゴ](../images/posts-image/2020-12-01-02.jpg)
 
 Vue と比べて JavaScript がメインの開発であるため、初学者が取り組む場合 JS 学習から始める必要がある。  
 (非同期、イベント駆動、基本的な ES バージョン差の吸収ができないと厳しいかも)  
@@ -41,8 +42,8 @@ Next.js 4 年目の知見：SSR はもう古い、Vercel に API サーバを置
 
 # Vue.js
 
-![](../images/posts-image/2020-12-01-03.png)
-![](../images/posts-image/2020-12-01-04.jpg)
+![Vue.jsのロゴ](../images/posts-image/2020-12-01-03.png)
+![Nuxtのロゴ](../images/posts-image/2020-12-01-04.jpg)
 
 React と比べて単一コンポーネントに html/css/JavaScript が纏まっている。  
 そのため機能が分割されておりシンプルなコードにしやすく理解が楽になる。

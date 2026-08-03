@@ -7,9 +7,11 @@
   },
   "scripts": {
     "build": "next build",
+    "build:bookmarklet": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON src/utils/thread-to-md/thread-to-md.js",
+    "check:bookmarklet": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON src/utils/thread-to-md/thread-to-md.js --check",
     "check:links": "node scripts/check-links.mjs",
     "check:links:external": "CHECK_EXTERNAL_LINKS=1 node scripts/check-links.mjs",
-    "ci": "npm run lint && npm run typecheck && npm run test:unit && npm run check:links && npm run build",
+    "ci": "npm run lint && npm run typecheck && npm run test:unit && npm run check:links && npm run check:bookmarklet && npm run build",
     "clean-up-branch": "git checkout main && git pull && git branch --merged main | grep -v -e main | xargs -I{} git branch -d {}",
     "dev": "next dev",
     "e2e:playwright": "npx playwright test",

@@ -5,7 +5,7 @@ slug: "2020-tech-entry"
 coverImage: "posts-image/2020-12-30.png"
 ---
 
-![](../images/posts-image/2020-12-30.png)
+![JavaScriptのロゴと2020の文字](../images/posts-image/2020-12-30.png)
 
 今年はレガシー系 SIer 企業から転職し、モダン技術を選択できる会社のエンジニアとして働くことになった。  
 設計開発が 8:2 から現在では 2：8 / 1：9 ほどの割合になっているため、開発力についてはかなり向上できた。  

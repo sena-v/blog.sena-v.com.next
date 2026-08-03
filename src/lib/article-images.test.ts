@@ -24,3 +24,16 @@ test("本文中の全ローカル画像がresponsive source用の実寸を持つ
 
   assert.ok(referencedImages.size > 0)
 })
+
+test("本文中の全画像が空でない代替文を持つ", () => {
+  let imageCount = 0
+
+  for (const writing of getLocalWritingsOnly()) {
+    for (const match of writing.content?.matchAll(/!\[([^\]]*)]\(([^)\s]+)(?:\s+[^)]*)?\)/g) ?? []) {
+      imageCount += 1
+      assert.notEqual(match[1].trim(), "", `${writing.slug}: ${match[2]} の代替文が空です`)
+    }
+  }
+
+  assert.ok(imageCount > 0)
+})

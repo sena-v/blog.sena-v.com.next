@@ -2,6 +2,7 @@ import assert from "node:assert/strict"
 import test from "node:test"
 
 import {
+  compareWritingPublicationOrder,
   getAllWritings,
   getRelatedWritings,
   getWritingArchives,
@@ -13,6 +14,17 @@ import {
   validateWritingDate,
   validateWritingSlug,
 } from "./content.ts"
+
+const writingFixture = (slug: string, publishedAt: string) => ({
+  kind: "local" as const,
+  slug,
+  title: slug,
+  summary: slug,
+  publishedAt,
+  tags: ["test"],
+  featured: false,
+  draft: false,
+})
 
 test("content identifierはURL・日付・画像rootの境界を越えない", () => {
   assert.equal(validateWritingSlug("package-manager-node"), "package-manager-node")
@@ -55,6 +67,20 @@ test("archiveは新しい月から並び、件数を保持する", () => {
     archives,
   )
   assert.ok(archives.every(([month, count]) => /^\d{4}-\d{2}$/.test(month) && count > 0))
+})
+
+test("公開日が同じ記事もslugで決定的に並ぶ", () => {
+  const writings = [
+    writingFixture("z-last", "2024-03-06"),
+    writingFixture("older", "2024-03-05"),
+    writingFixture("a-first", "2024-03-06"),
+  ]
+
+  assert.deepEqual(writings.sort(compareWritingPublicationOrder).map(({ slug }) => slug), [
+    "a-first",
+    "z-last",
+    "older",
+  ])
 })
 
 test("関連記事は現在記事を除外し、共有tagを持つ", () => {

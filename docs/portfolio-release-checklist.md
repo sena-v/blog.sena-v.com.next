@@ -24,10 +24,12 @@ Use this checklist one to two weeks before submitting sena-v.com for a job appli
 - [ ] Run `npm run ci`.
 - [ ] Run `npm audit` and resolve or document any finding.
 - [ ] Run `npm run check:links:external`.
+- [ ] Confirm the CodeQL check is successful and review any code-scanning alert.
 - [ ] Run `npm run e2e:playwright` after a production build.
 - [ ] Inspect the home page, Writings, About, the blog reboot article, and a long article at desktop and 390px mobile widths.
 - [ ] Verify keyboard navigation, visible focus, heading order, and color contrast.
 - [ ] Check the production `sitemap.xml`, `robots.txt`, and `rss.xml`.
+- [ ] Confirm public images contain no location metadata and Open Graph dimensions match the actual file.
 
 ## Release and application
 
