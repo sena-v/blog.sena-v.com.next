@@ -1,21 +1,33 @@
 {
-  "extends": ["config:base"],
-  "dependencyDashboard": false,
-  "major": {
-    "enabled": false
-  },
-  "schedule": ["before 2am"],
-  "automergeSchedule": ["ebefore 5am"],
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "timezone": "Asia/Tokyo",
+  "schedule": ["before 6am on monday"],
+  "dependencyDashboard": true,
+  "labels": ["dependencies"],
+  "branchConcurrentLimit": 5,
   "packageRules": [
     {
-      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
-      "automerge": true
+      "description": "Automatically merge low-risk patch and digest updates",
+      "matchUpdateTypes": ["patch", "digest"],
+      "automerge": true,
+      "platformAutomerge": true
     },
     {
-      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
-      "matchPackagePatterns": ["eslint"],
-      "groupName": "eslint",
-      "automerge": true
+      "description": "Group non-major npm updates",
+      "matchManagers": ["npm"],
+      "matchUpdateTypes": ["minor"],
+      "groupName": "non-major npm dependencies"
+    },
+    {
+      "description": "Review breaking upgrades explicitly",
+      "matchUpdateTypes": ["major"],
+      "dependencyDashboardApproval": true
+    },
+    {
+      "description": "Keep GitHub Actions updates together",
+      "matchManagers": ["github-actions"],
+      "groupName": "github actions"
     }
   ]
 }

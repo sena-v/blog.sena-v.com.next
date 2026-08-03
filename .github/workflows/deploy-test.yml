@@ -1,38 +1,57 @@
-name: testing prod environment
+name: production smoke test
+
+permissions:
+  contents: read
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
+
+concurrency:
+  group: production-smoke
+  cancel-in-progress: true
 
 jobs:
-  Run_e2e_for_Prod:
+  smoke:
     runs-on: ubuntu-latest
     container:
-      image: mcr.microsoft.com/playwright:latest
+      image: mcr.microsoft.com/playwright:v1.62.1-jammy
     steps:
-      - name: checkout branch
+      - name: Checkout
         uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: "npm"
-      - name: load or cache node dependencies
-        uses: actions/cache@v4
-        with:
-          path: ~/.npm
-          key: npm-${{ hashFiles('package-lock.json') }}
-          restore-keys: npm-
-      - name: install npm package
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
         run: npm ci
 
-      # E2e実行前にnetlify側のデプロイを待機(2分)
-      - name: Wait Before Invalidate
-        run: sleep 120
+      - name: Wait for this commit on Vercel
+        shell: bash
+        run: |
+          for attempt in {1..60}; do
+            deployed_sha="$(curl --fail --silent --show-error https://www.sena-v.com/version || true)"
+            if [ "$deployed_sha" = "$GITHUB_SHA" ]; then
+              exit 0
+            fi
+            sleep 10
+          done
+          echo "Timed out waiting for commit $GITHUB_SHA" >&2
+          exit 1
 
-      # prodでは本番に向けたいのでenvを設定
-      - name: Set NODE_ENV to production
-        run: echo "NODE_ENV=production" >> $GITHUB_ENV
+      - name: Run production smoke test
+        env:
+          PLAYWRIGHT_BASE_URL: https://www.sena-v.com/
+        run: npm run e2e:playwright
 
-      - name: Check e2e
-        run: npx playwright test
+      - name: Upload Playwright diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: production-playwright-results
+          path: test-results/
+          if-no-files-found: ignore
+          retention-days: 7
