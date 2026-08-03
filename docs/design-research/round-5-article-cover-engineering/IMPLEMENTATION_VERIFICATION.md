@@ -49,10 +49,10 @@
 | --- | --- |
 | ESLint | pass、warning 0 |
 | TypeScript | pass |
-| Unit tests | 12 / 12 pass |
+| Unit tests | 13 / 13 pass |
 | Internal content/link validation | Markdown source 37件（公開36件）、slug 37件、external URL 51件を検証 |
 | Production build | pass、77 pages |
-| Playwright E2E | 20 / 20 pass（hard reload初期HTMLを含む。目次focusは並列10回反復もpass） |
+| Playwright E2E | 21 / 21 pass（hard reload初期HTML・不正archive値の無効化を含む。目次focusは並列10回反復もpass） |
 | npm dependency audit | 0 vulnerabilities |
 | `git diff --check` | pass |
 | In-app browser console | error / warning 0（WebGL起動後を含む） |
@@ -76,7 +76,7 @@ E2Eには端末比率、縦64%表示、縦横切替、reload時のportrait復帰
 | smartphoneは外装なしで同じreader | 390×844でdesktop/canvas 0、mobile reader 1 | pass |
 | PV・GA credentialをclientへ出さない | server-only module、secret scan、公開payload review | pass |
 | WebGL / GA4障害時も閲覧可能 | CSS fallback E2E、静的新着fallback unit test | pass |
-| screenshot・操作・fallback test | In-app Browser実操作、Playwright 20 / 20 | pass |
+| screenshot・操作・fallback test | In-app Browser実操作、Playwright 21 / 21 | pass |
 
 ## Lighthouse 13.4.1
 

@@ -109,8 +109,8 @@ function ArticleTimeline({ value }: { value: string }) {
 
   return (
     <ol className="timeline article-timeline">
-      {items.map((item) => (
-        <li key={item.title}>
+      {items.map((item, index) => (
+        <li key={`${item.title}-${index}`}>
           <h3>{item.title}</h3>
           <p>{item.description}</p>
         </li>

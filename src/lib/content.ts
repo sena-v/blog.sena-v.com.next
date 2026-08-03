@@ -25,6 +25,9 @@ export type Writing = {
 
 const postsDirectory = path.join(process.cwd(), "posts")
 const externalDirectory = path.join(process.cwd(), "content", "external")
+const publicImagesDirectory = path.join(process.cwd(), "public", "images")
+const writingSlugPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
+const writingDatePattern = /^(\d{4})-(\d{2})-(\d{2})(?:T\d{2}:\d{2}:\d{2}(?:\.\d{1,3})?(?:Z|[+-]\d{2}:\d{2}))?$/
 
 const parseFrontmatter = (source: string, filePath: string) => {
   const frontmatter = /^---\r?\n([\s\S]*?)\r?\n---\r?\n?/.exec(source)
@@ -60,12 +63,76 @@ const optionalString = (data: Record<string, unknown>, key: string) => {
   return typeof value === "string" && value.trim() !== "" ? value.trim() : undefined
 }
 
+export const validateWritingSlug = (value: string, filePath = "content") => {
+  if (!writingSlugPattern.test(value)) {
+    throw new Error(`slug must contain only lowercase letters, numbers, and single hyphens: ${filePath}`)
+  }
+
+  return value
+}
+
+export const validateWritingDate = (value: string, key = "date", filePath = "content") => {
+  const match = writingDatePattern.exec(value)
+  if (!match || Number.isNaN(Date.parse(value))) {
+    throw new Error(`${key} must be an ISO 8601 date: ${filePath}`)
+  }
+
+  const [, year, month, day] = match
+  const calendarDate = new Date(Date.UTC(Number(year), Number(month) - 1, Number(day)))
+  if (
+    calendarDate.getUTCFullYear() !== Number(year)
+    || calendarDate.getUTCMonth() + 1 !== Number(month)
+    || calendarDate.getUTCDate() !== Number(day)
+  ) {
+    throw new Error(`${key} must be a real calendar date: ${filePath}`)
+  }
+
+  return value
+}
+
+export const validateCoverImage = (value: string, filePath = "content") => {
+  const segments = value.split("/")
+  if (
+    value.startsWith("/")
+    || value.includes("\\")
+    || /[?#\0]/.test(value)
+    || segments.some((segment) => segment === "" || segment === "." || segment === "..")
+  ) {
+    throw new Error(`coverImage must be a relative path below public/images: ${filePath}`)
+  }
+
+  const resolvedPath = path.resolve(publicImagesDirectory, value)
+  const imageRoot = `${fs.realpathSync(publicImagesDirectory)}${path.sep}`
+  if (!fs.existsSync(resolvedPath)) {
+    throw new Error(`coverImage must reference an existing file below public/images: ${filePath}`)
+  }
+
+  const realPath = fs.realpathSync(resolvedPath)
+  if (!realPath.startsWith(imageRoot) || !fs.statSync(realPath).isFile()) {
+    throw new Error(`coverImage must reference an existing file below public/images: ${filePath}`)
+  }
+
+  return value
+}
+
+const requiredSlug = (data: Record<string, unknown>, filePath: string) =>
+  validateWritingSlug(requiredString(data, "slug", filePath), filePath)
+
+const requiredDate = (data: Record<string, unknown>, key: string, filePath: string) =>
+  validateWritingDate(requiredString(data, key, filePath), key, filePath)
+
+const optionalDate = (data: Record<string, unknown>, key: string, filePath: string) => {
+  const value = optionalString(data, key)
+  return value ? validateWritingDate(value, key, filePath) : undefined
+}
+
 const requiredHttpUrl = (data: Record<string, unknown>, key: string, filePath: string) => {
   const value = requiredString(data, key, filePath)
 
   try {
     const url = new URL(value)
     if (url.protocol !== "https:" && url.protocol !== "http:") throw new Error("Unsupported protocol")
+    if (url.username || url.password) throw new Error("Credentials are not allowed")
     return url.toString()
   } catch {
     throw new Error(`${key} must be an absolute HTTP(S) URL: ${filePath}`)
@@ -111,18 +178,21 @@ const getLocalWritings = (): Writing[] => {
       const source = fs.readFileSync(filePath, "utf8")
       const { data, content } = parseFrontmatter(source, filePath)
       const coverImage = optionalString(data, "coverImage")
+      const publishedAt = validateWritingDate(optionalString(data, "publishedAt") ?? entry.name, "publishedAt", filePath)
 
       return {
         kind: "local" as const,
-        slug: requiredString(data, "slug", filePath),
+        slug: requiredSlug(data, filePath),
         title: requiredString(data, "title", filePath),
         summary: optionalString(data, "summary") ?? makeSummary(content),
-        publishedAt: optionalString(data, "publishedAt") ?? entry.name,
-        updatedAt: optionalString(data, "updatedAt"),
+        publishedAt,
+        updatedAt: optionalDate(data, "updatedAt", filePath),
         tags: stringArray(data, "tags", filePath),
-        coverImage: coverImage ? `/images/${coverImage}` : undefined,
+        coverImage: coverImage ? `/images/${validateCoverImage(coverImage, filePath)}` : undefined,
         content,
-        relatedSlugs: optionalStringArray(data, "relatedSlugs", filePath),
+        relatedSlugs: optionalStringArray(data, "relatedSlugs", filePath)?.map((slug) =>
+          validateWritingSlug(slug, filePath),
+        ),
         featured: data.featured === true,
         draft: data.draft === true,
       }
@@ -142,12 +212,12 @@ const getExternalWritings = (): Writing[] => {
 
       return {
         kind: "external" as const,
-        slug: requiredString(data, "slug", filePath),
+        slug: requiredSlug(data, filePath),
         title: requiredString(data, "title", filePath),
         summary: requiredString(data, "summary", filePath),
-        publishedAt: requiredString(data, "publishedAt", filePath),
-        updatedAt: optionalString(data, "updatedAt"),
-        importedAt: requiredString(data, "importedAt", filePath),
+        publishedAt: requiredDate(data, "publishedAt", filePath),
+        updatedAt: optionalDate(data, "updatedAt", filePath),
+        importedAt: requiredDate(data, "importedAt", filePath),
         tags: stringArray(data, "tags", filePath),
         externalUrl: requiredHttpUrl(data, "externalUrl", filePath),
         platform: requiredString(data, "platform", filePath),

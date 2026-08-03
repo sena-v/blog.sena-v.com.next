@@ -95,7 +95,7 @@ JavaScript の現場に行っても一切困ることはありません。
 新しい概念を導入していたりするので差を感じがちですが、この辺をうまくキャッチアップしつつ、  
 仕様的な部分についても理解することで NodeJS のレベルを引き上げることができます。  
 
-ES ごとの追加機能について：[とほほの JavaScript リファレンス:JavaScript って何？](http://www.tohoho-web.com/js/what.htm)
+ES ごとの追加機能について：[とほほの JavaScript リファレンス:JavaScript って何？](https://www.tohoho-web.com/js/what.htm)
 
 ## 初期～改修まで使える基礎的な部分の知識
 

@@ -849,6 +849,16 @@ test("記事一覧で複数タグをAND検索し、個別解除しても他の�
   expect(new URL(page.url()).searchParams.get("archive")).toBe("2024-03")
 })
 
+test("記事一覧は未知のarchive値を絞り込み条件として採用しない", async ({ page }) => {
+  await page.goto("/writings?archive=../../private")
+
+  const visibleEntries = await page.locator(".writing-timeline-entry").count()
+  expect(visibleEntries).toBeGreaterThan(0)
+  await expect(page.locator(".filter-bar")).toContainText(`${visibleEntries} / ${visibleEntries} 件`)
+  await expect(page.locator('input[name="archive"]')).toHaveCount(0)
+  await expect(page.getByRole("link", { name: "すべて解除" })).toHaveCount(0)
+})
+
 test("記事一覧とAboutは1280pxの初見で主要内容まで見える密度にする", async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 720 })
   await page.goto("/writings")

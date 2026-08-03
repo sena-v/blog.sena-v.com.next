@@ -1,7 +1,30 @@
 import assert from "node:assert/strict"
 import test from "node:test"
 
-import { getAllWritings, getRelatedWritings, getWritingArchives, getWritingBySlug } from "./content.ts"
+import {
+  getAllWritings,
+  getRelatedWritings,
+  getWritingArchives,
+  getWritingBySlug,
+  validateCoverImage,
+  validateWritingDate,
+  validateWritingSlug,
+} from "./content.ts"
+
+test("content identifierはURL・日付・画像rootの境界を越えない", () => {
+  assert.equal(validateWritingSlug("package-manager-node"), "package-manager-node")
+  assert.throws(() => validateWritingSlug("../admin"), /slug/)
+  assert.throws(() => validateWritingSlug("Upper-Case"), /slug/)
+
+  assert.equal(validateWritingDate("2024-03-06"), "2024-03-06")
+  assert.equal(validateWritingDate("2019-12-02T01:40:07+09:00"), "2019-12-02T01:40:07+09:00")
+  assert.throws(() => validateWritingDate("2024-02-31"), /calendar date/)
+  assert.throws(() => validateWritingDate("03/06/2024"), /ISO 8601/)
+
+  assert.equal(validateCoverImage("bun.jpg"), "bun.jpg")
+  assert.throws(() => validateCoverImage("../background.jpg"), /relative path/)
+  assert.throws(() => validateCoverImage("missing.png"), /existing file/)
+})
 
 test("archiveは新しい月から並び、件数を保持する", () => {
   const archives = getWritingArchives()

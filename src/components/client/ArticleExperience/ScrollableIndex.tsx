@@ -52,7 +52,8 @@ export function ScrollableIndex({
   }, [items, updatePosition])
 
   function scrollByAmount(amount: number) {
-    scrollerRef.current?.scrollBy({ top: amount, behavior: "smooth" })
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    scrollerRef.current?.scrollBy({ top: amount, behavior: reduceMotion ? "auto" : "smooth" })
   }
 
   function handleThumbKeyDown(event: KeyboardEvent<HTMLDivElement>) {

@@ -36,11 +36,13 @@ const buildWritingsHref = ({ query, tags, archive }: WritingsFilters) => {
 export default async function WritingsPage({ searchParams }: WritingsPageProps) {
   const params = await searchParams
   const query = firstValue(params.query).trim()
-  const selectedArchive = firstValue(params.archive).trim()
   const normalizedQuery = query.toLocaleLowerCase("ja")
   const allWritings = getAllWritings()
   const tags = getAllTags()
   const knownTags = new Set(tags.map(([tag]) => tag))
+  const knownArchives = new Set(allWritings.map((writing) => writing.publishedAt.slice(0, 7)))
+  const requestedArchive = firstValue(params.archive).trim()
+  const selectedArchive = knownArchives.has(requestedArchive) ? requestedArchive : ""
   const selectedTags = allValues(params.tag).filter((tag) => knownTags.has(tag))
   const filters = { query, tags: selectedTags, archive: selectedArchive }
   const tagsClearHref = buildWritingsHref({ ...filters, tags: [] })
