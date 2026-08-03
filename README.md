@@ -12,7 +12,9 @@
 - Maintenance controls: CI, Renovate, security headers, dependency audits, E2E tests, and link validation
 - Responsive, keyboard-friendly design built primarily with Server Components and plain CSS
 
-The design and migration decisions are described in the public [2026 blog reboot article](https://sena-v.com/articles/blog-reboot-2026).
+The current design and migration decisions are recorded in the
+[implementation specification](docs/design-research/round-5-article-cover-engineering/FIRST_FINAL_DESIGN_SPEC.md).
+The 2026 reboot article remains a draft until its text has been reviewed separately.
 
 ## Stack
 
@@ -66,6 +68,7 @@ coverImage: "posts-image/example.png"
 publishedAt: "2026-08-02"
 updatedAt: "2026-08-10" # only after a meaningful content update
 featured: false
+draft: false # optional; must be a YAML boolean
 ---
 ```
 
@@ -83,6 +86,7 @@ tags: ["TypeScript"]
 externalUrl: "https://example.com/article"
 platform: "Example"
 featured: false
+draft: false # optional; must be a YAML boolean
 ---
 ```
 
@@ -99,6 +103,6 @@ Do not change an old `publishedAt` to make the archive look active. Add `updated
 
 ## Deployment
 
-Vercel builds the `main` branch. Creating a branch or pull request is safe; merging to `main` is a production release action and should happen only after CI and a visual review pass.
+Vercel builds the `main` branch. Creating a branch or pull request is safe; merging to `main` is a production release action and should happen only after CI and a visual review pass. The canonical production origin is `https://sena-v.com`; configure it as Vercel's primary domain and redirect `www.sena-v.com` to the apex host.
 
 Environment variables are documented in `.env.example`. Secrets and real analytics IDs must not be committed.

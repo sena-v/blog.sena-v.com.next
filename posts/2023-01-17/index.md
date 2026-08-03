@@ -2,7 +2,6 @@
 title: "Wowza API v1.6->v1.9で認証方法を変更する"
 tags: ["node", "wowza"]
 slug: wowza-authorization-to-jwt
-coverImage: ""
 ---
 
 配信関連のタスクとして、wowzaのAPIアップデートを実施した際に記事がなかったため記録。
@@ -62,5 +61,4 @@ Invalid_Tokenでエラーになるためpostされる前のheaderが正確に生
 
 Lifecycle scheduleを見るとマイナーアップデートについては半年程となるため、  
 v1.9の2024年9月には再度対応が必要になるかもしれないので注視したいと思います。
-
 

@@ -693,23 +693,23 @@ img {
 .bootstrap-reader-header {
   height: 7.4%;
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  place-items: center;
-  padding-inline: 7%;
+  grid-template-columns: 44px 1fr 54px;
+  align-items: center;
+  padding-inline: 2.8%;
   border-bottom: 1px solid #292a31;
 }
 
 .bootstrap-reader-header i {
-  width: 18px;
-  height: 1px;
-  justify-self: start;
+  width: 17px;
+  height: 1.25px;
+  justify-self: center;
   background: #a7aab2;
-  box-shadow: 0 5px 0 #a7aab2, 0 -5px 0 #a7aab2;
+  box-shadow: 0 4.25px 0 #a7aab2, 0 -4.25px 0 #a7aab2;
 }
 
 .bootstrap-reader-header i:last-child {
-  width: 40px;
-  height: 22px;
+  width: 44px;
+  height: 24px;
   justify-self: end;
   background: #111218;
   border: 1px solid #3a3b43;
@@ -718,6 +718,7 @@ img {
 }
 
 .bootstrap-reader-header b {
+  justify-self: center;
   color: inherit;
   font-size: clamp(16.8px, 3.234cqw, 17.85px);
 }

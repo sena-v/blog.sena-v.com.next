@@ -2,7 +2,6 @@
 title: "数年止まったNext.jsブログを、履歴を残して再構築した"
 tags: ["Next.js", "TypeScript", "設計", "メンテナンス"]
 slug: blog-reboot-2026
-coverImage: ""
 summary: "更新が止まった個人ブログを、リポジトリを作り直さずにNext.js 16へ更新し、また書き続けられる形へ再設計した判断と手順をまとめます。"
 publishedAt: "2026-08-02"
 featured: false

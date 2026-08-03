@@ -7,6 +7,8 @@ import {
   getWritingArchives,
   getWritingBySlug,
   validateCoverImage,
+  validateFrontmatterKeys,
+  validateOptionalBoolean,
   validateWritingDate,
   validateWritingSlug,
 } from "./content.ts"
@@ -26,10 +28,24 @@ test("content identifierはURL・日付・画像rootの境界を越えない", (
   assert.throws(() => validateCoverImage("missing.png"), /existing file/)
 })
 
+test("frontmatterの未知フィールドと曖昧なbooleanを公開扱いにしない", () => {
+  assert.doesNotThrow(() => validateFrontmatterKeys({ title: "Article", draft: true }, ["title", "draft"]))
+  assert.throws(
+    () => validateFrontmatterKeys({ title: "Article", drfat: true }, ["title", "draft"], "fixture.md"),
+    /Unknown frontmatter field drfat: fixture\.md/,
+  )
+  assert.equal(validateOptionalBoolean(undefined, "draft"), false)
+  assert.equal(validateOptionalBoolean(true, "draft"), true)
+  assert.throws(() => validateOptionalBoolean("true", "draft", "fixture.md"), /draft must be a boolean/)
+})
+
 test("archiveは新しい月から並び、件数を保持する", () => {
   const archives = getWritingArchives()
   assert.ok(archives.length > 0)
-  assert.deepEqual([...archives].sort(([left], [right]) => right.localeCompare(left)), archives)
+  assert.deepEqual(
+    [...archives].sort(([left], [right]) => right.localeCompare(left)),
+    archives,
+  )
   assert.ok(archives.every(([month, count]) => /^\d{4}-\d{2}$/.test(month) && count > 0))
 })
 

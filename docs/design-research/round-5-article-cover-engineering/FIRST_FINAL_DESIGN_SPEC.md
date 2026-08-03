@@ -274,7 +274,9 @@ native scrollの挙動を維持し、wheel、trackpad、touch drag、scrollbar d
 ## 15. Performance
 
 - mobileではWebGL bundleを読み込まない構成を優先する。
-- desktopでもcanvasをlazy-loadし、記事本文とnavigationの初期表示を止めない。
+- desktopではDOM shellを同期的に読み込み、canvasだけをlazy-loadして記事本文とnavigationの初期表示を止めない。
+- server bootstrapとhydration後の端末外枠・header操作は同じgeometry tokenを使い、主要要素の座標差を`1px`未満にする。
+- hydration待ちを隠すための全面overlayは使わない。必要な遷移は端末内contentだけの短いcrossfadeに限定する。
 - idle中の連続60fps renderingを行わない。
 - 端末素材と比較画像は適切に圧縮し、実ページの記事画像はresponsive sourceを使う。
 - fontは必要weightだけをself-hostまたは適切にsubsetする。
@@ -305,6 +307,7 @@ native scrollの挙動を維持し、wheel、trackpad、touch drag、scrollbar d
 - [x] 実スマートフォンでは端末外装を表示せず、同じ記事readerを直接使える。
 - [x] PV実数とGA認証情報がclientへ露出しない。
 - [x] WebGL / GA4障害時にも記事閲覧と新着順が動く。
+- [x] desktopのhard reloadを繰り返しても端末外枠とtheme toggleが移動しない。
 - [x] Playwrightの主要viewport screenshot、keyboard操作、reduced motion、theme維持、fallbackのtestが通る。
 
 ## 18. 実装順

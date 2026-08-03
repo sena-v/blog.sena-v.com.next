@@ -6,6 +6,12 @@ type Ga4Environment = {
   vercelEnvironment?: string
 }
 
+export function buildGa4PageLocation(origin: string, path: string) {
+  const canonicalOrigin = new URL(origin).origin
+  const location = new URL(path, origin)
+  return `${canonicalOrigin}${location.pathname}`
+}
+
 export function resolveGa4MeasurementId({
   explicitlyEnabled,
   measurementId,

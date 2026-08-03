@@ -34,7 +34,7 @@ export default function PrivacyPage() {
         </p>
         <p>
           外部サイトへのリンクがクリックされたことは、Google Analyticsの拡張計測機能によって記録される場合があります。
-          ブログ内で入力された検索語は収集せず、メールアドレスと検索パラメータを送らないためのredactionを設定します。
+          page viewはqueryを除いたpathnameだけを送信し、ブログ内で入力された検索語は収集しません。加えて、メールアドレスと検索パラメータを送らないためのredactionを設定します。
           計測は本番サイトだけで行い、localhostとVercelのPreview Deploymentでは行いません。
         </p>
         <h2>Googleによるデータの扱いと無効化</h2>

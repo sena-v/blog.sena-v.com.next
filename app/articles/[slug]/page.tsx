@@ -7,6 +7,8 @@ import { siteUrl } from "@/utils/constants"
 
 type ArticlePageProps = { params: Promise<{ slug: string }> }
 
+export const revalidate = 43200
+
 export const generateStaticParams = () => getLocalWritingsOnly().map(({ slug }) => ({ slug }))
 
 export async function generateMetadata({ params }: ArticlePageProps): Promise<Metadata> {
@@ -55,7 +57,10 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
+      />
       <ArticleExperience writing={writing as typeof writing & { content: string }} />
     </>
   )

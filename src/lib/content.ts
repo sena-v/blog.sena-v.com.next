@@ -28,6 +28,31 @@ const externalDirectory = path.join(process.cwd(), "content", "external")
 const publicImagesDirectory = path.join(process.cwd(), "public", "images")
 const writingSlugPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
 const writingDatePattern = /^(\d{4})-(\d{2})-(\d{2})(?:T\d{2}:\d{2}:\d{2}(?:\.\d{1,3})?(?:Z|[+-]\d{2}:\d{2}))?$/
+const localFrontmatterKeys = [
+  "title",
+  "slug",
+  "summary",
+  "tags",
+  "coverImage",
+  "publishedAt",
+  "updatedAt",
+  "relatedSlugs",
+  "featured",
+  "draft",
+] as const
+const externalFrontmatterKeys = [
+  "title",
+  "slug",
+  "summary",
+  "publishedAt",
+  "updatedAt",
+  "importedAt",
+  "tags",
+  "externalUrl",
+  "platform",
+  "featured",
+  "draft",
+] as const
 
 const parseFrontmatter = (source: string, filePath: string) => {
   const frontmatter = /^---\r?\n([\s\S]*?)\r?\n---\r?\n?/.exec(source)
@@ -58,9 +83,32 @@ const requiredString = (data: Record<string, unknown>, key: string, filePath: st
   return value.trim()
 }
 
-const optionalString = (data: Record<string, unknown>, key: string) => {
+const optionalString = (data: Record<string, unknown>, key: string, filePath: string) => {
   const value = data[key]
-  return typeof value === "string" && value.trim() !== "" ? value.trim() : undefined
+  if (value === undefined) return undefined
+  if (typeof value !== "string" || value.trim() === "") {
+    throw new Error(`${key} must be a non-empty string when provided: ${filePath}`)
+  }
+  return value.trim()
+}
+
+export const validateFrontmatterKeys = (
+  data: Record<string, unknown>,
+  allowedKeys: readonly string[],
+  filePath = "content",
+) => {
+  const unknownKeys = Object.keys(data).filter((key) => !allowedKeys.includes(key))
+  if (unknownKeys.length > 0) {
+    throw new Error(
+      `Unknown frontmatter field${unknownKeys.length === 1 ? "" : "s"} ${unknownKeys.join(", ")}: ${filePath}`,
+    )
+  }
+}
+
+export const validateOptionalBoolean = (value: unknown, key: string, filePath = "content") => {
+  if (value === undefined) return false
+  if (typeof value !== "boolean") throw new Error(`${key} must be a boolean when provided: ${filePath}`)
+  return value
 }
 
 export const validateWritingSlug = (value: string, filePath = "content") => {
@@ -80,9 +128,9 @@ export const validateWritingDate = (value: string, key = "date", filePath = "con
   const [, year, month, day] = match
   const calendarDate = new Date(Date.UTC(Number(year), Number(month) - 1, Number(day)))
   if (
-    calendarDate.getUTCFullYear() !== Number(year)
-    || calendarDate.getUTCMonth() + 1 !== Number(month)
-    || calendarDate.getUTCDate() !== Number(day)
+    calendarDate.getUTCFullYear() !== Number(year) ||
+    calendarDate.getUTCMonth() + 1 !== Number(month) ||
+    calendarDate.getUTCDate() !== Number(day)
   ) {
     throw new Error(`${key} must be a real calendar date: ${filePath}`)
   }
@@ -93,10 +141,10 @@ export const validateWritingDate = (value: string, key = "date", filePath = "con
 export const validateCoverImage = (value: string, filePath = "content") => {
   const segments = value.split("/")
   if (
-    value.startsWith("/")
-    || value.includes("\\")
-    || /[?#\0]/.test(value)
-    || segments.some((segment) => segment === "" || segment === "." || segment === "..")
+    value.startsWith("/") ||
+    value.includes("\\") ||
+    /[?#\0]/.test(value) ||
+    segments.some((segment) => segment === "" || segment === "." || segment === "..")
   ) {
     throw new Error(`coverImage must be a relative path below public/images: ${filePath}`)
   }
@@ -122,7 +170,7 @@ const requiredDate = (data: Record<string, unknown>, key: string, filePath: stri
   validateWritingDate(requiredString(data, key, filePath), key, filePath)
 
 const optionalDate = (data: Record<string, unknown>, key: string, filePath: string) => {
-  const value = optionalString(data, key)
+  const value = optionalString(data, key, filePath)
   return value ? validateWritingDate(value, key, filePath) : undefined
 }
 
@@ -177,14 +225,19 @@ const getLocalWritings = (): Writing[] => {
       const filePath = path.join(postsDirectory, entry.name, "index.md")
       const source = fs.readFileSync(filePath, "utf8")
       const { data, content } = parseFrontmatter(source, filePath)
-      const coverImage = optionalString(data, "coverImage")
-      const publishedAt = validateWritingDate(optionalString(data, "publishedAt") ?? entry.name, "publishedAt", filePath)
+      validateFrontmatterKeys(data, localFrontmatterKeys, filePath)
+      const coverImage = optionalString(data, "coverImage", filePath)
+      const publishedAt = validateWritingDate(
+        optionalString(data, "publishedAt", filePath) ?? entry.name,
+        "publishedAt",
+        filePath,
+      )
 
       return {
         kind: "local" as const,
         slug: requiredSlug(data, filePath),
         title: requiredString(data, "title", filePath),
-        summary: optionalString(data, "summary") ?? makeSummary(content),
+        summary: optionalString(data, "summary", filePath) ?? makeSummary(content),
         publishedAt,
         updatedAt: optionalDate(data, "updatedAt", filePath),
         tags: stringArray(data, "tags", filePath),
@@ -193,8 +246,8 @@ const getLocalWritings = (): Writing[] => {
         relatedSlugs: optionalStringArray(data, "relatedSlugs", filePath)?.map((slug) =>
           validateWritingSlug(slug, filePath),
         ),
-        featured: data.featured === true,
-        draft: data.draft === true,
+        featured: validateOptionalBoolean(data.featured, "featured", filePath),
+        draft: validateOptionalBoolean(data.draft, "draft", filePath),
       }
     })
 }
@@ -209,6 +262,7 @@ const getExternalWritings = (): Writing[] => {
       const filePath = path.join(externalDirectory, fileName)
       const source = fs.readFileSync(filePath, "utf8")
       const { data } = parseFrontmatter(source, filePath)
+      validateFrontmatterKeys(data, externalFrontmatterKeys, filePath)
 
       return {
         kind: "external" as const,
@@ -221,8 +275,8 @@ const getExternalWritings = (): Writing[] => {
         tags: stringArray(data, "tags", filePath),
         externalUrl: requiredHttpUrl(data, "externalUrl", filePath),
         platform: requiredString(data, "platform", filePath),
-        featured: data.featured === true,
-        draft: false,
+        featured: validateOptionalBoolean(data.featured, "featured", filePath),
+        draft: validateOptionalBoolean(data.draft, "draft", filePath),
       }
     })
 }
@@ -244,8 +298,7 @@ export const getAllWritings = () => {
 
 export const getLocalWritingsOnly = () => getAllWritings().filter((writing) => writing.kind === "local")
 
-export const getWritingBySlug = (slug: string) =>
-  getLocalWritingsOnly().find((writing) => writing.slug === slug)
+export const getWritingBySlug = (slug: string) => getLocalWritingsOnly().find((writing) => writing.slug === slug)
 
 export const getRelatedWritings = (current: Writing, limit = 8) => {
   const candidates = getAllWritings().filter((writing) => writing.slug !== current.slug)
