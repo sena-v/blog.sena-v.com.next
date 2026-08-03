@@ -62,31 +62,6 @@ export default function AboutPage() {
             </div>
           </section>
 
-          <div className="about-policy-grid">
-            <section className="about-chapter">
-              <header>
-                <h2>日付を変えずに残す</h2>
-              </header>
-              <div className="about-chapter-copy">
-                <p>
-                  古い記事は、当時の判断が分かるよう公開日を変えずに残しています。
-                  今の推奨と違う内容には、更新日や追記を付けます。
-                </p>
-              </div>
-            </section>
-
-            <section className="about-chapter">
-              <header>
-                <h2>迷った過程も書く</h2>
-              </header>
-              <div className="about-chapter-copy">
-                <p>
-                  調べて終わりにすると忘れるので、あとで読み返せるところまで書きます。
-                  迷った点や選ばなかった方法も、必要なら一緒に残します。
-                </p>
-              </div>
-            </section>
-          </div>
         </article>
 
         <aside className="about-aside" aria-label="外部リンクと記事一覧">

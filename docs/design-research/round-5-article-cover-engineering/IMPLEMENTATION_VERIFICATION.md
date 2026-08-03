@@ -28,6 +28,8 @@
 - desktopのdrawerは`show()`を使って端末screen内だけを覆う左側sheetにし、portrait/landscapeともhamburgerと同じ左方向から表示する。close buttonはdrawer左上の44px targetとし、hamburgerとの横中心差を16px未満にする。3本線hamburgerへpointer/focusが入った瞬間の端末transformを固定し、開閉によるheader方向への位置ずれを防ぐ。外側は`overflow:clip`、focus復帰は`preventScroll`を使い、Escape・見出し移動後のfocusを維持する。theme変更は常時見えるheaderに一元化し、drawer内の重複controlは置かない。端末内wordmarkのdotはpink、theme iconはactive SVG自体を18px knob内部のgrid中央へ置き、座標補正に依存しない。実smartphone drawerも左側全高sheet、カード型navigation、番号付き目次、関連記事を持つ。
 - reader wordmarkは17px以上、44pxの操作領域を持つbuttonとする。wordmarkまたはheader空白面から、desktopでは端末内reader、smartphoneではdocumentを先頭へ戻す。menu・theme操作では誤発火せず、reduced motionではsmooth scrollを使わない。
 - Writingsのtag絞り込みはpopoverで複数選択・AND検索を行い、選択中tagの個別解除・一括解除、query/archive条件の維持を行う。
+- Writings heroは総数を`記事数 36`と明記し、裸の数字だけを表示しない。
+- Aboutは「書いていること」と外部・記事一覧linkへ絞り、説明的な方針sectionを置かない。global headerはwordmarkとは別に`ホーム`を明示し、390px幅でも3リンクを横overflowさせない。
 - 外側左railは主見出しをeyebrowの1.6倍以上にし、`SENA-V.COM / READING DESK`へ18pxのpink ruleを付ける。主題と文脈labelを同じ強さにせず、意図的なhierarchyとして見せる。
 - desktop判定はclient navigation後もmatch結果を共有し、関連記事・人気記事・Archiveの内部link遷移でSP用readerを一度描画してからdesktopへ戻すflashを発生させない。遷移中のDOM mutationをE2Eで監視し、SP用DOM 0件とtheme維持を検証する。
 - hard reloadでは初期HTML内のmobile readerをdesktopへ一瞬表示しない。headの早期`js` markerとCSS media queryで同寸法の軽量bootstrap shellを選び、client chunkを遮断した状態でも端末・左右rail・記事見出しを安定表示する。JavaScript無効時は元のsemanticなresponsive readerを残し、mobile hydration後はbootstrap DOMを除去する。
@@ -55,7 +57,7 @@
 | `git diff --check` | pass |
 | In-app browser console | error / warning 0（WebGL起動後を含む） |
 
-E2Eには端末比率、縦64%表示、縦横切替、reload時のportrait復帰とtheme保持、WebGL準備待ち、操作前後・縦横往復後のbezel基準色、pointer追従highlight、回転中のDOM/rim非表示、pointer左右追従とleave時のspring-back、外側scroll固定、左右285px rail、見出し比率1.6倍以上と18px eyebrow rule、orientation controlの両側gutterと1600ms SVG円周animation、均一bezel、light theme contrast・toggle中心・drawer配色、3本線hamburger・左上44px close・drawer内theme control 0件・17px以上のpink-dot wordmark・headerからのscroll-to-top・knob内icon中心0px、return control、索引文字サイズ、1280×720 landscape本文サイズ、30px rabbit outlineと44px hit area、Writingsの複数tag AND検索・個別解除、Writings/Aboutの初見密度、Archive専用高さ・2019.12の4行separator・外部サイト表記、3種の内部遷移中SP flash不在、draftのsitemap除外、端末screen内drawerと開閉前後0.5px未満の位置固定、Tab focus trap・Escape・見出しfocus、reduced motion時のtilt無効化、WebGL fallback、smartphoneでのcanvas不在・横overflow不在、responsive画像、redirect、SEO metadata、security headers、privacy/analytics条件を含む。
+E2Eには端末比率、縦64%表示、縦横切替、reload時のportrait復帰とtheme保持、WebGL準備待ち、操作前後・縦横往復後のbezel基準色、pointer追従highlight、回転中のDOM/rim非表示、pointer左右追従とleave時のspring-back、外側scroll固定、左右285px rail、見出し比率1.6倍以上と18px eyebrow rule、orientation controlの両側gutterと1600ms SVG円周animation、均一bezel、light theme contrast・toggle中心・drawer配色、3本線hamburger・左上44px close・drawer内theme control 0件・17px以上のpink-dot wordmark・headerからのscroll-to-top・knob内icon中心0px、return control、索引文字サイズ、1280×720 landscape本文サイズ、30px rabbit outlineと44px hit area、Writingsの複数tag AND検索・個別解除・記事数表記、Writings/Aboutの初見密度、About方針section不在、global `ホーム`導線と390px header収まり、Archive専用高さ・2019.12の4行separator・外部サイト表記、3種の内部遷移中SP flash不在、draftのsitemap除外、端末screen内drawerと開閉前後0.5px未満の位置固定、Tab focus trap・Escape・見出しfocus、reduced motion時のtilt無効化、WebGL fallback、smartphoneでのcanvas不在・横overflow不在、responsive画像、redirect、SEO metadata、security headers、privacy/analytics条件を含む。
 
 ## 受け入れ条件対応表
 

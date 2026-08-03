@@ -10,10 +10,13 @@ export function SiteHeader() {
         <nav aria-label="メインナビゲーション">
           <ul className="nav-list">
             <li>
+              <Link href="/">ホーム</Link>
+            </li>
+            <li>
               <Link href="/writings">記事一覧</Link>
             </li>
             <li>
-              <Link href="/about">このブログについて</Link>
+              <Link href="/about">ブログについて</Link>
             </li>
           </ul>
         </nav>

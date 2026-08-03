@@ -57,7 +57,7 @@ export default async function WritingsPage({ searchParams }: WritingsPageProps) 
     <main id="main-content" className="writings-page">
       <header className="page-hero writings-hero shell">
         <div className="page-hero-copy">
-          <p className="eyebrow">WRITINGS / {allWritings.length}</p>
+          <p className="eyebrow">WRITINGS / 記事数 {allWritings.length}</p>
           <h1>記事一覧</h1>
         </div>
         <p className="page-intro">

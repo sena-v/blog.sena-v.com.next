@@ -119,7 +119,7 @@ img {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 28px;
+  gap: clamp(12px, 2vw, 28px);
 }
 
 .wordmark {
@@ -148,6 +148,7 @@ img {
   font-size: 0.72rem;
   letter-spacing: 0.06em;
   text-decoration: none;
+  white-space: nowrap;
 }
 
 .nav-list a:hover {
@@ -2785,18 +2786,6 @@ html[data-reader-theme-preference="light"] .article-reader,
   font-size: 0.67rem;
 }
 
-.about-policy-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(36px, 5vw, 64px);
-}
-
-.about-policy-grid .about-chapter {
-  grid-template-columns: 1fr;
-  align-content: start;
-  gap: 22px;
-}
-
 .about-aside {
   position: static;
   margin-top: clamp(28px, 4vw, 46px);
@@ -3183,11 +3172,6 @@ html[data-reader-theme-preference="light"] .article-reader,
   .about-chapter {
     grid-template-columns: 1fr;
     gap: 20px;
-  }
-
-  .about-policy-grid {
-    grid-template-columns: 1fr;
-    gap: 0;
   }
 
   .tag-filter-popover-head {

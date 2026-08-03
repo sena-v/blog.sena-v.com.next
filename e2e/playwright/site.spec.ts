@@ -852,6 +852,9 @@ test("記事一覧で複数タグをAND検索し、個別解除しても他の�
 test("記事一覧とAboutは1280pxの初見で主要内容まで見える密度にする", async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 720 })
   await page.goto("/writings")
+  await expect(page.locator(".writings-hero .eyebrow")).toHaveText(/^WRITINGS \/ 記事数 \d+$/)
+  await expect(page.locator(".site-header nav").getByRole("link", { name: "ホーム", exact: true }))
+    .toHaveAttribute("href", "/")
   const writingsDensity = await page.evaluate(() => {
     const hero = document.querySelector(".writings-hero")!.getBoundingClientRect()
     const title = document.querySelector(".writings-hero h1")!
@@ -880,6 +883,9 @@ test("記事一覧とAboutは1280pxの初見で主要内容まで見える密度
   await expect(tagDialog).toBeHidden()
 
   await page.goto("/about")
+  await expect(page.locator(".about-policy-grid")).toHaveCount(0)
+  await expect(page.getByRole("heading", { name: "日付を変えずに残す" })).toHaveCount(0)
+  await expect(page.getByRole("heading", { name: "迷った過程も書く" })).toHaveCount(0)
   const aboutDensity = await page.evaluate(() => {
     const hero = document.querySelector(".about-hero")!.getBoundingClientRect()
     const title = document.querySelector(".about-hero h1")!
@@ -901,12 +907,14 @@ test("記事一覧とAboutは1280pxの初見で主要内容まで見える密度
     const history = document.querySelector(".about-history")!.getBoundingClientRect()
     const firstChapter = document.querySelector(".about-chapter-main")!.getBoundingClientRect()
     const links = document.querySelector(".about-links")!.getBoundingClientRect()
+    const navigation = document.querySelector(".site-header nav")!.getBoundingClientRect()
     return {
       overflowX: document.documentElement.scrollWidth - document.documentElement.clientWidth,
       titleRight: title.right,
       historyRight: history.right,
       firstChapterRight: firstChapter.right,
       linksRight: links.right,
+      navigationRight: navigation.right,
       viewportWidth: window.innerWidth,
     }
   })
@@ -915,6 +923,7 @@ test("記事一覧とAboutは1280pxの初見で主要内容まで見える密度
   expect(mobileAbout.historyRight).toBeLessThan(mobileAbout.viewportWidth)
   expect(mobileAbout.firstChapterRight).toBeLessThan(mobileAbout.viewportWidth)
   expect(mobileAbout.linksRight).toBeLessThan(mobileAbout.viewportWidth)
+  expect(mobileAbout.navigationRight).toBeLessThanOrEqual(mobileAbout.viewportWidth)
 })
 
 test("ローカル記事にmetadata・構造化データ・目次がある", async ({ page }) => {
