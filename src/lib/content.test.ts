@@ -7,6 +7,7 @@ import {
   getWritingArchives,
   getWritingBySlug,
   validateCoverImage,
+  validateExternalUrl,
   validateFrontmatterKeys,
   validateOptionalBoolean,
   validateWritingDate,
@@ -26,6 +27,13 @@ test("content identifierはURL・日付・画像rootの境界を越えない", (
   assert.equal(validateCoverImage("bun.jpg"), "bun.jpg")
   assert.throws(() => validateCoverImage("../background.jpg"), /relative path/)
   assert.throws(() => validateCoverImage("missing.png"), /existing file/)
+})
+
+test("外部記事URLはcredentialを含まないHTTPSだけを受け入れる", () => {
+  assert.equal(validateExternalUrl("https://example.com/post"), "https://example.com/post")
+  assert.throws(() => validateExternalUrl("http://example.com/post"), /absolute HTTPS URL/)
+  assert.throws(() => validateExternalUrl("https://user:pass@example.com/post"), /without credentials/)
+  assert.throws(() => validateExternalUrl("javascript:alert(1)"), /absolute HTTPS URL/)
 })
 
 test("frontmatterの未知フィールドと曖昧なbooleanを公開扱いにしない", () => {

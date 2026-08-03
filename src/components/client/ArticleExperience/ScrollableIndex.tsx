@@ -208,6 +208,6 @@ function IndexLink({ item }: { item: ReaderIndexItem }) {
       </span>
     </a>
   ) : (
-    <Link href={item.href} aria-current={item.current ? "page" : undefined}>{item.title}</Link>
+    <Link href={item.href} prefetch={false} aria-current={item.current ? "page" : undefined}>{item.title}</Link>
   )
 }

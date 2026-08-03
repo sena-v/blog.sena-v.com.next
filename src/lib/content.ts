@@ -174,18 +174,19 @@ const optionalDate = (data: Record<string, unknown>, key: string, filePath: stri
   return value ? validateWritingDate(value, key, filePath) : undefined
 }
 
-const requiredHttpUrl = (data: Record<string, unknown>, key: string, filePath: string) => {
-  const value = requiredString(data, key, filePath)
-
+export const validateExternalUrl = (value: string, key = "externalUrl", filePath = "content") => {
   try {
     const url = new URL(value)
-    if (url.protocol !== "https:" && url.protocol !== "http:") throw new Error("Unsupported protocol")
+    if (url.protocol !== "https:") throw new Error("Unsupported protocol")
     if (url.username || url.password) throw new Error("Credentials are not allowed")
     return url.toString()
   } catch {
-    throw new Error(`${key} must be an absolute HTTP(S) URL: ${filePath}`)
+    throw new Error(`${key} must be an absolute HTTPS URL without credentials: ${filePath}`)
   }
 }
+
+const requiredHttpsUrl = (data: Record<string, unknown>, key: string, filePath: string) =>
+  validateExternalUrl(requiredString(data, key, filePath), key, filePath)
 
 const stringArray = (data: Record<string, unknown>, key: string, filePath: string) => {
   const value = data[key]
@@ -273,7 +274,7 @@ const getExternalWritings = (): Writing[] => {
         updatedAt: optionalDate(data, "updatedAt", filePath),
         importedAt: requiredDate(data, "importedAt", filePath),
         tags: stringArray(data, "tags", filePath),
-        externalUrl: requiredHttpUrl(data, "externalUrl", filePath),
+        externalUrl: requiredHttpsUrl(data, "externalUrl", filePath),
         platform: requiredString(data, "platform", filePath),
         featured: validateOptionalBoolean(data.featured, "featured", filePath),
         draft: validateOptionalBoolean(data.draft, "draft", filePath),

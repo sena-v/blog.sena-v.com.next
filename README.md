@@ -52,7 +52,7 @@ npm run check:links:external
 npm audit
 ```
 
-Pull requests run the quality and E2E suites on Node.js 24. A smoke test runs against the production domain after changes reach `main`.
+Pull requests run the quality and E2E suites with the Node.js version pinned in `.nvmrc`, enforce job timeouts, and audit the complete dependency graph. A smoke test runs against the production domain after changes reach `main`.
 
 ## Content model
 

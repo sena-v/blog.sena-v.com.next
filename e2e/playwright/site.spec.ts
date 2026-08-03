@@ -68,7 +68,10 @@ test("トップページが実記事を中心にしたdesktop readerを表示す
   await expect(page.locator(".desktop-experience")).toHaveAttribute("data-orientation", "portrait")
   await expect(page.locator(".article-reader .reader-article-header h1")).toBeVisible()
   await expect(page.locator(".orientation-control")).toHaveCount(1)
-  await expect(page.getByRole("button", { name: "横表示へ切り替える" })).toBeVisible()
+  const orientationButton = page.getByRole("button", { name: "横表示へ切り替える" })
+  await expect(orientationButton).toBeVisible()
+  await expect(orientationButton).not.toHaveAttribute("aria-pressed")
+  await expect(orientationButton).toHaveAccessibleDescription("現在は縦表示")
   await expect(page.locator(".reader-menu-button span")).toHaveCount(3)
   expect(await page.locator(".reader-brand-dot").evaluate((element) => ({
     actual: getComputedStyle(element).color,
@@ -88,6 +91,9 @@ test("トップページが実記事を中心にしたdesktop readerを表示す
   })
   expect(themeIconCentering.x).toBeLessThan(0.01)
   expect(themeIconCentering.y).toBeLessThan(0.01)
+  const themeButton = page.locator(".theme-toggle")
+  await expect(themeButton).not.toHaveAttribute("aria-pressed")
+  await expect(themeButton).toHaveAccessibleDescription(/現在は(ダーク|ライト)モード/)
   const visualHierarchy = await page.locator(".device-shell").evaluate((element) => {
     const box = element.getBoundingClientRect()
     const rim = getComputedStyle(element, "::before")
@@ -326,7 +332,9 @@ test("同一比率の端末をuniform scaleで縦横切替し、reader状態を�
   await expect(experience).toHaveAttribute("data-webgl-mode", "webgl")
   await expect(page.locator("canvas")).toHaveCount(1, { timeout: 15_000 })
   await expect(experience).toHaveAttribute("data-device-uniform-scale", "1.2369924")
-  await expect(page.getByRole("button", { name: "縦表示へ切り替える" })).toBeEnabled()
+  const portraitReturnButton = page.getByRole("button", { name: "縦表示へ切り替える" })
+  await expect(portraitReturnButton).toBeEnabled()
+  await expect(portraitReturnButton).toHaveAccessibleDescription("現在は横表示")
   await expect(experience).not.toHaveClass(/is-rotating/, { timeout: 5_000 })
   const transitionSamples = await page.evaluate(() => {
     type TransitionSample = { state: string | null; ready: string | null; visualVisibility: string; rimVisibility: string; screenVisibility: string }
@@ -384,6 +392,9 @@ test("同一比率の端末をuniform scaleで縦横切替し、reader状態を�
   const themeButtonName = startedDark ? "ライトモードへ切り替える" : "ダークモードへ切り替える"
   await page.getByRole("button", { name: themeButtonName }).click()
   await expect(reader).toHaveAttribute("data-reader-theme", nextTheme)
+  await expect(page.locator(".theme-toggle")).toHaveAccessibleDescription(
+    `現在は${nextTheme === "dark" ? "ダーク" : "ライト"}モード`,
+  )
   await page.reload()
   await expect(page.locator(".desktop-experience")).toHaveAttribute("data-orientation", "portrait")
   await expect(page.locator(".article-reader")).toHaveAttribute("data-reader-theme", nextTheme)
@@ -862,6 +873,26 @@ test("記事一覧をGETパラメータとarchiveで検索できる", async ({ p
   await expect(page).toHaveURL(/query=%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8/)
   await expect(page.getByText("すべて解除")).toBeVisible()
   await expect(page.locator(".writing-timeline-entry").first()).toBeVisible()
+})
+
+test("記事一覧の反復リンクは表示だけでRSCを一括prefetchしない", async ({ page }) => {
+  const repeatedLinkPrefetches: string[] = []
+  page.on("request", (request) => {
+    const requestUrl = new URL(request.url())
+    const isRscRequest = request.headers().rsc === "1" || requestUrl.searchParams.has("_rsc")
+    const writingsFilterKeys = [...requestUrl.searchParams.keys()].filter((key) => key !== "_rsc")
+    const isRepeatedDestination = (
+      requestUrl.pathname.startsWith("/articles/")
+      || requestUrl.pathname.startsWith("/tags/")
+      || (requestUrl.pathname === "/writings" && writingsFilterKeys.length > 0)
+    )
+    if (isRscRequest && isRepeatedDestination) repeatedLinkPrefetches.push(request.url())
+  })
+
+  await page.goto("/writings")
+  await page.waitForTimeout(1_800)
+
+  expect(repeatedLinkPrefetches).toEqual([])
 })
 
 test("記事一覧で複数タグをAND検索し、個別解除しても他の条件を残せる", async ({ page }) => {

@@ -14,6 +14,7 @@ concurrency:
 jobs:
   smoke:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     container:
       image: mcr.microsoft.com/playwright:v1.62.1-jammy@sha256:b3251f7ff1a9fa559a28d1c67eaa15fc1a9800f7845e82756caea7842967f615
     steps:
@@ -23,7 +24,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
-          node-version: 24
+          node-version-file: .nvmrc
           cache: npm
 
       - name: Install dependencies
@@ -33,7 +34,7 @@ jobs:
         shell: bash
         run: |
           for attempt in {1..60}; do
-            deployed_sha="$(curl --location --fail --silent --show-error https://sena-v.com/version || true)"
+            deployed_sha="$(curl --location --fail --silent --show-error --connect-timeout 5 --max-time 10 https://sena-v.com/version || true)"
             if [ "$deployed_sha" = "$GITHUB_SHA" ]; then
               exit 0
             fi

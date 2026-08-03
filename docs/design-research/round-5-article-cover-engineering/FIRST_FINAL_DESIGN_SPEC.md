@@ -142,6 +142,7 @@ iconは現在の向きではなく、押した後に到達する向きを示す�
 
 - portrait state: 横長phone icon + `横`、`aria-label="横表示へ切り替える"`
 - landscape state: 縦長phone icon + `縦`、`aria-label="縦表示へ切り替える"`
+- buttonのaccessible nameは到達先、`aria-describedby`は現在の向きを示す。toggleの押下状態ではないため`aria-pressed`は使わない。
 
 ### 外観と位置
 
@@ -205,6 +206,7 @@ native scrollの挙動を維持し、wheel、trackpad、touch drag、scrollbar d
 - tagは角丸cardの反復ではなく、記事本文と同じ`#tag`表現を使う。
 - heroの総数は裸の数字にせず、`記事数 36`のように単位と意味を明示する。
 - 1280px幅の初見で見出し、検索、絞り込み、先頭記事まで到達できる密度にする。
+- 一覧に反復する記事・tag・filter linkは自動prefetchを無効にし、画面表示だけで数十件のRSC requestを発生させない。global navigationの少数の主要linkはprefetchを維持する。
 
 ### About
 
