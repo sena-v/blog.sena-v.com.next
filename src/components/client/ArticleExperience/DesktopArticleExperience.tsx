@@ -18,6 +18,7 @@ import type {
   ReaderOrientation,
   ReaderTheme,
 } from "@/components/article-experience/types"
+import { HOME_LOGO_ACTIVATE_EVENT } from "@/components/client/HomeLogoLink"
 import { ArticleReader } from "./ArticleReader"
 import { ScrollableIndex } from "./ScrollableIndex"
 
@@ -100,7 +101,14 @@ export default function DesktopArticleExperience({
   const tiltTarget = useRef({ x: 0, y: 0, highlightX: 50, highlightY: 14 })
   const pendingOrientation = useRef<ReaderOrientation | null>(null)
   const transitionCleanup = useRef<(() => void) | null>(null)
+  const homeLogoActivateHandler = useRef<() => void>(() => undefined)
   const usesWebGL = webglSupported && !webglFailed
+
+  useEffect(() => {
+    const handleHomeLogoActivate = () => homeLogoActivateHandler.current()
+    window.addEventListener(HOME_LOGO_ACTIVATE_EVENT, handleHomeLogoActivate)
+    return () => window.removeEventListener(HOME_LOGO_ACTIVATE_EVENT, handleHomeLogoActivate)
+  }, [])
 
   useEffect(() => () => {
     timers.current.forEach(window.clearTimeout)
@@ -294,6 +302,18 @@ export default function DesktopArticleExperience({
     }
     startOrientationChange(next)
   }
+
+  function resetToPortrait() {
+    pendingOrientation.current = null
+    if (preparingWebGL) setPreparingWebGL(false)
+    if (orientation === "portrait") return
+
+    releaseDeviceTransform()
+    resetDeviceTilt()
+    startOrientationChange("portrait", reducedMotion || !usesWebGL || !webglReady)
+  }
+
+  homeLogoActivateHandler.current = resetToPortrait
 
   const nextOrientation = orientation === "portrait" ? "landscape" : "portrait"
   const nextLabel = nextOrientation === "landscape" ? "横" : "縦"

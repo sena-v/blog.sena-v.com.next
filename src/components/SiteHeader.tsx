@@ -1,12 +1,12 @@
 import Link from "next/link"
 
+import { HomeLogoLink } from "@/components/client/HomeLogoLink"
+
 export function SiteHeader() {
   return (
     <header className="site-header">
       <div className="shell header-inner">
-        <Link className="wordmark" href="/" aria-label="sena-v.com ホーム">
-          sena-v<span aria-hidden="true">.</span>com
-        </Link>
+        <HomeLogoLink />
         <nav aria-label="メインナビゲーション">
           <ul className="nav-list">
             <li>
