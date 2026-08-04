@@ -10,7 +10,7 @@ const postToPost = function () {
   const texts = posts
     .map((post) => {
       // 引用ポストがある可能性があるので先行で分離する()
-      const [myPost, qt] = post.innerText.split("引用")
+      const [myPost] = post.innerText.split("引用")
       const arr = myPost.split(/\r\n|\n/).filter((v) => v)
 
       // 1個目はuserNameで固定(配列から削除してstringとして採用)

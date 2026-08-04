@@ -3,6 +3,7 @@ title: "自分がReactを選ぶべきだと思うただ1つの理由"
 tags: ["JavaScript", "React", "Vue", "技術"]
 slug: "reason-react-recommend"
 coverImage: "posts-image/2020-12-01-01.png"
+updatedAt: "2026-08-02"
 ---
 
 今後何を勉強するかを分析して、対応幅が広くなりそうな React をやろうと思った。  
@@ -33,7 +34,8 @@ CRA は機能を後で導入したくなった場合カスタマイズが面倒�
 
 参考リンク
 [Next.js の特徴と採用するメリットについて考えてみた](https://freelance-jak.com/technology/react/2325/)  
-[Next.js 4 年目の知見：SSR はもう古い、Vercel に API サーバを置くな](https://qiita.com/jagaapple/items/faf125e28f8c2860269c)：機能レベルの知識視点。  
+Next.js 4 年目の知見：SSR はもう古い、Vercel に API サーバを置くな：機能レベルの知識視点。
+（2026年8月追記：参照先の記事が公開終了となったため、リンクを外しました。）
 [なぜ Next.js を採用するのか？](https://mottox2.com/posts/429)：CRA と Next.js の比較  
 [CRA (Create React App), Next.JS, Gatsby【 どう使い分けるのか？】](https://watablogtravel.com/cra-create-react-app-next-js-gatsby%E3%80%90-%E3%81%A9%E3%81%86%E4%BD%BF%E3%81%84%E5%88%86%E3%81%91%E3%82%8B%E3%81%AE%E3%81%8B%EF%BC%9F%E3%80%91/)
 

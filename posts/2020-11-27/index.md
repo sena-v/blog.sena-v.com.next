@@ -3,6 +3,7 @@ title: "2020年最新技術とそれに関する知見"
 tags: ["技術","Next"]
 slug: "2020-tech-trend"
 coverImage: "posts-image/2020-11-27-01.png"
+updatedAt: "2026-08-02"
 ---
 
 最近 Twitter で流れてきて気になった単語。  
@@ -175,8 +176,8 @@ GraphQL はエンドポイントを一つにし、飛んできたリクエスト
 - ライブラリがそこまで充実しているわけではないので、連携する機能によっては実装が面倒になる
 
   参考：[Web API 初心者と学ぶ GraphQL](https://qiita.com/SiragumoHuin/items/cc58f456bc43a1be41b4)  
-  　　　[初心者目線で GraphQL を解説！～同じ WebAPI の REST との違いは？～](https://vitalify.jp/app-lab/vietnam-offshore/20171006-graphql/#3RESTRESTful)  
-  　　　[「GraphQL」徹底入門 ─ REST との比較、API・フロント双方の実装から学ぶ](https://eh-career.com/engineerhub/entry/2018/12/26/103000)  
+  　　　初心者目線で GraphQL を解説！～同じ WebAPI の REST との違いは？～（2026年8月現在、参照先は公開終了）
+  　　　[「GraphQL」徹底入門 ─ REST との比較、API・フロント双方の実装から学ぶ](https://en-ambi.com/itcontents/entry/2018/12/26/103000/)
 
 ### 感想
 

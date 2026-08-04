@@ -3,6 +3,7 @@ title: "2021年水準のJavaScriptを学ぶ最速パターン"
 tags: ["技術", "JavaScript", "勉強法"]
 slug: "2021-javascript"
 coverImage: "posts-image/2021-01-01.png"
+updatedAt: "2026-08-02"
 ---
 
 年度替わりの 3 月までに基礎固めをしようと思ったため、2021 年現在で JavaScript を学ぶために  
@@ -39,7 +40,7 @@ NodeJS についてはバックエンドの JavaScript として扱われがち�
 組み合わせができ便利度が上がること、バンドラの存在、トランスパイラの存在から NodeJS が書ければ  
 JavaScript の現場に行っても一切困ることはありません。
 
-参考：[【JavaScript】なろうランキングを API で一括取得する](https://sena-v.com/narou-rank-get)、  
+参考：[【JavaScript】なろうランキングを API で一括取得する](/articles/narou-rank-get)、
 [Node.js でコンソールアプリを作る](https://susisu.hatenablog.com/entry/2016/12/21/145611)
 
 とは言っても本気で 0 からの場合記法もわからないと思うので、[JavaScript 初級者から中級者になろう](https://uhyohyo.net/javascript/)の  
@@ -78,7 +79,7 @@ JavaScript の現場に行っても一切困ることはありません。
 行数的にもちょうどよいと思うので、node の fs モジュールと+α でなにか作るのが丁度いいと思います。  
 
 ※自分は API で情報取得を実施し、内部で処理、text を出力するコンソールアプリを作成しました。  
-参考：[【JavaScript】なろうランキングを API で一括取得する](https://sena-v.com/narou-rank-get)  
+参考：[【JavaScript】なろうランキングを API で一括取得する](/articles/narou-rank-get)
 
 # 書いて覚えるフェーズが終わったら
 
@@ -94,7 +95,7 @@ JavaScript の現場に行っても一切困ることはありません。
 新しい概念を導入していたりするので差を感じがちですが、この辺をうまくキャッチアップしつつ、  
 仕様的な部分についても理解することで NodeJS のレベルを引き上げることができます。  
 
-ES ごとの追加機能について：[とほほの JavaScript リファレンス:JavaScript って何？](http://www.tohoho-web.com/js/what.htm)
+ES ごとの追加機能について：[とほほの JavaScript リファレンス:JavaScript って何？](https://www.tohoho-web.com/js/what.htm)
 
 ## 初期～改修まで使える基礎的な部分の知識
 
