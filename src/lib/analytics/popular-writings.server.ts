@@ -1,3 +1,5 @@
+import "server-only"
+
 import { createSign } from "node:crypto"
 
 import { unstable_cache } from "next/cache"

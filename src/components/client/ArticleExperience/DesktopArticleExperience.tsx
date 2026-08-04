@@ -8,6 +8,7 @@ import {
   type PointerEvent as ReactPointerEvent,
   type ReactNode,
   useEffect,
+  useId,
   useRef,
   useState,
 } from "react"
@@ -90,6 +91,7 @@ export default function DesktopArticleExperience({
   const [webglFailed, setWebglFailed] = useState(false)
   const [preparingWebGL, setPreparingWebGL] = useState(false)
   const [drawerOpen, setDrawerOpen] = useState(false)
+  const orientationStatusId = useId()
   const timers = useRef<number[]>([])
   const deviceShellRef = useRef<HTMLDivElement>(null)
   const tiltFrame = useRef<number | null>(null)
@@ -373,7 +375,7 @@ export default function DesktopArticleExperience({
             disabled={rotating || preparingWebGL || drawerOpen}
             aria-busy={rotating || preparingWebGL}
             aria-label={`${nextLabel}表示へ切り替える`}
-            aria-pressed={orientation === "landscape"}
+            aria-describedby={orientationStatusId}
           >
             <span className={`orientation-ring orientation-target-${nextOrientation}`} aria-hidden="true">
               <svg className="orientation-progress" viewBox="0 0 32 32" focusable="false">
@@ -383,12 +385,12 @@ export default function DesktopArticleExperience({
             </span>
             <span className="orientation-label" aria-hidden="true">{nextLabel}</span>
           </button>
-          <span className="orientation-status sr-only" aria-live="polite">
+          <span id={orientationStatusId} className="orientation-status sr-only" aria-live="polite">
             {preparingWebGL
               ? "端末表示を準備中"
               : rotating
-                ? `${nextLabel}表示へ切り替え中`
-                : `${orientation === "portrait" ? "縦" : "横"}表示`}
+                ? `${orientation === "portrait" ? "縦" : "横"}表示へ切り替え中`
+                : `現在は${orientation === "portrait" ? "縦" : "横"}表示`}
           </span>
         </div>
 

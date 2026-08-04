@@ -37,7 +37,7 @@ export function WritingCard({ writing }: { writing: Writing }) {
   }
 
   return (
-    <Link className="writing-card" href={`/articles/${writing.slug}`}>
+    <Link className="writing-card" href={`/articles/${writing.slug}`} prefetch={false}>
       {cardBody}
     </Link>
   )

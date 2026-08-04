@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { useEffect, useMemo, useRef, type MouseEvent as ReactMouseEvent } from "react"
+import { useEffect, useId, useMemo, useRef, type MouseEvent as ReactMouseEvent } from "react"
 
 import { MarkdownArticle } from "@/components/MarkdownArticle"
 import type {
@@ -44,6 +44,7 @@ export function ArticleReader({
   const contentRef = useRef<HTMLDivElement>(null)
   const restoreTriggerFocusRef = useRef(true)
   const onMenuStateChangeRef = useRef(onMenuStateChange)
+  const themeStatusId = useId()
   const headings = useMemo(() => extractMarkdownHeadings(writing.content), [writing.content])
 
   useEffect(() => {
@@ -200,7 +201,7 @@ export function ArticleReader({
           type="button"
           onClick={() => onThemeChange(nextTheme)}
           aria-label={`${nextTheme === "dark" ? "ダーク" : "ライト"}モードへ切り替える`}
-          aria-pressed={theme === "dark"}
+          aria-describedby={themeStatusId}
           title={`${nextTheme === "dark" ? "ダーク" : "ライト"}モードへ`}
         >
           <span className="theme-icon theme-icon-sun" aria-hidden="true">
@@ -229,6 +230,9 @@ export function ArticleReader({
             )}
           </span>
         </button>
+        <span id={themeStatusId} className="sr-only">
+          現在は{theme === "dark" ? "ダーク" : "ライト"}モード
+        </span>
       </header>
 
       <div ref={contentRef} className="reader-scroll" tabIndex={0} aria-label="記事本文">
@@ -319,7 +323,7 @@ export function ArticleReader({
                       </span>
                     </a>
                   ) : (
-                    <Link href={item.href}>{item.title}</Link>
+                    <Link href={item.href} prefetch={false}>{item.title}</Link>
                   )}
                 </li>
               ))}

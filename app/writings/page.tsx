@@ -103,6 +103,7 @@ export default async function WritingsPage({ searchParams }: WritingsPageProps) 
                 <Link
                   className="tag-filter-clear"
                   href={tagsClearHref}
+                  prefetch={false}
                   aria-label="選択中のタグをすべて解除"
                 >
                   タグ解除
@@ -122,7 +123,7 @@ export default async function WritingsPage({ searchParams }: WritingsPageProps) 
                   <span>複数選択・AND検索</span>
                 </div>
                 <div className="tag-filter-popover-actions">
-                  {selectedTags.length > 0 && <Link href={tagsClearHref}>すべて外す</Link>}
+                  {selectedTags.length > 0 && <Link href={tagsClearHref} prefetch={false}>すべて外す</Link>}
                   <button
                     type="button"
                     popoverTarget="writings-tag-filter"
@@ -178,6 +179,7 @@ export default async function WritingsPage({ searchParams }: WritingsPageProps) 
                     <Link
                       key={tag}
                       href={buildWritingsHref({ ...filters, tags: selectedTags.filter((item) => item !== tag) })}
+                      prefetch={false}
                       aria-label={`${tag}のタグ絞り込みを解除`}
                     >
                       #{tag}<span aria-hidden="true">×</span>
@@ -185,7 +187,7 @@ export default async function WritingsPage({ searchParams }: WritingsPageProps) 
                   ))}
                 </span>
               )}
-              <Link href="/writings">すべて解除</Link>
+              <Link href="/writings" prefetch={false}>すべて解除</Link>
             </>
           )}
         </div>

@@ -26,7 +26,7 @@ export function WritingTimeline({ writings }: { writings: Writing[] }) {
                 <span className="sr-only">（新しいタブで開く）</span>
               </a>
             ) : (
-              <Link className="timeline-title" href={`/articles/${writing.slug}`}>
+              <Link className="timeline-title" href={`/articles/${writing.slug}`} prefetch={false}>
                 {writing.title}
               </Link>
             )}
@@ -38,7 +38,7 @@ export function WritingTimeline({ writings }: { writings: Writing[] }) {
           <ul className="tag-list" aria-label="タグ">
             {writing.tags.map((tag) => (
               <li key={tag}>
-                <Link className="tag-link" href={`/tags/${encodeURIComponent(tag)}`}>{tag}</Link>
+                <Link className="tag-link" href={`/tags/${encodeURIComponent(tag)}`} prefetch={false}>{tag}</Link>
               </li>
             ))}
           </ul>
