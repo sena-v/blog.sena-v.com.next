@@ -39,6 +39,7 @@
     "eslint": "^9.39.5",
     "eslint-config-next": "^16.2.12",
     "eslint-config-prettier": "^10.1.8",
+    "picomatch": "^4.0.4",
     "prettier": "^3.4.2",
     "typescript": "^5"
   },

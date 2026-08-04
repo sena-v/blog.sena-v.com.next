@@ -2,7 +2,6 @@
 title: "開発時によく使うコマンド忘備録"
 tags: ["node","npm"]
 slug: command-daily-use
-coverImage:
 ---
 
 ## よく使うコマンドまとめ

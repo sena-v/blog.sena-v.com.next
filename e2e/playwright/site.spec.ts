@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test"
 
-test("desktopの初期HTMLはmobile readerを描画せず安定したshellを表示する", async ({ page }) => {
+test("desktopの初期HTMLとhydration後でshellとtheme toggleの位置が変わらない", async ({ page }) => {
   await page.setViewportSize({ width: 1619, height: 886 })
   await page.route("**/_next/static/chunks/**", (route) => (
     route.request().resourceType() === "script" ? route.abort() : route.continue()
@@ -12,16 +12,51 @@ test("desktopの初期HTMLはmobile readerを描画せず安定したshellを表
   await expect(page.locator(".desktop-reader-bootstrap")).toBeVisible()
   const bootstrapLayout = await page.evaluate(() => {
     const device = document.querySelector(".desktop-reader-bootstrap .device-shell")!.getBoundingClientRect()
+    const theme = document.querySelector(".bootstrap-reader-header i:last-child")!.getBoundingClientRect()
+    const menu = document.querySelector(".bootstrap-reader-header i:first-child")!.getBoundingClientRect()
+    const brand = document.querySelector(".bootstrap-reader-header b")!.getBoundingClientRect()
     return {
-      deviceWidth: device.width,
+      device: { x: device.x, y: device.y, width: device.width, height: device.height },
+      theme: { x: theme.x, y: theme.y, width: theme.width, height: theme.height },
+      menu: { x: menu.x, y: menu.y, width: menu.width, height: menu.height },
+      brand: { x: brand.x, y: brand.y, width: brand.width, height: brand.height },
       visibleRatio: (Math.min(device.bottom, innerHeight) - device.top) / device.height,
       overflowX: document.documentElement.scrollWidth - innerWidth,
     }
   })
-  expect(bootstrapLayout.deviceWidth).toBeGreaterThanOrEqual(600)
+  expect(bootstrapLayout.device.width).toBeGreaterThanOrEqual(600)
   expect(bootstrapLayout.visibleRatio).toBeGreaterThan(0.63)
   expect(bootstrapLayout.visibleRatio).toBeLessThan(0.65)
   expect(bootstrapLayout.overflowX).toBe(0)
+
+  await page.unroute("**/_next/static/chunks/**")
+  for (let attempt = 0; attempt < 5; attempt += 1) {
+    await page.reload({ waitUntil: "domcontentloaded" })
+    await expect(page.locator(".theme-toggle")).toBeVisible()
+    const hydratedLayout = await page.evaluate(() => {
+      const device = document.querySelector(".device-shell")!.getBoundingClientRect()
+      const theme = document.querySelector(".theme-toggle")!.getBoundingClientRect()
+      const menu = document.querySelector(".reader-menu-button span:nth-child(2)")!.getBoundingClientRect()
+      const brand = document.querySelector(".reader-brand")!.getBoundingClientRect()
+      return {
+        device: { x: device.x, y: device.y, width: device.width, height: device.height },
+        theme: { x: theme.x, y: theme.y, width: theme.width, height: theme.height },
+        menu: { x: menu.x, y: menu.y, width: menu.width, height: menu.height },
+        brand: { x: brand.x, y: brand.y, width: brand.width, height: brand.height },
+      }
+    })
+    for (const key of ["x", "y", "width", "height"] as const) {
+      expect(Math.abs(hydratedLayout.device[key] - bootstrapLayout.device[key])).toBeLessThan(1)
+      expect(Math.abs(hydratedLayout.theme[key] - bootstrapLayout.theme[key])).toBeLessThan(1)
+    }
+    for (const element of ["menu", "brand"] as const) {
+      for (const axis of ["x", "y"] as const) {
+        const hydratedCenter = hydratedLayout[element][axis] + hydratedLayout[element][axis === "x" ? "width" : "height"] / 2
+        const bootstrapCenter = bootstrapLayout[element][axis] + bootstrapLayout[element][axis === "x" ? "width" : "height"] / 2
+        expect(Math.abs(hydratedCenter - bootstrapCenter)).toBeLessThan(1)
+      }
+    }
+  }
 })
 
 test("トップページが実記事を中心にしたdesktop readerを表示する", async ({ page }) => {
@@ -644,7 +679,7 @@ test("hamburger drawerはEscapeで閉じ、focusを戻す", async ({ page }) => 
       containedRight: drawer.right <= screen.right,
       containedBottom: drawer.bottom <= screen.bottom,
       sheetWidth: sheet.width,
-      sheetContained: sheet.left >= screen.left && sheet.right <= screen.right,
+      sheetOverflow: Math.max(screen.left - sheet.left, sheet.right - screen.right, 0),
       deviceTop: document.querySelector(".device-shell")!.getBoundingClientRect().top,
       deviceLeft: document.querySelector(".device-shell")!.getBoundingClientRect().left,
       tiltX: (document.querySelector(".device-shell") as HTMLElement).style.getPropertyValue("--device-tilt-x"),
@@ -662,7 +697,7 @@ test("hamburger drawerはEscapeで閉じ、focusを戻す", async ({ page }) => 
   expect(portraitDrawerPlacement.containedRight).toBe(true)
   expect(portraitDrawerPlacement.containedBottom).toBe(true)
   expect(portraitDrawerPlacement.sheetWidth).toBeGreaterThanOrEqual(350)
-  expect(portraitDrawerPlacement.sheetContained).toBe(true)
+  expect(portraitDrawerPlacement.sheetOverflow).toBeLessThan(1)
   expect(Math.abs(portraitDrawerPlacement.deviceTop - positionBeforePortraitDrawer.top)).toBeLessThan(0.5)
   expect(Math.abs(portraitDrawerPlacement.deviceLeft - positionBeforePortraitDrawer.left)).toBeLessThan(0.5)
   expect(Math.abs(Number.parseFloat(portraitDrawerPlacement.tiltX) - Number.parseFloat(positionBeforePortraitDrawer.tiltX)))
@@ -810,6 +845,9 @@ test("旧slug URLを新しい記事URLへ転送する", async ({ page }) => {
   await page.goto("/?slug=next-14-app-router")
   await expect(page).toHaveURL(/\/articles\/next-14-app-router$/)
   await expect(page.locator(".reader-article-header h1")).toContainText("Next14")
+
+  await page.goto("/?slug=..%2Fadmin")
+  await expect(page).toHaveURL(/\/?slug=\.\.%2Fadmin$/)
 
   await page.goto("/projects/blog-reboot")
   await expect(page).toHaveURL(/\/writings$/)

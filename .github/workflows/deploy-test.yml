@@ -33,7 +33,7 @@ jobs:
         shell: bash
         run: |
           for attempt in {1..60}; do
-            deployed_sha="$(curl --fail --silent --show-error https://www.sena-v.com/version || true)"
+            deployed_sha="$(curl --location --fail --silent --show-error https://sena-v.com/version || true)"
             if [ "$deployed_sha" = "$GITHUB_SHA" ]; then
               exit 0
             fi
@@ -44,7 +44,7 @@ jobs:
 
       - name: Run production smoke test
         env:
-          PLAYWRIGHT_BASE_URL: https://www.sena-v.com/
+          PLAYWRIGHT_BASE_URL: https://sena-v.com/
         run: npm run e2e:playwright
 
       - name: Upload Playwright diagnostics

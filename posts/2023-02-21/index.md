@@ -2,7 +2,6 @@
 title: "macOS Ventureアップデート後gitでエラーが出る"
 tags: ["macbook","環境構築"]
 slug: macbook-update-git-error
-coverImage:
 ---
 
 macのOSアップデート時には結構発生するっぽい

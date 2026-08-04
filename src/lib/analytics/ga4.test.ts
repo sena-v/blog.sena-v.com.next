@@ -1,7 +1,22 @@
 import assert from "node:assert/strict"
 import test from "node:test"
 
-import { resolveGa4MeasurementId } from "./ga4.ts"
+import { buildGa4PageLocation, resolveGa4MeasurementId } from "./ga4.ts"
+
+test("page locationからqueryとfragmentを除外する", () => {
+  assert.equal(
+    buildGa4PageLocation("https://sena-v.com", "/writings?query=private%20search&tags=React#results"),
+    "https://sena-v.com/writings",
+  )
+  assert.equal(
+    buildGa4PageLocation("https://sena-v.com", "/articles/package-manager-node"),
+    "https://sena-v.com/articles/package-manager-node",
+  )
+  assert.equal(
+    buildGa4PageLocation("https://sena-v.com", "//attacker.example/secret?query=private"),
+    "https://sena-v.com/secret",
+  )
+})
 
 test("Vercel Productionでは有効なMeasurement IDを返す", () => {
   assert.equal(resolveGa4MeasurementId({ measurementId: "G-ABC123", vercelEnvironment: "production" }), "G-ABC123")

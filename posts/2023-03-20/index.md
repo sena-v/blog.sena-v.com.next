@@ -2,7 +2,6 @@
 title: "AsyncIteratorでデータを一括ではなく順次取得する"
 tags: ["TypeScript","npm"]
 slug: iterator-of-typescript
-coverImage:
 ---
 
 TypeScriptでAsyncIterableIteratorを使おうとしたら見たことない記述が多かったのでまとめた。

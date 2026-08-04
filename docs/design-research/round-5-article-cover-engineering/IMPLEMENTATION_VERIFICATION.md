@@ -1,8 +1,8 @@
 # Article cover implementation verification
 
-検証日: 2026-08-03
-対象branch: `feature/blog-reboot-2026`
-対象URL: `http://127.0.0.1:3000/` (`next build` + `next start`)
+検証日: 2026-08-04
+対象branch: `feature/blog-reboot-critical-fixes`
+対象URL: localhost (`next build` + `next start`)
 
 ## 仕様チェック
 
@@ -32,6 +32,7 @@
 - Aboutは「書いていること」と外部・記事一覧linkへ絞り、説明的な方針sectionを置かない。global headerはwordmarkとは別に`ホーム`を明示し、390px幅でも3リンクを横overflowさせない。
 - 外側左railは主見出しをeyebrowの1.6倍以上にし、`SENA-V.COM / READING DESK`へ18pxのpink ruleを付ける。主題と文脈labelを同じ強さにせず、意図的なhierarchyとして見せる。
 - desktop判定はclient navigation後もmatch結果を共有し、関連記事・人気記事・Archiveの内部link遷移でSP用readerを一度描画してからdesktopへ戻すflashを発生させない。遷移中のDOM mutationをE2Eで監視し、SP用DOM 0件とtheme維持を検証する。
+- hard reload時はDOM shellを同期読込し、server bootstrapとhydration後のtheme toggleを同じ寸法・座標に保つ。5回のreloadで端末外枠とtoggleの差が`1px`未満であることをE2Eで検証する。
 - hard reloadでは初期HTML内のmobile readerをdesktopへ一瞬表示しない。headの早期`js` markerとCSS media queryで同寸法の軽量bootstrap shellを選び、client chunkを遮断した状態でも端末・左右rail・記事見出しを安定表示する。JavaScript無効時は元のsemanticなresponsive readerを残し、mobile hydration後はbootstrap DOMを除去する。
 - リライト前の記事はfrontmatterの`draft`で管理し、一覧・トップ・関連記事・人気記事・Archive・RSS・sitemap・静的生成URLから同じcontent層で除外する。source fileは保持し、公開時にfrontmatterを戻せるようにする。
 - WebGLはdesktopのhover/focus/回転操作まで遅延し、CSS shellと記事DOMを先に表示する。
@@ -99,7 +100,7 @@ WebGLはhover後にcanvas 1件・readyとなり、pointer位置に応じてtilt�
 
 - CSP、HSTS、`X-Content-Type-Options`、`Referrer-Policy`、`Permissions-Policy`、COOP/CORP、frame拒否headerをproduction responseで検証した。
 - 外部記事frontmatterのURLはabsolute HTTP(S)だけを受理し、外部linkは `noopener noreferrer` と新規tab表記を持つ。
-- GA4とSpeed InsightsはVercel production以外では自動読込しない。
+- GA4とSpeed InsightsはVercel production以外では自動読込しない。GA4 page viewはqueryを除いたcanonical pathnameだけを手動送信し、管理画面の履歴変更page viewを無効にする。
 - GA4 service account secretは環境変数のみで扱い、client payloadはslugとfallback/GA4 sourceだけを受け取る。
 - credential形式のsecret scanでは `.env.example` の説明用placeholder以外を検出していない。
 - Markdown内のHTMLを直接実行せず、画像pathも既知のlocal assetだけを最適化対象にする。

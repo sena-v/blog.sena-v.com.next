@@ -1,8 +1,8 @@
 # ブログ改善ロードマップ
 
-最終更新: 2026-08-03
+最終更新: 2026-08-04
 
-状態: GA4を計測基盤として採用。第5回の構造比較とrefinementを経て、中央端末を縦横回転する[1st最終デザイン・機能仕様](./design-research/round-5-article-cover-engineering/FIRST_FINAL_DESIGN_SPEC.md)を確定。次は実DOMのprototypeから段階実装する。
+状態: GA4を計測基盤として採用。第5回の構造比較とrefinementを経て確定した[1st最終デザイン・機能仕様](./design-research/round-5-article-cover-engineering/FIRST_FINAL_DESIGN_SPEC.md)を実装し、現在は公開前の安定性・Privacy・運用設定を検証している。
 
 ## この文書の目的
 
@@ -21,7 +21,7 @@
 - ローカルのCI、ビルド、主要画面のE2Eは通過済み。
 - このブランチはまだ `main` へマージも、本番公開もしていない。
 - 既存のGA4実装で見つけた初回PVの重複と環境の切り分けは、ローカルで修正済み。本番には未公開。
-- 人気順とデザインの本改修は未実装。
+- 人気順、responsive reader、遅延WebGL外装、縦横切替を実装済み。
 - GA4の本番設定確認は後から再開できる状態。現在はデザイン選定を先行する。
 - 第1回の5案、第2回の10案、第3回の20案、第4回の20案に加え、記事カバーとWebGL記事ビューアを検討する第5回を [`docs/design-research/`](./design-research/README.md) に保存した。現在は[1st最終デザイン・機能仕様](./design-research/round-5-article-cover-engineering/FIRST_FINAL_DESIGN_SPEC.md)を実装判断の基準にする。
 
@@ -114,7 +114,7 @@
 - 保守しやすく、表示性能を守れるか
 - テンプレート的、SaaS的、AI生成的に見えないか
 
-第5回では、画像を独立した観察記録ではなく記事カバーとして扱う。カバー指定時は本人素材、未指定時は管理された汎用カバーへフォールバックする。比較の結果、同一比率の中央端末、縦横回転、実DOMの記事reader、右側の小型回転操作、dark mode、scroll可能な記事索引を1st finalとして選んだ。詳細は[1st最終デザイン・機能仕様](./design-research/round-5-article-cover-engineering/FIRST_FINAL_DESIGN_SPEC.md)を参照する。次は実記事入りのlocalhost prototypeで、実DOMと索引を先に作り、WebGL外装、回転、GA4人気順を段階的に統合する。サイト共通ナビゲーションには年表を使わないが、年・月単位のarchiveはportrait左側へ残す。
+第5回では、画像を独立した観察記録ではなく記事カバーとして扱う。カバー指定時は本人素材、未指定時は管理された汎用カバーへフォールバックする。比較の結果、同一比率の中央端末、縦横回転、実DOMの記事reader、右側の小型回転操作、dark mode、scroll可能な記事索引を1st finalとして選び、実記事を使うproduction UIへ統合した。詳細は[1st最終デザイン・機能仕様](./design-research/round-5-article-cover-engineering/FIRST_FINAL_DESIGN_SPEC.md)と[実装検証記録](./design-research/round-5-article-cover-engineering/IMPLEMENTATION_VERIFICATION.md)を参照する。
 
 ### 5. 人気順をUIへ加える
 
@@ -184,7 +184,7 @@
 実装前の確認事項:
 
 - 既存GA4プロパティの所有者、Measurement ID、データ期間を確認する。
-- 拡張計測の「ブラウザの履歴イベントに基づくページの変更」が有効であることを確認する。
+- 拡張計測の「ブラウザの履歴イベントに基づくページの変更」が無効であることを確認する。
 - RealtimeまたはDebugViewで、初回表示と画面遷移がそれぞれ1回だけ計測されることを確認する。
 - Google Signalsと広告パーソナライズを利用しない設定を確認する。
 - メールアドレスのredactionと、ブログ内検索パラメータ `query` のredactionを有効にする。
@@ -193,7 +193,7 @@
 - Google CloudでData APIを有効化し、読み取り専用サービスアカウントを用意する。
 - Privacyページの内容と実際の設定が一致していることを確認する。
 
-既存実装では、初期化時の `config` とReactのEffect内の `config` が重なり、初回PVを二重送信する可能性があった。GoogleがSPA向けに推奨するブラウザ履歴ベースの自動計測へ一本化し、`config` は一度だけ呼ぶ。外部リンククリックは拡張計測に任せ、同じイベントを独自コードから重複送信しない。
+既存実装では、初期化時の `config` とReactのEffect内の `config` が重なり、初回PVを二重送信する可能性があった。現在は `send_page_view: false` で初期化し、App Routerが確定したpathnameだけを手動送信する。GA4管理画面側でも履歴変更page viewを無効にし、検索queryの送信と二重計測を防ぐ。外部リンククリックは拡張計測に任せる。
 
 参考:
 

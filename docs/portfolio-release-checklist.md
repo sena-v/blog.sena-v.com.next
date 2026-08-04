@@ -31,6 +31,8 @@ Use this checklist one to two weeks before submitting sena-v.com for a job appli
 
 ## Release and application
 
+- [ ] In Vercel Domains, set `sena-v.com` as the Primary Domain and confirm `www.sena-v.com` redirects to the apex host.
+- [ ] In GA4 Enhanced Measurement, disable page views based on browser history and confirm manual pathname-only page views are not duplicated.
 - [ ] Review the final diff and CI results before merging to `main`.
 - [ ] Confirm the production deployment and its smoke test.
 - [ ] Open the site in a private browser session to catch authentication or cache mistakes.

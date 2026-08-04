@@ -1,17 +1,9 @@
-import { redirect } from "next/navigation"
-
 import { ArticleExperience } from "@/components/ArticleExperience"
 import { getLocalWritingsOnly } from "@/lib/content"
 
-type HomeProps = {
-  searchParams: Promise<Record<string, string | string[] | undefined>>
-}
+export const revalidate = 43200
 
-export default async function Home({ searchParams }: HomeProps) {
-  const legacySlugValue = (await searchParams).slug
-  const legacySlug = Array.isArray(legacySlugValue) ? legacySlugValue[0] : legacySlugValue
-  if (legacySlug) redirect(`/articles/${encodeURIComponent(legacySlug)}`)
-
+export default async function Home() {
   const latest = getLocalWritingsOnly()[0]
   if (!latest?.content) throw new Error("At least one local article is required")
 

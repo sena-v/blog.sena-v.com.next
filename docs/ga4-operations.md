@@ -1,6 +1,6 @@
 # GA4運用・検証メモ
 
-最終更新: 2026-08-02
+最終更新: 2026-08-04
 
 この文書は、sena-v.comのGoogle Analytics 4計測を本番で有効にし、後からData APIで人気順を作るための作業記録である。Google Analyticsの管理画面やGoogle Cloudを変更する前に、対象アカウントとプロパティを確認する。
 
@@ -10,12 +10,13 @@
 - Vercelでは `VERCEL_ENV=production` のときだけGA4を読み込む。
 - Previewとlocalhostでは読み込まない。ローカルで検証するときだけ `GA4_ENABLED=true` を明示する。
 - 緊急停止時はProductionでも `GA4_ENABLED=false` にする。
-- `gtag('config')` は初期化時に一度だけ呼ぶ。
-- SPAの画面遷移はGA4拡張計測のブラウザ履歴イベントに任せる。
-- 独自のpage viewや外部リンククリックを重ねて送らない。
+- `gtag('config')` は `send_page_view: false` で初期化時に一度だけ呼ぶ。
+- page viewはApp Routerのpathname変更時に手動で一度だけ送る。`page_location`と`page_path`へqueryとfragmentを含めない。
+- GA4拡張計測の「ブラウザの履歴イベントに基づくページの変更」は無効にし、手動page viewと重複させない。
+- 外部リンククリックは拡張計測に任せ、独自eventを重ねて送らない。
 - Google Signalsと広告パーソナライズ用シグナルはコード側でも無効にする。
 
-Googleは、SPAではブラウザ履歴の変化による自動計測を推奨している。手動page viewと自動計測を併用すると重複するため、どちらか一つに揃える。
+手動page viewと自動履歴計測を併用すると重複する。検索条件をGET parameterで保持しながら検索文字列を送信しないため、このブログではpathnameだけを使う手動page viewへ統一する。
 
 - [Measure single-page applications](https://developers.google.com/analytics/devguides/collection/ga4/single-page-applications)
 - [Measure pageviews](https://developers.google.com/analytics/devguides/collection/ga4/views)
@@ -34,7 +35,7 @@ Googleは、SPAではブラウザ履歴の変化による自動計測を推奨�
 ### 2. Data stream
 
 - [ ] 拡張計測を有効にする。
-- [ ] Page viewsの詳細設定で「Page changes based on browser history events」を有効にする。
+- [ ] Page viewsの詳細設定で「Page changes based on browser history events」を無効にする。
 - [ ] 外部リンククリックを有効にする。
 - [ ] 独自コードやGoogle Tag Managerから同じpage viewを送っていないことを確認する。
 - [ ] Site searchは無効にし、ブログ内検索語を収集しない。
@@ -71,6 +72,7 @@ Googleは、SPAではブラウザ履歴の変化による自動計測を推奨�
 - [ ] 各画面で `page_view` が一度だけ記録される。
 - [ ] `/articles/{slug}` が正しいpage pathとして記録される。
 - [ ] Writingsで検索しても検索語がイベントやpage locationに残らない。
+- [ ] 初回表示とApp Router遷移で、各pathnameの `page_view` が一度だけ送信される。
 - [ ] 外部リンクは `click` と `outbound=true` で確認できる。
 - [ ] localhostの操作は記録されない。
 - [ ] Vercel Previewの操作は記録されない。

@@ -2,11 +2,7 @@
 
 import { lazy, Suspense, useLayoutEffect, useState, useSyncExternalStore } from "react"
 
-import type {
-  ArticleExperienceData,
-  ReaderOrientation,
-  ReaderTheme,
-} from "@/components/article-experience/types"
+import type { ArticleExperienceData, ReaderOrientation, ReaderTheme } from "@/components/article-experience/types"
 import { ArticleReader } from "./ArticleReader"
 
 const DesktopArticleExperience = lazy(() => import("./DesktopArticleExperience"))
@@ -132,7 +128,9 @@ function DesktopReaderBootstrap({ data }: { data: ArticleExperienceData }) {
               <div className="device-screen-layer bootstrap-reader-screen">
                 <div className="bootstrap-reader-header">
                   <i />
-                  <b>sena-v<span>.</span>com</b>
+                  <b>
+                    sena-v<span>.</span>com
+                  </b>
                   <i />
                 </div>
                 <div className="bootstrap-reader-copy">
@@ -203,9 +201,7 @@ export function ArticleExperienceClient({ data }: { data: ArticleExperienceData 
 
   return (
     <main id="main-content" className="desktop-reader-page">
-      <Suspense
-        fallback={<DesktopReaderBootstrap data={data} />}
-      >
+      <Suspense fallback={<DesktopReaderBootstrap data={data} />}>
         <DesktopArticleExperience
           data={data}
           theme={theme}
