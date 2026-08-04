@@ -105,4 +105,8 @@ Do not change an old `publishedAt` to make the archive look active. Add `updated
 
 Vercel builds the `main` branch. Creating a branch or pull request is safe; merging to `main` is a production release action and should happen only after CI and a visual review pass. The canonical production origin is `https://sena-v.com`; configure it as Vercel's primary domain and redirect `www.sena-v.com` to the apex host.
 
+## License
+
+Copyright © 2019–2026 sena-v. All rights reserved. This repository does not grant an open-source license; see [LICENSE](./LICENSE). Third-party software and trademarks remain subject to their respective owners' terms.
+
 Environment variables are documented in `.env.example`. Secrets and real analytics IDs must not be committed.

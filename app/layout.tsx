@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     title: `${siteTitle} — 技術と日々の記録`,
     description: siteDescription,
     url: siteUrl,
-    images: [{ url: "/background.jpg", width: 1000, height: 1000, alt: siteTitle }],
+    images: [{ url: "/background.jpg", width: 1600, height: 1200, alt: siteTitle }],
   },
   twitter: {
     card: "summary_large_image",

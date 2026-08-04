@@ -6,7 +6,6 @@ import { siteUrl } from "@/utils/constants"
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages = ["", "/writings", "/about", "/privacy"].map((path) => ({
     url: `${siteUrl}${path}`,
-    lastModified: new Date("2026-08-02"),
     changeFrequency: path === "" ? ("weekly" as const) : ("monthly" as const),
     priority: path === "" ? 1 : path === "/privacy" ? 0.3 : 0.8,
   }))
@@ -18,7 +17,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }))
   const tags = getAllTags().map(([tag]) => ({
     url: `${siteUrl}/tags/${encodeURIComponent(tag)}`,
-    lastModified: new Date("2026-08-02"),
     changeFrequency: "monthly" as const,
     priority: 0.5,
   }))

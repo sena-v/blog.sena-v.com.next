@@ -7,7 +7,7 @@ slug: wowza-authorization-to-jwt
 配信関連のタスクとして、wowzaのAPIアップデートを実施した際に記事がなかったため記録。
 
 ## wowzaとは？
-![](/images/posts-image/2023-01-17.png)
+![Wowzaのロゴ](/images/posts-image/2023-01-17.png)
 
 [Wowza](https://wowza.dpsj.co.jp/)
 
@@ -61,4 +61,3 @@ Invalid_Tokenでエラーになるためpostされる前のheaderが正確に生
 
 Lifecycle scheduleを見るとマイナーアップデートについては半年程となるため、  
 v1.9の2024年9月には再度対応が必要になるかもしれないので注視したいと思います。
-

@@ -1,7 +1,7 @@
 # Article cover implementation verification
 
 検証日: 2026-08-04
-対象branch: `feature/blog-reboot-quality-fixes`
+対象branch: `feature/blog-reboot-hardening-fixes`
 対象URL: localhost (`next build` + `next start`)
 
 ## 仕様チェック
@@ -45,6 +45,13 @@
 - GA4 Data APIのcredentialとPVはserver外へ出さず、12時間cacheと静的fallbackを持つ。
 - ローカル記事画像は実寸・responsive `srcset`・lazy loadingを持つ。
 - Markdown見出しIDはremark AST変換で決定し、SSRとhydrationの二重描画でも連番がずれないようにする。
+- 同一公開日の記事はslugを最終tie-breakerにし、記事一覧・関連記事の順序をfilesystem列挙順へ依存させない。
+- sitemapは記事にだけ実際の公開日/更新日を`lastModified`として出し、static pageとtagへ仮の固定日を出さない。
+- OG画像はGPS metadataを除去して1600×1200・127KBへ圧縮し、metadataの寸法を一致させる。faviconはPNGを`.ico`と偽装せずApp Routerの`icon.png`として配信する。
+- 本文画像16点に内容が分かる代替文を付け、空の代替文をunit testで拒否する。
+- README、content運用手順、設計documentを含むlocal link、bookmarklet sourceと生成物の一致、CodeQL `security-extended`を継続検証へ含める。
+- 未使用のcreate-next-app asset、旧icon重複、旧SNS/logo、未参照のPNGを削除し、design mock画像は`final-v1`の軽量WebP 2点だけを残す。
+- repositoryはAll rights reservedを明示し、所有者の判断なしにopen-source licenseを付与しない。
 
 ## 自動検証
 
@@ -52,9 +59,10 @@
 | --- | --- |
 | ESLint | pass、warning 0 |
 | TypeScript | pass |
-| Unit tests | 16 / 16 pass |
-| Internal content/link validation | Markdown source 37件（公開36件）、slug 37件、external URL 51件を検証 |
-| Production build | pass、77 pages |
+| Unit tests | 18 / 18 pass |
+| Internal content/link validation | content 37件、documentation 52件、slug 37件、external URL 257件を検証 |
+| Bookmarklet drift check | sourceから再生成後の一致を検証 |
+| Production build | pass、78 pages（PNG icon routeを含む） |
 | Playwright E2E | 22 / 22 pass（hard reload初期HTML・不正archive値・反復linkのRSC prefetch抑制を含む。目次focusは並列10回反復もpass） |
 | npm dependency audit | 0 vulnerabilities |
 | `git diff --check` | pass |
@@ -100,12 +108,14 @@ WebGLはhover後にcanvas 1件・readyとなり、pointer位置に応じてtilt�
 
 ## セキュリティ・privacyレビュー
 
-- CSP、HSTS、`X-Content-Type-Options`、`Referrer-Policy`、`Permissions-Policy`、COOP/CORP、frame拒否headerをproduction responseで検証した。
+- CSP、HSTS、`X-Content-Type-Options`、`Referrer-Policy`、`Permissions-Policy`、COOP/CORP、frame拒否headerをproduction responseで検証した。CSPは`script-src-attr 'none'`、`frame-src 'none'`、`media-src 'none'`を持ち、`img-src`から包括的な`https:`許可を除いた。
 - 外部記事frontmatterのURLはcredentialを含まないabsolute HTTPSだけを受理し、外部linkは `noopener noreferrer` と新規tab表記を持つ。
 - GA4とSpeed InsightsはVercel production以外では自動読込しない。GA4 page viewはqueryを除いたcanonical pathnameだけを手動送信し、管理画面の履歴変更page viewを無効にする。
 - GA4 service account secretは環境変数のみで扱い、client payloadはslugとfallback/GA4 sourceだけを受け取る。
 - credential形式のsecret scanでは `.env.example` の説明用placeholder以外を検出していない。
 - Markdown内のHTMLを直接実行せず、画像pathも既知のlocal assetだけを最適化対象にする。
+- 公開写真からGPSを含むEXIFを除去し、macOS metadata indexでも緯度・経度が`null`であることを確認した。
+- CodeQL workflowのactionはcommit SHAへ固定し、全依存のaudit・registry署名検証と合わせてsupply-chainの変化を検知する。
 
 ## 残る運用確認
 

@@ -14,12 +14,41 @@ const walk = (directory) =>
     return entry.isDirectory() ? walk(entryPath) : [entryPath]
   })
 
-const markdownFiles = [
+const contentMarkdownFiles = [
   ...walk(path.join(projectRoot, "posts")).filter((file) => file.endsWith(".md")),
   ...walk(path.join(projectRoot, "content", "external")).filter((file) => file.endsWith(".md")),
 ]
+const documentationMarkdownFiles = [
+  path.join(projectRoot, "README.md"),
+  path.join(projectRoot, "content", "README.md"),
+  ...walk(path.join(projectRoot, "docs")).filter((file) => file.endsWith(".md")),
+]
 
-for (const filePath of markdownFiles) {
+const collectMarkdownLinks = (filePath, source) => {
+  const relativePath = path.relative(projectRoot, filePath)
+
+  for (const linkMatch of source.matchAll(/!?\[[^\]]*\]\(([^)\s]+)(?:\s+"[^"]*")?\)/g)) {
+    const target = linkMatch[1]
+    if (target.startsWith("http://") || target.startsWith("https://")) {
+      externalUrls.add(target)
+      continue
+    }
+    if (target.startsWith("#") || target.startsWith("mailto:")) continue
+    if (/^\/(?:$|articles|tags|writings|about|privacy|projects)(?:\/|$)/.test(target)) continue
+
+    const cleanTarget = decodeURIComponent(target.split("#")[0].split("?")[0])
+    const legacyPublicTarget = cleanTarget.startsWith("../images/") ? cleanTarget.slice(3) : undefined
+    const resolved = cleanTarget.startsWith("/")
+      ? path.join(projectRoot, "public", cleanTarget)
+      : legacyPublicTarget
+        ? path.join(projectRoot, "public", legacyPublicTarget)
+        : path.resolve(path.dirname(filePath), cleanTarget)
+
+    if (!fs.existsSync(resolved)) errors.push(`${relativePath}: local link does not exist: ${target}`)
+  }
+}
+
+for (const filePath of contentMarkdownFiles) {
   const relativePath = path.relative(projectRoot, filePath)
   const source = fs.readFileSync(filePath, "utf8")
   const match = /^---\r?\n([\s\S]*?)\r?\n---/.exec(source)
@@ -44,25 +73,11 @@ for (const filePath of markdownFiles) {
     if (typeof data?.externalUrl === "string") externalUrls.add(data.externalUrl)
   }
 
-  for (const linkMatch of source.matchAll(/!?\[[^\]]*\]\(([^)\s]+)(?:\s+"[^"]*")?\)/g)) {
-    const target = linkMatch[1]
-    if (target.startsWith("http://") || target.startsWith("https://")) {
-      externalUrls.add(target)
-      continue
-    }
-    if (target.startsWith("#") || target.startsWith("mailto:")) continue
-    if (/^\/(?:articles|tags|writings|about|projects)(?:\/|$)/.test(target)) continue
+  collectMarkdownLinks(filePath, source)
+}
 
-    const cleanTarget = decodeURIComponent(target.split("#")[0].split("?")[0])
-    const legacyPublicTarget = cleanTarget.startsWith("../images/") ? cleanTarget.slice(3) : undefined
-    const resolved = cleanTarget.startsWith("/")
-      ? path.join(projectRoot, "public", cleanTarget)
-      : legacyPublicTarget
-        ? path.join(projectRoot, "public", legacyPublicTarget)
-        : path.resolve(path.dirname(filePath), cleanTarget)
-
-    if (!fs.existsSync(resolved)) errors.push(`${relativePath}: local link does not exist: ${target}`)
-  }
+for (const filePath of documentationMarkdownFiles) {
+  collectMarkdownLinks(filePath, fs.readFileSync(filePath, "utf8"))
 }
 
 for (const filePath of walk(path.join(projectRoot, "app")).filter((file) => /\.(tsx|ts)$/.test(file))) {
@@ -100,4 +115,6 @@ if (errors.length > 0) {
   process.exit(1)
 }
 
-console.log(`Validated ${markdownFiles.length} Markdown files, ${slugs.size} unique slugs, and ${externalUrls.size} external URLs.`)
+console.log(
+  `Validated ${contentMarkdownFiles.length} content files, ${documentationMarkdownFiles.length} documentation files, ${slugs.size} unique slugs, and ${externalUrls.size} external URLs.`,
+)

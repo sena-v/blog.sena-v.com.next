@@ -26,7 +26,7 @@ slug: npm-module-auto-update-check
   }
 ```
 
-![](/images/posts-image/2023-01-26.png)  
-  
+![npm run devの前にnpm outdatedの結果を表示したターミナル](/images/posts-image/2023-01-26.png)
+
 起動前に1秒程度出力の時間はかかるようになったが、更新必要かどうかが定期的に目に入るため  
 かなり効果的な対策ができ良かった。

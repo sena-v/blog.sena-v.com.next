@@ -282,10 +282,13 @@ const getExternalWritings = (): Writing[] => {
     })
 }
 
+const compareCodePointOrder = (left: string, right: string) => (left < right ? -1 : left > right ? 1 : 0)
+
+export const compareWritingPublicationOrder = (left: Writing, right: Writing) =>
+  right.publishedAt.localeCompare(left.publishedAt) || compareCodePointOrder(left.slug, right.slug)
+
 export const getAllWritings = () => {
-  const writings = [...getLocalWritings(), ...getExternalWritings()].sort((a, b) =>
-    b.publishedAt.localeCompare(a.publishedAt),
-  )
+  const writings = [...getLocalWritings(), ...getExternalWritings()].sort(compareWritingPublicationOrder)
   const duplicateSlugs = writings
     .map((writing) => writing.slug)
     .filter((slug, index, slugs) => slugs.indexOf(slug) !== index)
@@ -318,7 +321,10 @@ export const getRelatedWritings = (current: Writing, limit = 8) => {
 
       if (leftIsManual !== rightIsManual) return leftIsManual ? -1 : 1
       if (leftIsManual && rightIsManual) return left.manualRank! - right.manualRank!
-      return right.sharedTags - left.sharedTags || right.writing.publishedAt.localeCompare(left.writing.publishedAt)
+      return (
+        right.sharedTags - left.sharedTags
+        || compareWritingPublicationOrder(left.writing, right.writing)
+      )
     })
     .slice(0, limit)
     .map(({ writing }) => writing)
@@ -342,7 +348,11 @@ export const getAllTags = () => {
     writing.tags.forEach((tag) => counts.set(tag, (counts.get(tag) ?? 0) + 1))
   })
 
-  return [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], "ja"))
+  return [...counts.entries()].sort((a, b) => (
+    b[1] - a[1]
+    || a[0].localeCompare(b[0], "ja")
+    || compareCodePointOrder(a[0], b[0])
+  ))
 }
 
 export const formatDate = (date: string) =>

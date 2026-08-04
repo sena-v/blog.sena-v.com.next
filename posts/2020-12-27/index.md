@@ -5,7 +5,7 @@ slug: "gatsby-graphql"
 coverImage: "posts-image/2020-12-27.png"
 ---
 
-![](../images/posts-image/2020-12-27.png)
+![GraphQLのロゴ](../images/posts-image/2020-12-27.png)
 
 Gatsby における GraphQL の挙動について、公式チュートリアル・参考サイトで得られる情報は  
 順番に学習することを想定しているため、ピンポイントでの理解が難しくなっている。

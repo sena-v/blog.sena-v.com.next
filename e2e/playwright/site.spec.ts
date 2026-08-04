@@ -1043,10 +1043,23 @@ test("外部記事を新しいタブへのリンクとして明示する", async
 
 test("RSS・sitemap・robots・production security headersを配信する", async ({ request }) => {
   const home = await request.get("/")
-  expect(home.headers()["content-security-policy"]).toContain("frame-ancestors 'none'")
+  const csp = home.headers()["content-security-policy"]
+  expect(csp).toContain("frame-ancestors 'none'")
+  expect(csp).toContain("script-src-attr 'none'")
+  expect(csp).toContain("frame-src 'none'")
+  expect(csp).toContain("img-src 'self' data: blob:")
+  expect(csp).not.toMatch(/img-src[^;]*https:/)
   expect(home.headers()["x-frame-options"]).toBe("DENY")
+  expect(home.headers()["x-powered-by"]).toBeUndefined()
   expect(home.headers()["cross-origin-resource-policy"]).toBe("same-origin")
   expect(home.headers()["cross-origin-opener-policy"]).toBe("same-origin")
+  const homeHtml = await home.text()
+  expect(homeHtml).toContain('property="og:image:width" content="1600"')
+  expect(homeHtml).toContain('property="og:image:height" content="1200"')
+  const iconHref = /<link rel="icon" href="([^"]*\/icon\.png[^"]*)"/.exec(homeHtml)?.[1]
+  expect(iconHref).toBeTruthy()
+  const icon = await request.get(iconHref!)
+  expect(icon.headers()["content-type"]).toContain("image/png")
 
   const rss = await request.get("/rss.xml")
   expect(rss.ok()).toBeTruthy()
@@ -1058,6 +1071,7 @@ test("RSS・sitemap・robots・production security headersを配信する", asyn
   const sitemapXml = await sitemap.text()
   expect(sitemapXml).toContain("/articles/package-manager-node")
   expect(sitemapXml).not.toContain("/articles/blog-reboot-2026")
+  expect(sitemapXml.match(/<loc>https:\/\/sena-v\.com<\/loc>\s*<lastmod>/)).toBeNull()
 
   const robots = await request.get("/robots.txt")
   expect(robots.ok()).toBeTruthy()

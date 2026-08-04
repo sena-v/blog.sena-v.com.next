@@ -270,6 +270,7 @@ native scrollの挙動を維持し、wheel、trackpad、touch drag、scrollbar d
 - drawerはfocus trap、Escapeで閉じる、close後のfocus復帰を持つ。
 - scroll領域には見出しまたは`aria-label`を関連付ける。
 - orientation controlとtheme toggleは現在状態と到達先を読み上げられる。
+- 記事本文の情報を持つ画像は、画像内容または画面の意味が分かる空でない代替文を持つ。
 - `prefers-reduced-motion`とOS themeを尊重する。
 - 記事本文はcanvasの代替説明ではなく、最初からsemantic DOMとして存在する。
 
@@ -280,7 +281,7 @@ native scrollの挙動を維持し、wheel、trackpad、touch drag、scrollbar d
 - server bootstrapとhydration後の端末外枠・header操作は同じgeometry tokenを使い、主要要素の座標差を`1px`未満にする。
 - hydration待ちを隠すための全面overlayは使わない。必要な遷移は端末内contentだけの短いcrossfadeに限定する。
 - idle中の連続60fps renderingを行わない。
-- 端末素材と比較画像は適切に圧縮し、実ページの記事画像はresponsive sourceを使う。
+- 端末素材と比較画像は最終採用版だけを軽量形式で残し、実ページの記事画像はresponsive sourceを使う。
 - fontは必要weightだけをself-hostまたは適切にsubsetする。
 - route changeごとのGA4送信と人気順取得が重複しないようにする。
 - implementation前後でLighthouse、Core Web Vitals、JS / image / font量を記録する。
@@ -289,8 +290,19 @@ native scrollの挙動を維持し、wheel、trackpad、touch drag、scrollbar d
 
 - 記事は固有のcanonical URLを持ち、WebGL stateやquery parameterがない状態でも直接開ける。
 - title、description、published / updated date、OG情報、構造化データは通常のserver-rendered metadataとして出す。
+- OG画像の寸法は実fileと一致させ、撮影位置など公開不要なmetadataを除去する。faviconは拡張子と実formatを一致させる。
+- sitemapの`lastModified`は記事の公開日または更新日など根拠がある場合だけ出し、static pageやtagへ固定の仮日付を付けない。
 - orientationやthemeをcanonical URLへ含めない。
 - JavaScriptやWebGLが失敗しても、本文と主要navigationをindex・閲覧できる。
+
+## 16.1 Security / maintenance
+
+- production CSPはframe、object、inline event handler、外部画像を既定で拒否し、GA4など実際に使う接続先だけを許可する。
+- 記事の並び順は公開日が同じ場合もslugで決定し、build環境やfilesystem順へ依存させない。
+- contentだけでなくREADMEと設計・運用documentのlocal linkもCIで検証する。
+- bookmarkletなどの生成物はsourceとの差分をCIで検知し、手編集による陳腐化を防ぐ。
+- CodeQLの`security-extended` queryをmainへのPR・pushと週次scheduleで実行する。
+- repositoryは明示的な権利表示を持ち、所有者の判断なしにopen-source licenseを付与しない。
 
 ## 17. 受け入れ条件
 
@@ -338,7 +350,7 @@ native scrollの挙動を維持し、wheel、trackpad、touch drag、scrollbar d
 
 ## 20. 現在branchの範囲
 
-`feature/blog-reboot-2026`ではproduction UI、遅延WebGL外装、GA4人気順とfallback、responsive reader、アクセシビリティ、security headerまで実装・検証する。リライト前の`blog-reboot-2026`記事だけは`draft`として公開面から除外する。
+`feature/blog-reboot-hardening-fixes`までのstackではproduction UI、遅延WebGL外装、GA4人気順とfallback、responsive reader、アクセシビリティ、security header、CI/CodeQL、metadata・asset hardeningまで実装・検証する。リライト前の`blog-reboot-2026`記事だけは`draft`として公開面から除外する。
 
 寸法参照:
 
