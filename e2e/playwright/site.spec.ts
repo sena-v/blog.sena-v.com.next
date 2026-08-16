@@ -524,6 +524,27 @@ test("索引はnative scrollとrabbit thumbで操作できる", async ({ page })
   expect(parseFloat(rabbitPresentation.glyphWidth)).toBeGreaterThanOrEqual(1.4)
   expect(await archive.evaluate((element) => element.scrollHeight > element.clientHeight)).toBe(true)
   expect(await archive.evaluate((element) => getComputedStyle(element).maskImage)).not.toBe("none")
+  await expect(thumb).toHaveAttribute("data-interacting", "false")
+  await thumb.focus()
+  await thumb.press("ArrowDown")
+  await expect(thumb).toHaveAttribute("data-interacting", "true")
+  await expect.poll(() => archive.evaluate((element) => element.scrollTop)).toBeGreaterThan(0)
+  await expect(thumb).toHaveAttribute("data-interacting", "false", { timeout: 1_000 })
+
+  await archive.evaluate((element) => { element.scrollTop = 0 })
+  await expect.poll(() => archive.evaluate((element) => element.scrollTop)).toBe(0)
+  const thumbBox = await thumb.boundingBox()
+  expect(thumbBox).not.toBeNull()
+  await page.mouse.move(thumbBox!.x + thumbBox!.width / 2, thumbBox!.y + thumbBox!.height / 2)
+  await page.mouse.down()
+  await expect(thumb).toHaveAttribute("data-interacting", "true")
+  await expect.poll(() => thumb.locator(".rabbit-thumb").evaluate((element) => getComputedStyle(element).transform))
+    .not.toBe("none")
+  await page.mouse.move(thumbBox!.x + thumbBox!.width / 2, thumbBox!.y + thumbBox!.height / 2 + 80, { steps: 4 })
+  await expect.poll(async () => Number(await thumb.getAttribute("aria-valuenow"))).toBeGreaterThan(0)
+  await page.mouse.up()
+  await expect(thumb).toHaveAttribute("data-interacting", "false")
+
   await archive.focus()
   await archive.press("End")
   await expect.poll(() => archive.evaluate((element) => element.scrollTop)).toBeGreaterThan(0)
@@ -536,6 +557,42 @@ test("索引はnative scrollとrabbit thumbで操作できる", async ({ page })
   await expect(archiveMonth).toHaveAttribute("aria-expanded", "true")
   await expect(page.locator(".archive-item").nth(1).locator(".archive-articles a").first()).toBeVisible()
   expect(page.url()).toBe(beforeExpandUrl)
+})
+
+test("読了位置はdesktop readerとmobile pageのスクロールに追従する", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 950 })
+  await page.goto("/articles/package-manager-node")
+
+  const desktopProgress = page.getByRole("progressbar", { name: "記事の読了位置" })
+  await expect(desktopProgress).toHaveAttribute("aria-valuemin", "0")
+  await expect(desktopProgress).toHaveAttribute("aria-valuemax", "100")
+  await expect(desktopProgress).toHaveAttribute("aria-valuenow", "0")
+  await page.locator(".reader-scroll").evaluate((element) => {
+    element.scrollTop = (element.scrollHeight - element.clientHeight) / 2
+  })
+  await expect.poll(async () => Number(await desktopProgress.getAttribute("aria-valuenow")))
+    .toBeGreaterThan(40)
+  expect(Number(await desktopProgress.getAttribute("aria-valuenow"))).toBeLessThan(60)
+  await page.locator(".reader-scroll").evaluate((element) => {
+    element.scrollTop = element.scrollHeight
+  })
+  await expect.poll(async () => Number(await desktopProgress.getAttribute("aria-valuenow")))
+    .toBeGreaterThanOrEqual(99)
+  await expect.poll(() => desktopProgress.evaluate((element) => (
+    new DOMMatrix(getComputedStyle(element).transform).a
+  ))).toBeGreaterThanOrEqual(0.99)
+
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.goto("/articles/package-manager-node")
+  const mobileProgress = page.getByRole("progressbar", { name: "記事の読了位置" })
+  await expect(mobileProgress).toHaveAttribute("aria-valuenow", "0")
+  await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight / 2))
+  await expect.poll(async () => Number(await mobileProgress.getAttribute("aria-valuenow")))
+    .toBeGreaterThan(5)
+  expect(Number(await mobileProgress.getAttribute("aria-valuenow"))).toBeLessThan(95)
+  await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight))
+  await expect.poll(async () => Number(await mobileProgress.getAttribute("aria-valuenow")))
+    .toBeGreaterThanOrEqual(99)
 })
 
 test("関連記事・人気記事・archiveの遷移中にSPレイアウトやthemeへ戻らない", async ({ page }) => {
@@ -792,6 +849,30 @@ test("reduced motionでは短いcrossfadeで切り替える", async ({ page }) =
   await page.getByRole("button", { name: "横表示へ切り替える" }).click()
   await expect(experience).toHaveAttribute("data-orientation", "landscape")
   await expect(experience).not.toHaveClass(/is-rotating/, { timeout: 500 })
+
+  await page.goto("/writings")
+  const hero = page.locator(".writings-hero")
+  await expect(hero).toHaveCSS("animation-name", "none")
+  await expect(hero).toHaveCSS("opacity", "1")
+  const wordmark = page.getByRole("link", { name: "sena-v.com ホーム" })
+  await wordmark.focus()
+  await expect(wordmark).toHaveCSS("transform", "none")
+  await expect(wordmark.locator("span")).toHaveCSS("transform", "none")
+  const timelineTitle = page.locator(".timeline-title").first()
+  await timelineTitle.focus()
+  const transitionDurationMs = async (element: typeof timelineTitle) => element.evaluate((target) => {
+    const value = getComputedStyle(target).transitionDuration.split(",")[0].trim()
+    return Number.parseFloat(value) * (value.endsWith("ms") ? 1 : 1_000)
+  })
+  expect(await transitionDurationMs(timelineTitle)).toBeLessThanOrEqual(1)
+  await expect(timelineTitle).toHaveCSS("transform", "none")
+  const homeLink = page.locator(".site-header .nav-list a").filter({ hasText: "ホーム" })
+  await homeLink.focus()
+  expect(await homeLink.evaluate((element) => getComputedStyle(element, "::after").transform)).toBe("none")
+  await page.getByRole("button", { name: /タグで絞り込む/ }).click()
+  const tagDialog = page.getByRole("dialog", { name: "タグで絞り込む" })
+  await expect(tagDialog).toBeVisible()
+  expect(await transitionDurationMs(tagDialog)).toBeLessThanOrEqual(1)
 })
 
 test("WebGL初期化不能でもCSS shellと記事DOMを表示する", async ({ page }) => {
@@ -956,6 +1037,40 @@ test("記事一覧とAboutは1280pxの初見で主要内容まで見える密度
   await page.getByRole("button", { name: /タグで絞り込む/ }).click()
   const tagDialog = page.getByRole("dialog", { name: "タグで絞り込む" })
   await expect(tagDialog).toBeVisible()
+  const expandedTagLayout = await tagDialog.evaluate((dialog) => {
+    const cloud = dialog.querySelector(".tags-cloud")
+    const footer = dialog.querySelector(".tag-filter-footer")
+    const applyButton = footer?.querySelector("button")
+    if (!cloud || !footer || !applyButton) return null
+
+    const originalItems = [...cloud.children]
+    const scrollHeightBefore = cloud.scrollHeight
+    for (let repeat = 0; repeat < 2; repeat += 1) {
+      originalItems.forEach((item) => cloud.append(item.cloneNode(true)))
+    }
+    cloud.scrollTop = cloud.scrollHeight
+
+    const dialogBox = dialog.getBoundingClientRect()
+    const footerBox = footer.getBoundingClientRect()
+    const buttonBox = applyButton.getBoundingClientRect()
+    return {
+      tagCountBefore: originalItems.length,
+      tagCountAfter: cloud.children.length,
+      scrollHeightBefore,
+      scrollHeightAfter: cloud.scrollHeight,
+      scrollTop: cloud.scrollTop,
+      footerBottomGap: dialogBox.bottom - footerBox.bottom,
+      buttonBottomGap: dialogBox.bottom - buttonBox.bottom,
+      buttonRightGap: dialogBox.right - buttonBox.right,
+    }
+  })
+  if (!expandedTagLayout) throw new Error("タグpopoverのレイアウト要素を取得できません")
+  expect(expandedTagLayout.tagCountAfter).toBe(expandedTagLayout.tagCountBefore * 3)
+  expect(expandedTagLayout.scrollHeightAfter).toBeGreaterThan(expandedTagLayout.scrollHeightBefore)
+  expect(expandedTagLayout.scrollTop).toBeGreaterThan(0)
+  expect(expandedTagLayout.footerBottomGap).toBeGreaterThanOrEqual(0)
+  expect(expandedTagLayout.buttonBottomGap).toBeGreaterThanOrEqual(10)
+  expect(expandedTagLayout.buttonRightGap).toBeGreaterThanOrEqual(10)
   expect(await page.locator(".writing-timeline-entry").first().evaluate((element) => element.getBoundingClientRect().top))
     .toBeCloseTo(firstEntryTopBeforeTags, 0)
   await page.getByRole("button", { name: "タグ選択を閉じる" }).click()
@@ -1003,6 +1118,64 @@ test("記事一覧とAboutは1280pxの初見で主要内容まで見える密度
   expect(mobileAbout.firstChapterRight).toBeLessThan(mobileAbout.viewportWidth)
   expect(mobileAbout.linksRight).toBeLessThan(mobileAbout.viewportWidth)
   expect(mobileAbout.navigationRight).toBeLessThanOrEqual(mobileAbout.viewportWidth)
+})
+
+test("記事一覧の動きはhero・wordmark・navigation・記事行・タグ操作に限定する", async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 720 })
+  await page.goto("/writings")
+
+  const hero = page.locator(".writings-hero")
+  await expect(hero).toHaveCSS("animation-name", "editorial-enter")
+  expect(await hero.evaluate((element) => Number.parseFloat(getComputedStyle(element).animationDuration)))
+    .toBeGreaterThan(0)
+
+  const homeLink = page.locator(".site-header .nav-list a").filter({ hasText: "ホーム" })
+  const initialUnderline = await homeLink.evaluate((element) => getComputedStyle(element, "::after").transform)
+  await homeLink.focus()
+  await expect.poll(() => homeLink.evaluate((element) => getComputedStyle(element, "::after").transform))
+    .not.toBe(initialUnderline)
+
+  const wordmark = page.getByRole("link", { name: "sena-v.com ホーム" })
+  const wordmarkDot = wordmark.locator("span")
+  const initialWordmarkTransform = await wordmark.evaluate((element) => getComputedStyle(element).transform)
+  const initialDotTransform = await wordmarkDot.evaluate((element) => getComputedStyle(element).transform)
+  await wordmark.hover()
+  await expect.poll(() => wordmark.evaluate((element) => getComputedStyle(element).transform))
+    .not.toBe(initialWordmarkTransform)
+  await expect.poll(() => wordmarkDot.evaluate((element) => getComputedStyle(element).transform))
+    .not.toBe(initialDotTransform)
+  await page.mouse.move(0, 0)
+  await wordmark.focus()
+  await expect.poll(() => wordmark.evaluate((element) => getComputedStyle(element).transform))
+    .not.toBe(initialWordmarkTransform)
+
+  const firstTitle = page.locator(".timeline-title").first()
+  const firstEntry = firstTitle.locator("xpath=ancestor::*[contains(@class, 'writing-timeline-entry')]")
+  const initialTitleTransform = await firstTitle.evaluate((element) => getComputedStyle(element).transform)
+  await firstTitle.hover()
+  await expect.poll(() => firstTitle.evaluate((element) => getComputedStyle(element).transform))
+    .not.toBe(initialTitleTransform)
+  await expect.poll(() => firstEntry.evaluate((element) => getComputedStyle(element).backgroundColor))
+    .not.toBe("rgba(0, 0, 0, 0)")
+  await page.mouse.move(0, 0)
+  await firstTitle.focus()
+  await expect.poll(() => firstTitle.evaluate((element) => getComputedStyle(element).transform))
+    .not.toBe(initialTitleTransform)
+
+  await page.getByRole("button", { name: /タグで絞り込む/ }).click()
+  const tagDialog = page.getByRole("dialog", { name: "タグで絞り込む" })
+  await expect(tagDialog).toBeVisible()
+  await expect.poll(() => tagDialog.evaluate((element) => getComputedStyle(element).opacity)).toBe("1")
+  expect(await tagDialog.evaluate((element) => Number.parseFloat(getComputedStyle(element).transitionDuration)))
+    .toBeGreaterThan(0)
+  const tagCheckbox = tagDialog.getByRole("checkbox", { name: /技術/ })
+  await tagDialog.getByText("技術", { exact: true }).click()
+  await expect(tagCheckbox).toBeChecked()
+  await expect.poll(() => tagCheckbox.evaluate((element) => (
+    getComputedStyle(element.parentElement!.querySelector(".tag-check")!).opacity
+  ))).toBe("1")
+  await page.getByRole("button", { name: "タグ選択を閉じる" }).click()
+  await expect(tagDialog).toBeHidden()
 })
 
 test("ローカル記事にmetadata・構造化データ・目次がある", async ({ page }) => {
