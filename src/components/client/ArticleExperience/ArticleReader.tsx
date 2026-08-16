@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { useEffect, useId, useMemo, useRef, type MouseEvent as ReactMouseEvent } from "react"
+import { useCallback, useEffect, useId, useMemo, useRef, type MouseEvent as ReactMouseEvent } from "react"
 
 import { MarkdownArticle } from "@/components/MarkdownArticle"
 import type {
@@ -39,17 +39,92 @@ export function ArticleReader({
   reducedMotion = false,
   mobile = false,
 }: ArticleReaderProps) {
+  const readerRef = useRef<HTMLElement>(null)
   const dialogRef = useRef<HTMLDialogElement>(null)
   const triggerRef = useRef<HTMLButtonElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
+  const progressRef = useRef<HTMLSpanElement>(null)
+  const progressFrameRef = useRef<number | null>(null)
+  const lastProgressPercentRef = useRef(-1)
+  const mobileProgressRangeRef = useRef({ top: 0, max: 0 })
   const restoreTriggerFocusRef = useRef(true)
   const onMenuStateChangeRef = useRef(onMenuStateChange)
   const themeStatusId = useId()
   const headings = useMemo(() => extractMarkdownHeadings(writing.content), [writing.content])
 
+  const updateReadingProgress = useCallback(() => {
+    const progress = progressRef.current
+    if (!progress) return
+
+    let value = 0
+    let max = 0
+    if (mobile) {
+      const range = mobileProgressRangeRef.current
+      value = window.scrollY - range.top
+      max = range.max
+    } else {
+      const scroller = contentRef.current
+      if (!scroller) return
+      value = scroller.scrollTop
+      max = scroller.scrollHeight - scroller.clientHeight
+    }
+
+    const ratio = max > 0 ? Math.min(1, Math.max(0, value / max)) : 0
+    const percent = Math.round(ratio * 100)
+    progress.style.transform = `scaleX(${ratio.toFixed(4)})`
+    if (lastProgressPercentRef.current !== percent) {
+      lastProgressPercentRef.current = percent
+      progress.setAttribute("aria-valuenow", String(percent))
+    }
+  }, [mobile])
+
+  const queueReadingProgress = useCallback(() => {
+    if (progressFrameRef.current !== null) return
+    progressFrameRef.current = window.requestAnimationFrame(() => {
+      progressFrameRef.current = null
+      updateReadingProgress()
+    })
+  }, [updateReadingProgress])
+
   useEffect(() => {
     onMenuStateChangeRef.current = onMenuStateChange
   }, [onMenuStateChange])
+
+  useEffect(() => {
+    const reader = readerRef.current
+    const scroller = contentRef.current
+    const measureProgressRange = () => {
+      if (mobile && reader) {
+        mobileProgressRangeRef.current = {
+          top: reader.getBoundingClientRect().top + window.scrollY,
+          max: Math.max(0, reader.scrollHeight - window.innerHeight),
+        }
+      }
+      queueReadingProgress()
+    }
+    const observer = typeof ResizeObserver === "undefined" ? null : new ResizeObserver(measureProgressRange)
+
+    measureProgressRange()
+    window.addEventListener("resize", measureProgressRange)
+    if (mobile) {
+      window.addEventListener("scroll", queueReadingProgress, { passive: true })
+      if (reader) observer?.observe(reader)
+    } else if (scroller) {
+      scroller.addEventListener("scroll", queueReadingProgress, { passive: true })
+      observer?.observe(scroller.firstElementChild ?? scroller)
+    }
+
+    return () => {
+      window.removeEventListener("resize", measureProgressRange)
+      window.removeEventListener("scroll", queueReadingProgress)
+      scroller?.removeEventListener("scroll", queueReadingProgress)
+      observer?.disconnect()
+      if (progressFrameRef.current !== null) {
+        window.cancelAnimationFrame(progressFrameRef.current)
+        progressFrameRef.current = null
+      }
+    }
+  }, [mobile, orientation, queueReadingProgress, writing.slug])
 
   useEffect(() => {
     const dialog = dialogRef.current
@@ -166,6 +241,7 @@ export function ArticleReader({
 
   return (
     <section
+      ref={readerRef}
       className={`article-reader article-reader-${orientation}${mobile ? " article-reader-mobile" : ""}`}
       data-reader-theme={theme}
       aria-label={`${writing.title}の記事reader`}
@@ -233,6 +309,15 @@ export function ArticleReader({
         <span id={themeStatusId} className="sr-only">
           現在は{theme === "dark" ? "ダーク" : "ライト"}モード
         </span>
+        <span
+          ref={progressRef}
+          className="reader-progress"
+          role="progressbar"
+          aria-label="記事の読了位置"
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-valuenow={0}
+        />
       </header>
 
       <div ref={contentRef} className="reader-scroll" tabIndex={0} aria-label="記事本文">

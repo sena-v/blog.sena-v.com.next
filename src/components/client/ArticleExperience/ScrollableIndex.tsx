@@ -6,6 +6,7 @@ import { useCallback, useEffect, useId, useRef, useState, type KeyboardEvent, ty
 import type { ReaderIndexItem } from "@/components/article-experience/types"
 
 const RABBIT_THUMB_SIZE = 30
+const RABBIT_KEYBOARD_FEEDBACK_DURATION = 280
 
 type ScrollableIndexProps = {
   title: string
@@ -27,7 +28,9 @@ export function ScrollableIndex({
   const scrollerRef = useRef<HTMLDivElement>(null)
   const railRef = useRef<HTMLDivElement>(null)
   const dragRef = useRef<{ pointerY: number; scrollTop: number } | null>(null)
+  const interactionTimerRef = useRef<number | null>(null)
   const [position, setPosition] = useState({ value: 0, max: 0, ratio: 0 })
+  const [isInteracting, setIsInteracting] = useState(false)
   const [expandedArchiveId, setExpandedArchiveId] = useState<string | null>(() =>
     variant === "archive"
       ? items.find((item) => item.children?.some((child) => child.current))?.id ?? null
@@ -51,6 +54,10 @@ export function ScrollableIndex({
     return () => observer.disconnect()
   }, [items, updatePosition])
 
+  useEffect(() => () => {
+    if (interactionTimerRef.current !== null) window.clearTimeout(interactionTimerRef.current)
+  }, [])
+
   function scrollByAmount(amount: number) {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
     scrollerRef.current?.scrollBy({ top: amount, behavior: reduceMotion ? "auto" : "smooth" })
@@ -69,12 +76,23 @@ export function ScrollableIndex({
     const amount = amounts[event.key]
     if (amount === undefined) return
     event.preventDefault()
+    setIsInteracting(true)
+    if (interactionTimerRef.current !== null) window.clearTimeout(interactionTimerRef.current)
+    interactionTimerRef.current = window.setTimeout(() => {
+      interactionTimerRef.current = null
+      setIsInteracting(false)
+    }, RABBIT_KEYBOARD_FEEDBACK_DURATION)
     scrollByAmount(amount)
   }
 
   function handlePointerDown(event: PointerEvent<HTMLDivElement>) {
     const scroller = scrollerRef.current
-    if (!scroller) return
+    if (!scroller || position.max <= 0) return
+    if (interactionTimerRef.current !== null) {
+      window.clearTimeout(interactionTimerRef.current)
+      interactionTimerRef.current = null
+    }
+    setIsInteracting(true)
     dragRef.current = { pointerY: event.clientY, scrollTop: scroller.scrollTop }
     event.currentTarget.setPointerCapture(event.pointerId)
   }
@@ -90,6 +108,7 @@ export function ScrollableIndex({
 
   function stopDragging(event: PointerEvent<HTMLDivElement>) {
     dragRef.current = null
+    setIsInteracting(false)
     if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId)
   }
 
@@ -160,7 +179,7 @@ export function ScrollableIndex({
         </div>
         <div ref={railRef} className="scroll-rail" aria-hidden={position.max === 0}>
           <div
-            className="rabbit-thumb-hit"
+            className={`rabbit-thumb-hit${isInteracting ? " is-interacting" : ""}`}
             role="scrollbar"
             tabIndex={position.max > 0 ? 0 : -1}
             aria-controls={regionId}
@@ -169,12 +188,14 @@ export function ScrollableIndex({
             aria-valuemin={0}
             aria-valuemax={Math.round(position.max)}
             aria-valuenow={Math.round(position.value)}
+            data-interacting={isInteracting ? "true" : "false"}
             style={{ top: `calc(${position.ratio * 100}% - ${position.ratio * RABBIT_THUMB_SIZE}px)` }}
             onKeyDown={handleThumbKeyDown}
             onPointerDown={handlePointerDown}
             onPointerMove={handlePointerMove}
             onPointerUp={stopDragging}
             onPointerCancel={stopDragging}
+            onLostPointerCapture={stopDragging}
           >
             <RabbitThumb />
           </div>
