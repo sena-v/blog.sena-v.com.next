@@ -875,6 +875,22 @@ test("reduced motionでは短いcrossfadeで切り替える", async ({ page }) =
   expect(await transitionDurationMs(tagDialog)).toBeLessThanOrEqual(1)
 })
 
+test("左上ロゴは横向き端末をデフォルトの縦表示へ戻す", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" })
+  await page.setViewportSize({ width: 1440, height: 950 })
+  await page.goto("/")
+  const experience = page.locator(".desktop-experience")
+
+  await page.getByRole("button", { name: "横表示へ切り替える" }).click()
+  await expect(experience).toHaveAttribute("data-orientation", "landscape")
+  await expect(experience).not.toHaveClass(/is-rotating/, { timeout: 500 })
+
+  await page.getByRole("link", { name: "sena-v.com ホーム" }).click()
+  await expect(page).toHaveURL(/\/$/)
+  await expect(experience).toHaveAttribute("data-orientation", "portrait")
+  await expect(experience).not.toHaveClass(/is-rotating/, { timeout: 500 })
+})
+
 test("WebGL初期化不能でもCSS shellと記事DOMを表示する", async ({ page }) => {
   await page.addInitScript(() => {
     HTMLCanvasElement.prototype.getContext = () => null
