@@ -14,7 +14,11 @@ export function globSync(pattern: string, options: { readonly onlyDirectories: t
     expandDirectories: false,
     absolute: isAbsolute(pattern),
   })
-  const matches = picomatch(pattern.replace(/\/+$/, "") || "/", { strictSlashes: true })
+  // 末尾を探す正規表現の繰り返し走査を避け、入力長に比例する処理で正規化する。
+  const segments = pattern.split("/")
+  const lastSegment = segments.findLastIndex((segment) => segment.length > 0)
+  const matchingPattern = segments.slice(0, lastSegment + 1).join("/") || "/"
+  const matches = picomatch(matchingPattern, { strictSlashes: true })
   return (
     directories
       .map((directory) => directory.replace(/\/$/, "") || "/")
