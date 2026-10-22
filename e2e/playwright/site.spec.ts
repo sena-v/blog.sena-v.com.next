@@ -533,6 +533,8 @@ test("索引はnative scrollとrabbit thumbで操作できる", async ({ page })
 
   await archive.evaluate((element) => { element.scrollTop = 0 })
   await expect.poll(() => archive.evaluate((element) => element.scrollTop)).toBe(0)
+  // スクロール後の表示位置が更新されてから、ドラッグ開始の座標を取得する。
+  await expect(thumb).toHaveAttribute("aria-valuenow", "0")
   const thumbBox = await thumb.boundingBox()
   expect(thumbBox).not.toBeNull()
   await page.mouse.move(thumbBox!.x + thumbBox!.width / 2, thumbBox!.y + thumbBox!.height / 2)
