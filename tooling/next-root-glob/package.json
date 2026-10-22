@@ -1,0 +1,14 @@
+{
+  "name": "@sena-v/next-root-glob",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "exports": "./index.ts",
+  "engines": {
+    "node": "24.x"
+  },
+  "dependencies": {
+    "picomatch": "4.0.7",
+    "tinyglobby": "0.2.17"
+  }
+}
